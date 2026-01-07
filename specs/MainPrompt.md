@@ -245,6 +245,7 @@ Logo usage maintains minimum clear space of 1.5x the wheel icon height on all si
 7. Provisional-to-Paid conversion handling
 
 **Documentation URL:** https://bigbrainplan.com/projects/LfaKyxkUbgsvBZntXQBo/specifications/9cez4elKmsgXmimsjYuQ
+**Local Documentation:** /specs/Monetization-Payment-Module.md
 
 ---
 
@@ -260,6 +261,7 @@ Logo usage maintains minimum clear space of 1.5x the wheel icon height on all si
 6. Profile claim logic for invited teachers
 
 **Documentation URL:** https://bigbrainplan.com/projects/LfaKyxkUbgsvBZntXQBo/specifications/12MDrS8roXRfx0dm0cEp
+**Local Documentation:** /specs/Authentication-Module.md
 
 ---
 
@@ -323,8 +325,3 @@ After defining tasks for all modules, recommend:
 For each recommendation, explain the reasoning based on module dependencies identified above.
 
 Use the technical stack specifications and module documentation to ensure all tasks are aligned with the project's architecture and modular design patterns.
----
-## Local Repository Files
-
-This repository:
-- **Main Prompt**: /specs/MainPrompt.md
