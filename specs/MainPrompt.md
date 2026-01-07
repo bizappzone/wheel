@@ -232,24 +232,7 @@ Logo usage maintains minimum clear space of 1.5x the wheel icon height on all si
 
 ## 5. Module Specifications
 
-### 1. Monetization/Payment Module
-**Purpose:** Technical specification for the Monetization/Payment Module
-
-**Key Features:**
-1. Subscription plan management (Annual, Monthly)
-2. Recurring billing processing via Stripe
-3. Strict access gating (Expired = No Library Access)
-4. Dunning management (Failed payment retries)
-5. Invoice generation and history
-6. Upgrade/Downgrade logic
-7. Provisional-to-Paid conversion handling
-
-**Documentation URL:** https://bigbrainplan.com/projects/LfaKyxkUbgsvBZntXQBo/specifications/9cez4elKmsgXmimsjYuQ
-**Local Documentation:** /specs/Monetization-Payment-Module.md
-
----
-
-### 2. Authentication Module
+### 1. Authentication Module
 **Purpose:** Technical specification for the Authentication Module
 
 **Key Features:**
