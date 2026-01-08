@@ -249,6 +249,22 @@ Logo usage maintains minimum clear space of 1.5x the wheel icon height on all si
 
 ---
 
+### 2. Authentication Module
+**Purpose:** Technical specification for the Authentication Module
+
+**Key Features:**
+1. Email/Password and Social Login (Google/Microsoft for Edu)
+2. Role-based access control (Subscriber, Provisional, Admin)
+3. Session persistence and token refreshment
+4. Account recovery and secure password reset
+5. MFA support for Admin accounts
+6. Profile claim logic for invited teachers
+
+**Documentation URL:** https://bigbrainplan.com/projects/LfaKyxkUbgsvBZntXQBo/specifications/12MDrS8roXRfx0dm0cEp
+**Local Documentation:** /specs/Authentication-Module.md
+
+---
+
 ## 6. Implementation Plan
 
 Based on the modular architecture defined above, create a detailed implementation plan organized by module. For each module specification listed in section 5:
