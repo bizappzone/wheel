@@ -2,37 +2,52 @@
 
 ## 1. Executive Summary
 
-**URL:** https://bigbrainplan.com/projects/kNwr7WgCIGxQ9D0cJbZv/product-definition/marketing/executiveSummary
+**URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/product-definition/marketing/executiveSummary
 **Contains:** High-level project overview, goals, and business context
 
-Booster Agent targets a $60-80B global micro-business software market growing at 8-10% annually, where chronic dissatisfaction with complex platforms and fragmented tools creates significant white space for a confidence-driven alternative. By positioning as the locally-trusted business operating system delivered through franchise advisors, we occupy defensible territory that enterprise-descended competitors cannot replicate without dismantling their scale-based models. Our brand strategy centers on emotional reassurance and professional legitimacy rather than feature superiority, speaking directly to time-poor, risk-averse owner-operators who seek control without complexity. This approach is timely as regulatory complexity, subscription fatigue, and switching intent reach critical mass, while self-employment growth expands our addressable market.
+The Learning Wheel enters a $12-15 billion global educational content market growing at 8-10% annually, targeting 1.5-2 million teachers in a $900 million-1.5 billion serviceable addressable market where educators spend $500-1,000 annually out-of-pocket on resources. The platform uniquely positions itself in white space between transactional marketplaces (Teachers Pay Teachers) and fragmented free resources (OER Commons) through a contribution economy model that transforms teacher-created content into earned subscription credits and professional recognition. Brand positioning as "the contribution economy for educators" emphasizes fairness, reciprocity, and professional validation—reframing participation from passive consumption to meaningful exchange where "your teaching work has value, and here it counts." This strategy capitalizes on post-pandemic digital adoption (68% by 2024), teacher burnout driving demand for ready-made resources, and growing subscription fatigue with extractive marketplace models.
 
-The market opportunity is substantial and structurally unstable: micro-businesses (0-4 employees) represent tens of millions of firms spending $60-80B annually on software, yet exhibit low satisfaction, high churn, and elevated switching intent despite high market penetration. Growth drivers including rising self-employment, compliance complexity, and advertising platform confusion create demand not for more features but for relief from uncertainty and cognitive overload. Current market leaders—QuickBooks, Zoho, HubSpot, Square, and Odoo—dominate through brand authority and breadth signaling but consistently fail to emotionally resonate with micro-business owners who feel intimidated, guilty about underutilization, and unsupported by abstract, feature-dense platforms.
+The market opportunity is substantial and accelerating: 6+ million K-12 teachers globally represent a $4.5-6 billion TAM, with digital resources growing at 10-12% CAGR as hybrid learning becomes permanent (73% of schools maintaining digital infrastructure post-pandemic) and teacher time scarcity intensifies (12+ hours weekly on lesson preparation). The primary target—budget-conscious elementary teachers spending $400-800 annually while earning $45,000-65,000—exhibits strong "contribution economy" fit, willing to trade content creation effort for subscription savings. Current competitive dynamics reveal a fragmented landscape where incumbents cluster around either transactional income models (TpT's marketplace dominance) or institutional bundling (Twinkl's school licensing), leaving unoccupied strategic territory in the center: structured, metered value exchange where contribution directly offsets cost and confers professional status. No major player owns the narrative of ongoing reciprocal participation as professional stewardship rather than selling or altruistic sharing.
 
-Booster Agent exploits this gap through strategic repositioning away from software capability toward psychological safety and local legitimacy. The franchise model creates defensible differentiation: competitors can copy features but cannot replicate community trust and local advisor endorsement that transforms software selection from feature comparison into relationship decision. Our brand positioning—"Run your business the right way, with support from someone who knows your world"—anchors on four pillars: clarity over complexity, local expertise, professional legitimacy, and unified control. Visual identity (Foundation Blue for trust, documentary photography of real micro-businesses, Inter typography for clarity) and voice (experienced advisor, respectful without condescension) reinforce the core promise of business reassurance. The strategic direction is clear: leverage franchise-led distribution and community partnerships to capture disproportionate share in a market where value is shifting toward integrated, trust-based ecosystems that align with behavioral reality rather than aspirational entrepreneurship.
+The Learning Wheel's brand strategy exploits this white space through differentiated positioning that combines economic relief with professional recognition. The core message—"Your teaching work has value, and here it counts"—resonates with teachers' dual motivations: pragmatic budget constraints and intrinsic desire for peer validation. Unlike competitors emphasizing volume or unlimited access, the brand emphasizes scarcity, intentionality, and reciprocity through messaging pillars of contribution with purpose, fair exchange, and professional recognition. Visual identity and voice reinforce trust and respect (deep blue anchoring credibility, warm tones adding human energy, colleague-like tone that's professional but never condescending). The strategic imperative is clear: own the "contribution economy" language and mental models before incumbents can credibly replicate, targeting 1-3% market penetration (15,000-45,000 subscribers, $9-27 million ARR) in years 1-3 by converting Individual Budget-Conscious Teachers through content marketing, teacher influencer partnerships, and credit-funded viral referrals. Success hinges on establishing category-defining norms around valued participation rather than competing on features, making this a values-based differentiation play that's difficult for transactional marketplaces to imitate.
 
 ## 2. Product Definition
 
-**URL:** https://bigbrainplan.com/projects/kNwr7WgCIGxQ9D0cJbZv/product-definition/product/productSummary
+**URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/product-definition/product/productSummary
 **Contains:** Product Manager perspective including functional requirements, user flows, and product scope
 
-Booster Agent is a white-label, multi-tenant ERP platform architected to impose radical simplicity and operational compliance on micro-businesses through a unique franchise-distributed model. It unifies hybrid inventory management, strict financial governance, and digital presence into a linear workflow system that prioritizes psychological reassurance over feature complexity.
+The Learning Wheel is a contribution-based educational content marketplace that transforms teaching resources into a dynamic economy where educators both contribute and consume materials through a sophisticated credit system. The platform addresses the fundamental tension between content quality, accessibility, and creator incentivization by implementing a hybrid valuation model that rewards high-demand contributions while maintaining equitable access. This system creates a self-sustaining ecosystem where content value is determined by real-world utility rather than arbitrary pricing.
 
 ### Product Overview
 
-Booster Agent functions as a 'business-in-a-box' operating system, replacing fragmented point solutions with a unified, rigid-rail environment designed for non-technical micro-merchants. By leveraging a regional franchise model, it combines global software scalability with local operational trust.
+The Learning Wheel establishes a new paradigm in educational resource sharing by creating a contribution economy that balances creator recognition, content quality, and equitable access. Unlike traditional marketplaces that monetize individual transactions or free repositories that lack quality incentives, this platform uses credits as both currency and quality signal.
 
 
-### Strategic Vision: The 'Guardrails' Operating System
-Booster Agent is not designed to be a flexible toolkit for power users; rather, it is a prescriptive operating system for the 'un-digitized' economy. The product vision centers on **Radical Simplicity via Constraint**. Where competitors offer infinite configuration that paralyzes the micro-merchant, Booster Agent offers pre-configured, industry-specific logic. The platform's primary value proposition is the removal of decision fatigue—automating the complex 'how' of business operations (tax compliance, ad buying, inventory tracking) so the merchant can focus on execution. 
+## Vision
 
-### Key Differentiators
-*   **The Franchise-First Distribution Architecture:** Unlike standard SaaS models, the platform recognizes the Franchisee as a critical user persona. The Franchisee acts as the local compliance officer and support layer, requiring specific administrative interfaces to manage onboarding, pricing, and support. This allows the software to remain 'global' in code but 'local' in trust and compliance.
-*   **Linear Maker/Checker Workflows:** The system enforces a strict operational hierarchy. Even for a solo founder, the system separates the 'drafting' of an action (Maker) from the 'committing' of an action (Checker). This introduces a psychological pause that prevents errors and instills a sense of professional governance, scaling seamlessly as the business hires its first few employees.
-*   **Hybrid Supply Management:** The platform creates a unified abstraction for 'value,' treating physical goods and calendar-based service slots as equivalent inventory units. This allows a salon that sells shampoo (retail) and haircuts (services) to manage capacity and revenue in a single, un-fragmented view.
+The Learning Wheel envisions a global educational ecosystem where every teacher's expertise contributes to collective pedagogical advancement while simultaneously meeting their own classroom needs. The platform fundamentally reimagines how educational content is valued, distributed, and sustained by treating teaching resources as living assets whose worth evolves based on demonstrated classroom utility rather than marketing prowess or upfront pricing decisions.
 
-### The Syndication & Visibility Engine
-The product extends beyond internal operations to external growth. The integrated CMS is not merely a website builder but a node in a global syndication network. By standardizing content metadata at the input stage, Booster Agent allows the Central HQ to aggregate and promote merchant inventory across a global network, turning the 'CMS' into a passive customer acquisition channel rather than just a static brochure.
+## Core Differentiators
+
+The platform's **hybrid credit valuation system** represents a breakthrough in balancing multiple competing objectives:
+
+- **Dynamic Value Recognition**: Content value adjusts in real-time based on actual usage patterns (views/downloads), ensuring that genuinely useful resources naturally accumulate higher valuations regardless of creator reputation
+- **Strategic Demand Amplification**: Administrator-set multipliers for high-demand categories (STEM, non-English languages) address systemic content gaps by incentivizing contributions in underserved areas
+- **Aggregate Recalibration**: Periodic demand-based adjustments prevent value stagnation and ensure the credit economy reflects evolving educational priorities
+
+**Multi-framework curricular tagging** distinguishes The Learning Wheel from geographically-siloed platforms by enabling simultaneous alignment with Common Core, UK National Curriculum, IB, Cambridge, and other frameworks. This cross-framework capability transforms the platform into a genuinely global resource where a single worksheet can serve educators across multiple educational systems, dramatically expanding both contributor reach and consumer choice.
+
+## Dual-Market Architecture
+
+The platform simultaneously serves **individual educators (B2C)** seeking to offset subscription costs through contributions and **institutional purchasers (B2B)** whose teachers gain fully-funded access. Critically, the system maintains individual credit ownership even under institutional accounts, preserving personal incentives while enabling organizational adoption. This creates a unique viral mechanism where B2B users become B2C acquisition channels through credit-funded teacher invitations.
+
+## Metered Subscription Philosophy
+
+By implementing **monthly download limits**, the platform reframes subscription value from "unlimited access" to "curated monthly toolkit." This constraint increases the perceived value of each download decision, encourages thoughtful resource selection, and prevents low-intent hoarding behavior that degrades platform analytics and content discovery. The scarcity creates intentionality, transforming browsing into purposeful curation.
+
+## Content Persistence and Quality Assurance
+
+Content independence from creator account status ensures institutional memory and resource stability—materials remain accessible even if contributors leave the platform. The **lightweight peer review system** (single approval before publication) balances quality assurance with contribution velocity, while administrative moderation queues provide oversight without creating bottlenecks. This dual-layer approach maintains quality standards while respecting educator expertise and minimizing bureaucratic friction.
 
 ## 3. Technical Stack
 
@@ -40,128 +55,78 @@ The product extends beyond internal operations to external growth. The integrate
 
 ## 4. Marketing & Branding
 
-**URL:** https://bigbrainplan.com/projects/kNwr7WgCIGxQ9D0cJbZv/product-definition/marketing/marketingBranding
+**URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/product-definition/marketing/marketingBranding
 **Contains:** Brand identity, voice, UX principles, messaging, and visual design guidelines
 
-Booster Agent positions itself as the trusted local partner for micro-business legitimacy and control, bridging the gap between overwhelming enterprise software and fragmented point solutions. The brand communicates through a voice of experienced reassurance—knowledgeable but never condescending—using visual identity that emphasizes clarity, stability, and professional credibility. All brand elements work together to reduce anxiety and reinforce the emotional promise: "You're handling your business the right way."
+The Learning Wheel brand positions education as a shared contribution economy where teachers are recognized, rewarded, and respected for the value they create. The branding emphasizes trust, professional pride, and purposeful exchange, differentiating the platform from transactional marketplaces and free but fragmented resource libraries.
 
 ### Messaging Framework
 
-The core message—"Run your business the right way, with support from someone who knows your world"—anchors all communications. Four supporting pillars address clarity over complexity, local expertise, professional legitimacy, and unified control, each backed by specific proof points that demonstrate understanding of micro-business reality.
+The messaging framework centers on contribution, fairness, and professional pride. Messages ladder from a single core idea into distinct pillars that can flex by audience and context.
 
 
-**Core Brand Message & Hierarchy:** 
+Core Brand Message (Primary): "Your teaching work has value—and here, it counts." Supporting Pillar 1 (Secondary): Contribution with purpose – every resource shared strengthens the community. Proof point: visible usage, peer approval, and earned credits. Supporting Pillar 2: Fair exchange – access is earned, not exploited. Proof point: metered access language and credit redemption narratives. Supporting Pillar 3: Professional recognition – teaching expertise is acknowledged. Proof point: badges, certificates, and public contributor status.
 
-*Primary Message:* "Run your business the right way, with support from someone who knows your world."
+Audience variations refine emphasis without changing meaning. For individual teachers, messaging leans into savings and self-sufficiency ("pay with what you already make"). For institutional contexts, it emphasizes stewardship and leadership ("empower your teachers to support each other"). Tertiary messages support trust and quality, reinforcing moderation and review.
 
-*Message Pillar 1 - Clarity Over Complexity:* "Business software that works the way you think, not the way engineers think." This pillar addresses the cognitive overload of current solutions. Proof points include industry-specific workflows ("Built for how contractors actually work, not generic project management"), linear approval processes that match small-team reality, and elimination of unused features that create confusion. Use this pillar when addressing software frustration and decision paralysis.
-
-*Message Pillar 2 - Local Expertise, Always Available:* "Your business advisor is down the street, not in a call center." This pillar leverages the franchise model's unique advantage. Proof points include named local advisors with business credentials, community relationships and local business knowledge, and "done-with-you" onboarding that ensures success. Use this pillar when differentiating from distant SaaS providers and building trust.
-
-*Message Pillar 3 - Professional Legitimacy:* "Show up like the professional you are—to customers, partners, and yourself." This pillar addresses the dignity and credibility micro-business owners seek. Proof points include the publishing network for professional visibility, white-label capabilities that put your brand forward, and financial controls that ensure compliance and accuracy. Use this pillar when addressing growth aspirations and professional identity.
-
-*Message Pillar 4 - Unified Control:* "Everything you need to run your business, working together like it should." This pillar emphasizes integration and completeness. Proof points include CMS + CRM + Supply + Finance in one place, single login and unified data, and the prepaid wallet system that connects marketing to finance. Use this pillar when addressing subscription fatigue and tool fragmentation.
-
-**Audience-Specific Variations:** For solo founders emphasizing the transition from "winging it" to "running it right," lead with Pillars 1 and 3. For family businesses with 2-4 employees, emphasize Pillar 4 (unified control) and Pillar 2 (local expertise that understands multi-generational dynamics). For service providers (contractors, consultants, local professionals), lead with Pillar 3 (professional legitimacy) and Pillar 1 (workflows that match their reality). The franchise advisor tailors emphasis based on the prospect's primary anxiety point.
+Hierarchy matters: lead with belief (value of work), then explain exchange (how it circulates), then reassure with credibility (why it’s trusted).
 
 ### Brand Voice and Tone
 
-Booster Agent speaks with the voice of an experienced business advisor—knowledgeable and competent but never condescending, straightforward without being blunt, and warm without being casual. The brand personality balances professional credibility with approachable humanity, always demonstrating respect for the owner's intelligence while acknowledging the legitimate challenges of running a micro-business.
+The Learning Wheel speaks like a respected colleague: clear, supportive, and principled. The tone balances professionalism with warmth, never talking down to educators.
 
 
-**Brand Personality Characteristics:**
+Brand personality traits: respectful, purposeful, encouraging, credible, and calm. Voice attributes are professional but human—plain language, no hype, no jargon for its own sake. Example marketing line: "Share what works. Earn what matters." Example support tone: "Thanks for contributing—here’s how to make your resource even stronger."
 
-1. **Experienced & Grounded:** Like a seasoned business owner who's seen it all and knows what actually matters versus what's just noise. Not trendy or hyped, but solid and proven.
+Tone varies by context. Marketing is aspirational and values-driven. Product education is clear and instructional. Support communication is patient and appreciative. What to say: language that reinforces agency, fairness, and professionalism. What to avoid: gimmicks, aggressive sales language, or implying teachers are motivated primarily by money.
 
-2. **Respectful & Validating:** Acknowledges that micro-business owners are intelligent, capable people who are experts in their craft—they simply shouldn't need to become software experts too. Never talks down or oversimplifies to the point of condescension.
-
-3. **Clear & Direct:** Cuts through jargon and gets to the point. Values the owner's time too much to waste it on corporate-speak or unnecessary complexity.
-
-4. **Reassuring & Confident:** Communicates calm competence. Reduces anxiety rather than creating it. When there's a challenge, presents the solution alongside the problem.
-
-5. **Locally Rooted:** Understands that business happens in communities, not just in apps. References real-world business scenarios, not abstract use cases.
-
-**Voice Attributes & Tone Variations:**
-
-The core voice is **professional-conversational**—the way a trusted advisor speaks to a valued client. In marketing materials, the tone is **encouraging and clarifying**: "You're already doing the hard part—running your business. We handle the software part." In support contexts, the tone shifts to **patient and solution-focused**: "Here's exactly what to do next" rather than lengthy explanations. In educational content (guides, webinars), the tone is **teaching without lecturing**: sharing knowledge as a peer, not a professor.
-
-**Do's and Don'ts:**
-
-*Do:* Use "you" and "your business" frequently. Acknowledge real frustrations ("We know QuickBooks feels like overkill"). Speak in concrete scenarios ("When a customer calls to reschedule"). Use short sentences and paragraphs. End communications with clear next steps.
-
-*Don't:* Use software jargon without explanation ("leverage our API ecosystem"). Make jokes about how "easy" technology is. Suggest that struggling with software means someone isn't smart. Use hype language ("revolutionary," "game-changing"). Create artificial urgency or FOMO.
-
-**Creative Direction:** Visual communications should feel like quality business correspondence—professional but not corporate, clear but not stark. Imagery shows real micro-business scenarios (the contractor's truck, the consultant's home office, the family shop) rather than stock photo "startups." Layouts favor generous white space and clear hierarchy over dense information. The overall aesthetic communicates "I have this under control" rather than "Look how innovative I am."
+Creative direction favors clarity over cleverness. Metaphors should be grounded (wheels, cycles, classrooms) rather than abstract tech imagery. Every message should reinforce that this is a serious platform built for educators’ real work.
 
 ### Visual Brand Identity
 
-The visual identity system communicates stability, clarity, and professional credibility through a grounded color palette anchored by deep blue (trust and competence) with warm earth tones (approachability and local roots). Typography pairs a clean, highly legible sans-serif for interface clarity with a slightly warmer sans for marketing warmth, while photography emphasizes real micro-business environments and authentic work contexts.
+The visual identity expresses trust, movement, and professional warmth. It should feel modern but grounded, avoiding both corporate coldness and classroom clutter.
 
 
-**Color Palette System:**
+The color system balances stability with optimism. A deep blue anchors trust and credibility, while warm secondary tones introduce human energy. Typography prioritizes readability and neutrality, signaling respect for educators’ time. Visuals should feel composed and intentional, not busy.
 
-The primary brand color is **Foundation Blue** (#1E3A5F), a deep, authoritative blue that conveys trust, competence, and stability—critical attributes for software handling business finances and operations. This color dominates in application headers, key CTAs, and logo usage, psychologically anchoring the brand in reliability. Secondary colors include **Advisor Navy** (#2C5282) for depth and hierarchy, **Local Earth** (#8B6F47) to represent community roots and approachability, and **Growth Sage** (#5F7161) to suggest sustainable progress without aggressive growth rhetoric.
+Photography features real educators in authentic classroom or planning moments—natural light, candid expressions, minimal staging. Illustration, where used, should be simple and functional, supporting explanation rather than decoration. Layouts rely on consistent grids, generous spacing, and clear hierarchy to reduce cognitive load.
 
-Accent colors serve functional purposes: **Action Amber** (#D97706) for primary CTAs and important highlights, creating warmth and urgency without alarm, and **Success Moss** (#047857) for confirmations and positive states. The neutral palette provides interface foundation: **Slate 900** (#0F172A) for primary text, **Slate 600** (#475569) for secondary text, **Slate 200** (#E2E8F0) for borders and dividers, and **Slate 50** (#F8FAFC) for backgrounds. All color combinations meet WCAG AA contrast requirements minimum, with primary text combinations exceeding AAA standards.
-
-**Typography Hierarchy:**
-
-Headings use **Inter** (weights: 500 Medium, 600 Semibold, 700 Bold), a highly legible geometric sans-serif that conveys modern professionalism without coldness. Inter's excellent screen rendering and comprehensive weight range provide clear hierarchy while maintaining warmth through its slightly rounded terminals. Body text uses **Inter** (weights: 400 Regular, 500 Medium) with 1.6 line-height for optimal readability in long-form content and dense application interfaces. The consistency of using Inter across both headings and body creates cohesion and simplicity—reflecting the product's own philosophy.
-
-For marketing materials requiring additional warmth, **Outfit** (weights: 400, 500, 600) serves as an optional accent font for large display text, offering slightly more personality while maintaining excellent legibility. Web-safe fallbacks follow the stack: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif. Font pairing principles emphasize legibility over novelty—every typographic choice prioritizes the user's ability to quickly understand information without cognitive friction.
-
-**Visual Design System:**
-
-Photography style emphasizes **authentic micro-business environments**: the contractor's work truck with tools visible, the home office with family photos in the background, the small retail shop during actual business hours. Images should feel documentary rather than staged—real work, real spaces, real people who look like they run businesses, not models pretending. Lighting is natural or practical, avoiding the high-gloss aesthetic of enterprise software marketing. Imagery should answer the question: "Does this look like my world?"
-
-Iconography follows a **rounded line style** (2px stroke weight) that balances professionalism with approachability. Icons are simple and immediately recognizable, avoiding abstract metaphors in favor of literal representations (a calendar is a calendar, not a "time management solution symbol"). The style is consistent with Feather Icons or Lucide as reference systems.
-
-Graphic elements include **subtle grid patterns** suggesting organization and structure, used sparingly in backgrounds. Horizontal divider lines in brand colors create clear section separation. Corner radius standards (8px for cards, 6px for buttons, 4px for inputs) maintain consistency. Layout principles emphasize generous spacing (24px base grid), clear visual hierarchy through size and weight rather than color alone, and left-alignment for text to support scanning. The overall visual language communicates "organized and under control" rather than "innovative and disruptive."
-
-**Design Applications:**
-
-Logo usage maintains minimum clear space of 50% the logo height on all sides. On light backgrounds, use Foundation Blue; on dark backgrounds, white; on photographs, ensure sufficient contrast or use a subtle backdrop. Marketing collateral (brochures, one-pagers, presentation decks) uses the full color palette with Local Earth and Growth Sage providing warmth, generous white space preventing overwhelm, and photography anchoring content in real business contexts. Digital/web applications prioritize the neutral palette for interface elements, reserving brand colors for navigation, CTAs, and key status indicators. Social media templates use Foundation Blue headers with Slate 50 backgrounds, Action Amber for CTAs, and authentic photography following the documentary style—always including the franchise advisor's local branding in a consistent location to reinforce the local-trust positioning.
+Across applications—from web to social—the identity must remain consistent. Logos should always appear with clear space and never be overlaid on busy imagery. Social visuals should lead with message clarity, using color blocks and short statements rather than dense text.
 
 
 #### Color Palette
 
 
-**Primary Color**: Foundation Blue
+**Primary Color**: Learning Blue
 
-- Hex: #1E3A5F
+- Hex: #1F4ED8
 
-- RGB: rgb(30, 58, 95)
+- RGB: rgb(31, 78, 216)
 
-- Usage: Primary brand color for headers, main CTAs, logo, and key navigation elements. Dominates in application chrome and brand touchpoints.
+- Usage: Primary brand color for headers, logo, and key navigation elements
 
-- Psychology: Deep blue conveys trust, competence, stability, and professional credibility—essential for software managing business operations and finances. The darker tone suggests experience and groundedness rather than innovation hype.
+- Psychology: Trust, intelligence, stability, and confidence
 
 
 **Secondary Colors**:
 
-1. Advisor Navy: #2C5282 - Secondary brand color for depth, hierarchy, and hover states. Used in supporting navigation and secondary CTAs.
+1. Warm Amber: #F59E0B - Supporting highlights and emphasis in illustrations or section headers
 
-2. Local Earth: #8B6F47 - Warm earth tone representing community roots and approachability. Used in marketing materials, franchise advisor branding, and to soften the blue dominance.
-
-3. Growth Sage: #5F7161 - Muted green suggesting sustainable growth and organic progress. Used for growth-related messaging and to provide visual variety in marketing.
+2. Growth Green: #16A34A - Positive states, success indicators, and community cues
 
 
 **Accent Colors**:
 
-1. Action Amber: #D97706 - Primary action color for CTAs, important highlights, and interactive elements requiring attention. Provides warmth and urgency without alarm.
-
-2. Success Moss: #047857 - Success states, confirmations, positive indicators, and completed actions. Distinct from Growth Sage to serve functional UI purposes.
+1. Action Coral: #EF4444 - CTAs, alerts, and key interactive moments
 
 
 **Neutral Colors**:
 
-1. Slate 900: #0F172A - Primary text color for body copy and headings. Provides strong contrast on light backgrounds while being slightly softer than pure black.
+1. Slate Dark: #1F2937 - Primary text color
 
-2. Slate 600: #475569 - Secondary text color for supporting copy, captions, metadata, and de-emphasized content.
+2. Slate Light: #F3F4F6 - Backgrounds and content containers
 
-3. Slate 200: #E2E8F0 - Borders, dividers, and subtle separations. Provides structure without visual heaviness.
-
-4. Slate 50: #F8FAFC - Background color for application interfaces, cards, and content areas. Slightly warmer than pure white to reduce eye strain.
+3. Border Gray: #D1D5DB - Dividers and borders
 
 
 
@@ -170,11 +135,11 @@ Logo usage maintains minimum clear space of 50% the logo height on all sides. On
 
 **Heading Font**: Inter
 
-- Weights: 500, 600, 700
+- Weights: 600, 700
 
-- Usage: All heading levels (H1-H6), navigation labels, button text, and emphasis text. Weight 700 for H1-H2, weight 600 for H3-H4, weight 500 for H5-H6 and UI labels.
+- Usage: Headings, section titles, emphasis text
 
-- Fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif
+- Fallback: Arial, sans-serif
 
 
 **Body Font**: Inter
@@ -183,66 +148,249 @@ Logo usage maintains minimum clear space of 50% the logo height on all sides. On
 
 - Line Height: 1.6
 
-- Usage: All body text, paragraph content, form inputs, and interface copy. Weight 400 for standard text, weight 500 for emphasis within paragraphs.
+- Usage: Body copy, descriptions, instructional text
 
-- Fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif
+- Fallback: Arial, sans-serif
 
 
-**Accent Font**: Outfit
+**Accent Font**: Source Serif 4
 
-- Usage: Optional accent font for large display text in marketing materials, hero headlines, and promotional content requiring additional warmth. Not used in application interface.
+- Usage: Occasional quotes or editorial highlights
 
 
 
 #### Visual Design System
 
 
-**Photography**: Documentary-style imagery of authentic micro-business environments: real work trucks, actual home offices, genuine retail spaces during business hours. Natural or practical lighting, never high-gloss staged scenarios. People should look like business owners, not models. Images answer 'Does this look like my world?' Avoid generic office stock photography.
+**Photography**: Natural, candid classroom and planning environments with real educators
 
 
-**Illustration**: Minimal use of illustration; when needed, use simple line drawings in brand colors to explain workflows or concepts. Style should be clear and functional, not decorative or whimsical. Prioritize clarity over creativity.
+**Illustration**: Minimal, flat illustrations used for explanation
 
 
-**Iconography**: Rounded line icons (2px stroke weight) in the style of Feather Icons or Lucide. Simple, immediately recognizable, literal rather than metaphorical. Consistent stroke weight and corner radius (2px). Used for navigation, feature representation, and UI affordances.
+**Iconography**: Line icons with rounded corners
 
 
-**Graphic Elements**: Subtle grid patterns suggesting organization (used sparingly in backgrounds). Horizontal divider lines in brand colors for section separation. Minimal use of decorative elements—every graphic element should serve a functional purpose of clarity or hierarchy.
+**Graphic Elements**: Circular and radial motifs suggesting cycles and movement
 
 
-**Layout Principles**: 24px base grid system for consistent spacing. Generous white space to prevent overwhelm. Clear visual hierarchy through size and weight, not color alone. Left-alignment for text to support scanning. Single-column layouts for mobile, maximum 2-column for desktop content. Cards with 8px corner radius for content grouping.
+**Layout Principles**: 12-column grid, generous spacing, consistent vertical rhythm
 
 
 ## 5. Module Specifications
 
-### 1. Marketing & Branding
-**Purpose:** Technical specification for the module
+### 1. Systems Configuration Module
+**Purpose:** Technical specification for the Systems Configuration Module
 
-**Documentation URL:** https://bigbrainplan.com/projects/kNwr7WgCIGxQ9D0cJbZv/specifications/1HoTSnoE0JuqLeXTVC6z
-**Local Documentation:** /specs/Marketing---Branding.md
-
----
-
-### 2. Product Summary
-**Purpose:** Technical specification for the module
-
-**Documentation URL:** https://bigbrainplan.com/projects/kNwr7WgCIGxQ9D0cJbZv/specifications/xGgXqx0rjFY4KKB7c2WD
-**Local Documentation:** /specs/Product-Summary.md
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/lu838IJjrlpId6IO2Si5
+**Local Documentation:** /specs/Systems-Configuration-Module.md
 
 ---
 
-### 3. Ledger & Finance Module
-**Purpose:** Technical specification for the Ledger & Finance Module
+### 2. Business Analytics Module
+**Purpose:** Technical specification for the Business Analytics Module
 
 **Key Features:**
-1. Immutable General Ledger (append-only)
-2. Automated tax calculation based on regional franchise settings
-3. Bank feed reconciliation
-4. One-click financial report generation (P&L, Balance Sheet)
-5. Expense categorization via ML
-6. Audit trail for every financial modification
+1. Real-time dashboards
+2. Cohort and retention analysis
+3. Funnel tracking
+4. Automated alerts
+5. Custom report exports
 
-**Documentation URL:** https://bigbrainplan.com/projects/kNwr7WgCIGxQ9D0cJbZv/specifications/kPQ1Vm9Sp1urOJSbz6sj
-**Local Documentation:** /specs/Ledger---Finance-Module.md
+**Key Performance Indicators (KPIs):**
+[object Object]
+[object Object]
+[object Object]
+[object Object]
+[object Object]
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/XSLmm34fQ5XzF9uj0iYg
+**Local Documentation:** /specs/Business-Analytics-Module.md
+
+---
+
+### 3. Subscription Experience Module
+**Purpose:** Technical specification for the Subscription Experience Module
+
+**Key Features:**
+1. Subscription status and renewal visibility
+2. Credit-based renewal flows
+3. Invitation acceptance and access activation
+4. Usage meter visibility
+5. Institution-funded access indicators
+6. Subscription history
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/d1gmb5udodt7UM3v8EkK
+**Local Documentation:** /specs/Subscription-Experience-Module.md
+
+---
+
+### 4. File Storage & CDN Module
+**Purpose:** Technical specification for the File Storage & CDN Module
+
+**Key Features:**
+1. Secure file uploads
+2. Versioned storage
+3. CDN-backed delivery
+4. Access-controlled URLs
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/084CRsbePVxLVYdIsvbX
+**Local Documentation:** /specs/File-Storage---CDN-Module.md
+
+---
+
+### 5. Notification Module
+**Purpose:** Technical specification for the Notification Module
+
+**Key Features:**
+1. Email notifications
+2. In-app notifications
+3. Event-based triggers
+4. Template management
+5. Delivery tracking
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/h5pTnof3uGmDQi9naIsC
+**Local Documentation:** /specs/Notification-Module.md
+
+---
+
+### 6. Monetization/Payment Module
+**Purpose:** Technical specification for the Monetization/Payment Module
+
+**Key Features:**
+1. Recurring subscription billing
+2. Institutional invoicing support
+3. Payment method storage
+4. Renewal and cancellation handling
+5. Refund and adjustment workflows
+6. Financial reporting
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/5JHxUtbc2Wysvebmc4TX
+**Local Documentation:** /specs/Monetization-Payment-Module.md
+
+---
+
+### 7. Search & Discovery Module
+**Purpose:** Technical specification for the Search & Discovery Module
+
+**Key Features:**
+1. Full-text search
+2. Facet filtering
+3. Relevance scoring
+4. Autocomplete suggestions
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/E8WNEdvsCzFgN9CCp71g
+**Local Documentation:** /specs/Search---Discovery-Module.md
+
+---
+
+### 8. Content Moderation Module
+**Purpose:** Technical specification for the Content Moderation Module
+
+**Key Features:**
+1. Moderation queues
+2. Review assignments
+3. Flagging and takedowns
+4. Decision audit trails
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/U7YIV7UJJ0QkuRSpL1Jo
+**Local Documentation:** /specs/Content-Moderation-Module.md
+
+---
+
+### 9. Content Marketplace Module
+**Purpose:** Technical specification for the Content Marketplace Module
+
+**Key Features:**
+1. Search and browse by grade level and subject
+2. Multi-framework curriculum tagging and filtering
+3. Preview of content prior to download
+4. Metered monthly download enforcement
+5. Popularity and demand-based ranking
+6. Saved collections and favorites
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/3r6KgecMdn8JIIXujpD3
+**Local Documentation:** /specs/Content-Marketplace-Module.md
+
+---
+
+### 10. Admin Module
+**Purpose:** Technical specification for the Admin Module
+
+**Key Features:**
+1. User and account management
+2. Feature flag control
+3. System configuration
+4. Impersonation tools
+5. Audit logs
+6. Support ticket handling
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/nX0Ml6NGGAYHz8AAgNqH
+**Local Documentation:** /specs/Admin-Module.md
+
+---
+
+### 11. Content Creation & Submission Module
+**Purpose:** Technical specification for the Content Creation & Submission Module
+
+**Key Features:**
+1. Content upload with metadata and curriculum tagging
+2. Versioning and update history
+3. Single-peer approval workflow
+4. Administrative moderation queue
+5. Content persistence after account changes
+6. Contributor attribution and history
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/5saeyMvTiCI9opYcQUV9
+**Local Documentation:** /specs/Content-Creation---Submission-Module.md
+
+---
+
+### 12. User Account & Profile Module
+**Purpose:** Technical specification for the User Account & Profile Module
+
+**Key Features:**
+1. Individual teacher account creation and profile management
+2. Institutional account linkage and role assignment
+3. Account status tracking independent of content ownership
+4. Professional credentials and badge display
+5. Institution switching for multi-school educators
+6. Account activity and contribution summaries
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/1ILGWItZHLKvQvlHv0oK
+**Local Documentation:** /specs/User-Account---Profile-Module.md
+
+---
+
+### 13. Authentication Module
+**Purpose:** Technical specification for the Authentication Module
+
+**Key Features:**
+1. Email/password authentication
+2. OAuth and SSO support
+3. Role-based access control
+4. Session and token management
+5. Multi-factor authentication
+6. Account recovery flows
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/EwUmBdDbjQrvmLZlIyxA
+**Local Documentation:** /specs/Authentication-Module.md
+
+---
+
+### 14. Credit & Incentives Module
+**Purpose:** Technical specification for the Credit & Incentives Module
+
+**Key Features:**
+1. Credit accrual based on views and downloads
+2. Dynamic and fixed credit multipliers
+3. Aggregate demand recalibration
+4. Credit balance tracking
+5. Redemption for subscriptions, invitations, and rewards
+6. Credit expiration and anti-hoarding mechanisms
+
+**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/WRYeMAc50v6wyld00Sxl
+**Local Documentation:** /specs/Credit---Incentives-Module.md
 
 ---
 

@@ -4,64 +4,62 @@
 
 ### 1.1 Purpose
 
-The Authentication Module provides secure identity management and access control for the educator platform, integrating with Firebase Authentication to handle diverse educator segments including institutional and personal accounts. This module serves as the security gateway for all product modules, managing user authentication, authorization, and session lifecycle. It implements role-based access control to distinguish between subscriber, provisional, and administrative users while supporting multiple authentication methods including email/password and social login providers (Google/Microsoft for Education). The module also handles critical security functions such as multi-factor authentication for admin accounts, account recovery, secure password reset, and profile claim logic for invited teachers.
+The Authentication Module serves as the centralized authentication and authorization service for all users and administrators across the entire application ecosystem. This module provides secure identity verification, session management, and access control capabilities that protect system resources and user data. It implements industry-standard security protocols including email/password authentication, OAuth integration, single sign-on (SSO), multi-factor authentication (MFA), and role-based access control (RBAC). The module ensures that only authenticated and authorized users can access protected resources while maintaining a seamless user experience through efficient session and token management.
 
-The module acts as the foundational security layer that gates access to all product functionality, links authenticated identities to subscription records, and validates referral codes during registration. By centralizing authentication and authorization logic, it ensures consistent security policy enforcement across the platform while providing flexibility for institutional single sign-on (SSO) integration where applicable.
+This module acts as the security gateway for all product and core modules, providing consistent authentication and authorization services that can be consumed by any component requiring identity verification or access control decisions.
 
 ### 1.2 Scope
 
 **In Scope:**
-- User authentication via email/password and social providers (Google, Microsoft for Education)
-- Role-based access control (RBAC) with three primary roles: Subscriber, Provisional, and Admin
-- Session management including persistence and token refreshment
-- Account recovery workflows and secure password reset mechanisms
-- Multi-factor authentication (MFA) support specifically for Admin accounts
-- Profile claim logic enabling invited teachers to claim pre-created accounts
-- Integration with Firebase Authentication service
-- Management of AuthUser identity provider mappings
-- UserRole permission set management
-- InviteCode mapping for provisional access
-- Strong password policy enforcement
-- Institutional SSO integration capabilities
-- Linking authenticated identities to subscription records
-- Referral code validation during user registration
+- Email and password-based authentication with secure credential storage
+- OAuth 2.0 and SSO integration for third-party identity providers
+- Role-based access control (RBAC) system with permission grouping
+- Session management with configurable timeout policies
+- JWT and refresh token generation and validation
+- Multi-factor authentication (MFA) support including TOTP and SMS
+- Account recovery workflows (password reset, email verification)
+- User credential lifecycle management (creation, update, revocation)
+- Login attempt tracking and rate limiting
+- IP-based access control (allow/deny lists)
+- Security audit logging for authentication events
+- Integration APIs for all product and core modules
+- Admin interfaces for role and permission management
 
 **Out of Scope:**
-- Subscription payment processing (handled by separate subscription module)
-- User profile management beyond authentication-related attributes
-- Content authorization (course/resource access rules)
-- Audit logging of user activities beyond authentication events
-- User communication/notification systems
-- Account deletion and data retention policies (handled by separate data management module)
+- User profile management beyond authentication credentials
+- User registration UI/UX (consumes authentication APIs only)
+- Payment or billing-related authorization
+- Content-level permissions (handled by consuming modules)
+- Biometric authentication
+- Hardware token support
+- LDAP/Active Directory integration (future enhancement)
 
 ### 1.3 Assumptions and Constraints
 
 **Assumptions:**
-- Firebase Authentication service is available and properly configured
-- Network connectivity exists between the application and Firebase services
-- Users have access to email for account verification and recovery
-- Social login providers (Google, Microsoft) maintain stable OAuth2 APIs
-- Institutional SSO providers support SAML 2.0 or OAuth2/OIDC protocols
-- Users registering with invite codes have received valid codes through separate invitation workflows
-- Mobile and web clients can securely store authentication tokens
-- Clock synchronization exists across all system components for token validation
+- The system has access to a reliable email delivery service for account recovery and verification
+- SMS gateway is available for MFA via text message
+- All consuming modules will properly validate and verify authentication tokens
+- Network communication between modules is secured via TLS/HTTPS
+- Database and caching infrastructure provide sufficient performance for session lookups
+- Time synchronization is maintained across all servers for token expiration
+- OAuth providers maintain stable API contracts and availability
 
 **Constraints:**
-- Must use Firebase Authentication as the identity provider (no alternative authentication backends)
-- Firebase Authentication rate limits apply (e.g., 100 requests/second per project)
-- Token refresh cycles must align with Firebase token expiration policies (1 hour default)
-- MFA implementation limited to Firebase-supported methods (SMS, TOTP, email)
-- Password policies must comply with Firebase minimum requirements while enforcing additional platform-specific rules
-- Social login providers limited to Google and Microsoft for Education
-- Session data storage limited by browser/device capabilities for web/mobile clients
-- GDPR, FERPA, and COPPA compliance required for educational user data
-- Must support offline-first scenarios for mobile applications with graceful degradation
+- Must support horizontal scaling for high-concurrency authentication requests
+- Session storage must support distributed deployment (no in-memory-only sessions)
+- Password hashing must use industry-standard algorithms (bcrypt, Argon2, or PBKDF2)
+- OAuth integration limited to providers supporting OAuth 2.0 or OpenID Connect
+- Token expiration times must be configurable without code changes
+- Must comply with data protection regulations (GDPR, CCPA) for credential storage
+- Rate limiting must prevent brute-force attacks without impacting legitimate users
+- MFA implementation must support recovery codes for account access restoration
 
 ### 1.4 Version History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| v1.0 | 2025 | System Architect | Initial specification based on module definition |
+| Version | Date | Author | Description |
+|---------|------|--------|-------------|
+| v1.0 | 2025-01-20 | System Architect | Initial Technical Product Specification |
 
 ---
 
@@ -69,358 +67,377 @@ The module acts as the foundational security layer that gates access to all prod
 
 ### 2.1 Functional Requirements
 
-**Authentication Methods**
+**Authentication & Credential Management**
 
-- **AUTH-FR-001**: The system SHALL support user registration and authentication using email/password credentials with password strength validation enforcing minimum 8 characters, mixed case, numbers, and special characters.
+- **AUTH-FR-001**: The system SHALL support email/password authentication with secure password hashing using bcrypt (minimum cost factor 12) or Argon2id.
+  - Data Model: UserCredential (user_credential_id, user_id, email, password_hash, salt, hash_algorithm, created_at, updated_at)
 
-- **AUTH-FR-002**: The system SHALL support social authentication via Google OAuth2 provider, allowing users to sign in with their Google accounts and automatically creating AuthUser records with provider mapping.
+- **AUTH-FR-002**: The system SHALL enforce configurable password complexity rules including minimum length, character type requirements, and common password blacklisting.
 
-- **AUTH-FR-003**: The system SHALL support social authentication via Microsoft for Education OAuth2 provider, enabling institutional account sign-in and automatically creating AuthUser records with provider mapping.
+- **AUTH-FR-003**: The system SHALL implement OAuth 2.0 authentication supporting configurable identity providers (Google, Microsoft, GitHub, custom providers).
+  - Data Model: OAuthProvider (provider_id, provider_name, client_id, client_secret, authorization_endpoint, token_endpoint, scope, enabled)
 
-- **AUTH-FR-004**: The system SHALL validate email addresses during registration and send verification emails to confirm account ownership before granting full access.
+- **AUTH-FR-004**: The system SHALL support Single Sign-On (SSO) using SAML 2.0 or OpenID Connect protocols.
 
-- **AUTH-FR-005**: The system SHALL support institutional SSO integration using SAML 2.0 or OAuth2/OIDC protocols, mapping institutional identities to AuthUser records.
+- **AUTH-FR-005**: The system SHALL validate user credentials and return appropriate success or failure responses with error details (invalid email, incorrect password, account locked).
 
 **Role-Based Access Control**
 
-- **AUTH-FR-006**: The system SHALL implement role-based access control with three primary roles: Subscriber (full paid access), Provisional (limited trial/invited access), and Admin (platform administration), stored in UserRole entities with permission sets.
+- **AUTH-FR-006**: The system SHALL implement role-based access control (RBAC) with hierarchical role definitions and permission inheritance.
+  - Data Model: Role (role_id, role_name, description, parent_role_id, permissions, created_at, updated_at)
 
-- **AUTH-FR-007**: The system SHALL assign default role of "Provisional" to newly registered users unless they register with a valid referral code or complete subscription purchase.
+- **AUTH-FR-007**: The system SHALL support assignment of multiple roles to a single user with permission aggregation.
+  - Data Model: UserRole (user_role_id, user_id, role_id, assigned_at, assigned_by, expires_at)
 
-- **AUTH-FR-008**: The system SHALL enforce role-based permissions at API gateway level, blocking unauthorized access attempts and returning HTTP 403 Forbidden responses.
+- **AUTH-FR-008**: The system SHALL provide permission checking APIs that return boolean authorization decisions based on user roles and requested resource/action combinations.
 
-- **AUTH-FR-009**: The system SHALL support role elevation (Provisional to Subscriber) when subscription records are created and linked to AuthUser identities.
+- **AUTH-FR-009**: The system SHALL integrate with the Admin Module to provide role and permission management interfaces.
 
-- **AUTH-FR-010**: The system SHALL restrict Admin role assignment to manual provisioning by existing Admin users, preventing self-service admin access.
+**Session & Token Management**
 
-**Session Management**
+- **AUTH-FR-010**: The system SHALL create authenticated sessions upon successful login with configurable timeout periods (idle timeout and absolute timeout).
+  - Data Model: Session (session_id, user_id, token, refresh_token, ip_address, user_agent, created_at, last_activity_at, expires_at, revoked_at)
 
-- **AUTH-FR-011**: The system SHALL issue Firebase JWT tokens upon successful authentication, containing user_id, role, and expiration timestamp (default 1 hour).
+- **AUTH-FR-011**: The system SHALL generate JWT access tokens containing user identity, roles, and expiration claims signed with RS256 or HS256 algorithms.
 
-- **AUTH-FR-012**: The system SHALL implement automatic token refresh using Firebase refresh tokens, maintaining user sessions without requiring re-authentication for up to 30 days.
+- **AUTH-FR-012**: The system SHALL generate refresh tokens for extending session lifetime without re-authentication, with configurable expiration periods.
 
-- **AUTH-FR-013**: The system SHALL persist user session state across browser/app restarts using secure token storage (httpOnly cookies for web, secure keychain for mobile).
+- **AUTH-FR-013**: The system SHALL validate tokens on each authenticated request, checking signature, expiration, and revocation status.
 
-- **AUTH-FR-014**: The system SHALL support explicit logout functionality that invalidates both access and refresh tokens and clears local session storage.
+- **AUTH-FR-014**: The system SHALL support session revocation (logout) that invalidates both access and refresh tokens immediately.
 
-- **AUTH-FR-015**: The system SHALL implement session timeout after 30 minutes of inactivity for Admin accounts, requiring re-authentication.
+- **AUTH-FR-015**: The system SHALL support administrative session termination for security incidents or policy enforcement.
 
-**Account Recovery and Security**
+- **AUTH-FR-016**: The system SHALL track active sessions per user and enforce configurable maximum concurrent session limits.
 
-- **AUTH-FR-016**: The system SHALL provide password reset functionality via email, sending time-limited (1 hour) reset tokens to verified email addresses.
+**Multi-Factor Authentication**
 
-- **AUTH-FR-017**: The system SHALL enforce password reset token single-use policy, invalidating tokens after successful password change or expiration.
+- **AUTH-FR-017**: The system SHALL support time-based one-time password (TOTP) multi-factor authentication using standard TOTP algorithms (RFC 6238).
+  - Data Model: MFAConfiguration (mfa_config_id, user_id, mfa_type, secret_key, backup_codes, enabled, verified_at, created_at)
 
-- **AUTH-FR-018**: The system SHALL implement Multi-Factor Authentication (MFA) support for Admin accounts using TOTP (Time-based One-Time Password) as primary method.
+- **AUTH-FR-018**: The system SHALL support SMS-based one-time password delivery for multi-factor authentication.
 
-- **AUTH-FR-019**: The system SHALL require MFA enrollment for all Admin accounts within 7 days of role assignment, blocking admin functions until MFA is configured.
+- **AUTH-FR-019**: The system SHALL generate and securely store backup recovery codes for MFA account recovery.
 
-- **AUTH-FR-020**: The system SHALL provide MFA backup codes (10 single-use codes) during enrollment for account recovery if primary MFA device is unavailable.
+- **AUTH-FR-020**: The system SHALL enforce MFA requirements based on configurable policies (per-user, per-role, or global enforcement).
 
-**Invite Code and Profile Claiming**
+- **AUTH-FR-021**: The system SHALL remember trusted devices for configurable periods to reduce MFA friction.
 
-- **AUTH-FR-021**: The system SHALL validate referral codes during registration against InviteCode entities (fields: code, email, role, expiration_date, used_flag), granting specified role if valid and unused.
+**Account Recovery**
 
-- **AUTH-FR-022**: The system SHALL implement profile claim logic allowing invited teachers to claim pre-created accounts by verifying email ownership and setting initial password.
+- **AUTH-FR-022**: The system SHALL provide password reset functionality via email-based verification tokens with configurable expiration (default 1 hour).
+  - Data Model: PasswordResetToken (token_id, user_id, token_hash, created_at, expires_at, used_at, ip_address)
 
-- **AUTH-FR-023**: The system SHALL mark InviteCode records as used (used_flag=true) upon successful registration or profile claim, preventing code reuse.
+- **AUTH-FR-023**: The system SHALL validate password reset tokens and enforce single-use consumption.
 
-- **AUTH-FR-024**: The system SHALL support bulk invite code generation for institutional administrators, creating InviteCode batches with configurable expiration dates and role assignments.
+- **AUTH-FR-024**: The system SHALL provide email verification for new accounts or email address changes.
+  - Data Model: EmailVerificationToken (token_id, user_id, email, token_hash, created_at, expires_at, verified_at)
 
-**Identity and Subscription Linking**
+- **AUTH-FR-025**: The system SHALL support account unlock workflows for accounts locked due to excessive failed login attempts.
 
-- **AUTH-FR-025**: The system SHALL create and maintain AuthUser records (fields: user_id, email, provider_type, provider_user_id, created_at, last_login) for all authenticated users.
+**Security & Rate Limiting**
 
-- **AUTH-FR-026**: The system SHALL link AuthUser identities to subscription records via user_id foreign key, enabling subscription status queries during authorization checks.
+- **AUTH-FR-026**: The system SHALL implement configurable rate limiting for login attempts (per IP address and per email address).
+  - Data Model: LoginAttempt (attempt_id, email, ip_address, success, failure_reason, attempted_at, user_agent)
 
-- **AUTH-FR-027**: The system SHALL support multiple identity provider linkage to single AuthUser record, allowing users to authenticate via email or social providers interchangeably.
+- **AUTH-FR-027**: The system SHALL lock user accounts after configurable consecutive failed login attempts (default 5 attempts in 15 minutes).
+
+- **AUTH-FR-028**: The system SHALL support IP-based access control with configurable allow lists and deny lists.
+  - Data Model: IPAccessControl (rule_id, ip_address, ip_range, rule_type, reason, created_at, created_by)
+
+- **AUTH-FR-029**: The system SHALL log all authentication events (successful logins, failed attempts, logouts, password changes, MFA events) for security auditing.
+
+- **AUTH-FR-030**: The system SHALL integrate with the Analytics module to provide login tracking, user activity patterns, and security metrics.
+
+**Integration & APIs**
+
+- **AUTH-FR-031**: The system SHALL expose RESTful APIs for authentication operations (login, logout, token refresh, password reset).
+
+- **AUTH-FR-032**: The system SHALL expose authorization APIs for permission checking that can be consumed by all product and core modules.
+
+- **AUTH-FR-033**: The system SHALL publish authentication events (user.logged_in, user.logged_out, user.mfa_enabled, session.expired) for consumption by other modules.
+
+- **AUTH-FR-034**: The system SHALL provide middleware/interceptor components for common frameworks to simplify authentication integration.
 
 ### 2.2 Non-Functional Requirements
 
 **Performance**
 
-- **AUTH-NFR-001**: The system SHALL complete authentication requests (login/registration) within 2 seconds under normal load conditions (p95 latency).
+- **AUTH-NFR-001**: The system SHALL authenticate user credentials and generate tokens within 200ms for 95th percentile requests under normal load.
 
-- **AUTH-NFR-002**: The system SHALL support minimum 1000 concurrent authentication sessions without performance degradation.
+- **AUTH-NFR-002**: The system SHALL validate authentication tokens within 50ms for 95th percentile requests.
 
-- **AUTH-NFR-003**: The system SHALL cache user role and permission data with 5-minute TTL to minimize database queries during authorization checks.
+- **AUTH-NFR-003**: The system SHALL support minimum 1,000 concurrent authentication requests per second with horizontal scaling.
+
+- **AUTH-NFR-004**: The system SHALL cache session and role data to minimize database queries for authorization checks.
 
 **Scalability**
 
-- **AUTH-NFR-004**: The system SHALL horizontally scale to support 100,000 registered users with linear performance characteristics.
+- **AUTH-NFR-005**: The system SHALL support horizontal scaling across multiple instances without session affinity requirements.
 
-- **AUTH-NFR-005**: The system SHALL handle authentication request spikes of 10x normal load (e.g., start of school year) through Firebase Authentication's elastic infrastructure.
+- **AUTH-NFR-006**: The system SHALL use distributed session storage (Redis, database) to support multi-instance deployment.
 
-**Reliability**
+- **AUTH-NFR-007**: The system SHALL handle growth to 10 million user accounts without performance degradation.
 
-- **AUTH-NFR-006**: The system SHALL achieve 99.9% uptime for authentication services, leveraging Firebase Authentication's SLA.
+**Reliability & Availability**
 
-- **AUTH-NFR-007**: The system SHALL implement graceful degradation, allowing read-only access to cached user data if Firebase Authentication is temporarily unavailable.
+- **AUTH-NFR-008**: The system SHALL maintain 99.9% uptime for authentication services.
 
-- **AUTH-NFR-008**: The system SHALL retry failed authentication requests up to 3 times with exponential backoff before returning error to user.
+- **AUTH-NFR-009**: The system SHALL implement graceful degradation, allowing read-only authentication (token validation) when write operations fail.
+
+- **AUTH-NFR-010**: The system SHALL implement circuit breakers for external OAuth provider integrations to prevent cascading failures.
+
+- **AUTH-NFR-011**: The system SHALL persist all critical authentication data with automatic backup and point-in-time recovery capabilities.
 
 **Security**
 
-- **AUTH-NFR-009**: The system SHALL encrypt all authentication tokens in transit using TLS 1.3 or higher.
+- **AUTH-NFR-012**: The system SHALL encrypt all credentials at rest using AES-256 encryption.
 
-- **AUTH-NFR-010**: The system SHALL store password hashes using Firebase Authentication's default bcrypt algorithm with minimum cost factor of 10.
+- **AUTH-NFR-013**: The system SHALL transmit all authentication data over TLS 1.2 or higher with strong cipher suites.
 
-- **AUTH-NFR-011**: The system SHALL implement rate limiting of 5 failed login attempts per email address per 15-minute window, temporarily locking accounts after threshold.
+- **AUTH-NFR-014**: The system SHALL protect against common vulnerabilities (OWASP Top 10) including SQL injection, XSS, CSRF, and session fixation.
 
-- **AUTH-NFR-012**: The system SHALL enforce strong password policies: minimum 8 characters, at least one uppercase, one lowercase, one number, one special character.
+- **AUTH-NFR-015**: The system SHALL implement secure random number generation for tokens, salts, and cryptographic operations.
 
-- **AUTH-NFR-013**: The system SHALL log all authentication events (login, logout, password reset, MFA enrollment) with timestamp, user_id, IP address, and outcome for security audit.
+- **AUTH-NFR-016**: The system SHALL rotate encryption keys on a configurable schedule with zero-downtime key migration.
 
-- **AUTH-NFR-014**: The system SHALL comply with FERPA requirements for educational user data protection, implementing appropriate access controls and audit logging.
-
-- **AUTH-NFR-015**: The system SHALL implement GDPR-compliant data handling including user consent tracking and right-to-deletion support.
+- **AUTH-NFR-017**: The system SHALL comply with GDPR, CCPA, and SOC 2 requirements for credential and session data handling.
 
 **Maintainability**
 
-- **AUTH-NFR-016**: The system SHALL use Firebase Authentication SDK (latest stable version) to minimize custom authentication code and leverage managed security updates.
+- **AUTH-NFR-018**: The system SHALL externalize all configuration (OAuth credentials, timeout settings, password rules, MFA policies) without requiring code changes.
 
-- **AUTH-NFR-017**: The system SHALL implement structured logging with correlation IDs for distributed request tracing across authentication workflows.
+- **AUTH-NFR-019**: The system SHALL provide comprehensive API documentation using OpenAPI/Swagger specification.
+
+- **AUTH-NFR-020**: The system SHALL implement structured logging with correlation IDs for request tracing across distributed components.
 
 **Usability**
 
-- **AUTH-NFR-018**: The system SHALL provide clear, actionable error messages for authentication failures without exposing security-sensitive information (e.g., "Invalid credentials" instead of "Email not found").
+- **AUTH-NFR-021**: The system SHALL provide clear, actionable error messages for authentication failures without exposing security-sensitive information.
 
-- **AUTH-NFR-019**: The system SHALL support passwordless authentication flows for users who prefer social login, never requiring password creation for social-only accounts.
+- **AUTH-NFR-022**: The system SHALL support internationalization (i18n) for error messages and user-facing authentication flows.
 
 ### 2.3 Acceptance Criteria
 
-1. **Authentication Flows Complete**: All authentication methods (email/password, Google, Microsoft) successfully create AuthUser records and issue valid JWT tokens.
+1. **Authentication Functionality**: All authentication methods (email/password, OAuth, SSO) successfully authenticate valid credentials and reject invalid credentials with appropriate error messages.
 
-2. **RBAC Functional**: Role-based access control correctly enforces permissions for Subscriber, Provisional, and Admin roles across all product module integration points.
+2. **Authorization Enforcement**: Role-based access control correctly grants or denies access based on user roles and permissions across all integration points.
 
-3. **Session Management Operational**: Users remain authenticated across browser/app restarts, tokens refresh automatically, and explicit logout invalidates sessions.
+3. **Session Management**: Sessions are created, validated, refreshed, and revoked correctly with proper timeout enforcement and concurrent session limits.
 
-4. **Security Controls Active**: MFA enforced for Admin accounts, password policies validated, rate limiting prevents brute force attacks, and all authentication events logged.
+4. **MFA Implementation**: Multi-factor authentication works reliably for TOTP and SMS methods, with backup codes providing account recovery.
 
-5. **Account Recovery Working**: Password reset emails deliver within 2 minutes, reset tokens expire after 1 hour, and password changes immediately invalidate old credentials.
+5. **Account Recovery**: Password reset and email verification workflows complete successfully with proper token expiration and single-use enforcement.
 
-6. **Invite Code System Functional**: Referral codes validate correctly during registration, grant specified roles, mark as used, and prevent reuse.
+6. **Security Controls**: Rate limiting prevents brute-force attacks, IP access controls function correctly, and all authentication events are logged for audit.
 
-7. **Profile Claiming Operational**: Invited teachers successfully claim pre-created accounts via email verification and password setup.
+7. **Performance Targets**: Authentication operations meet specified performance requirements (200ms login, 50ms token validation) under load testing.
 
-8. **Integration Points Validated**: Authentication module correctly gates all product modules, links identities to subscription records, and validates referral codes during registration.
+8. **Integration Success**: All product and core modules can successfully integrate with authentication APIs and consume authentication events.
 
-9. **Performance Targets Met**: Authentication requests complete within 2 seconds (p95), system supports 1000 concurrent sessions, and scales to 100,000 users.
+9. **Configuration Flexibility**: All configurable items (OAuth providers, timeouts, password rules, MFA policies, rate limits, IP lists) can be modified without code deployment.
 
-10. **Compliance Verified**: FERPA, GDPR, and COPPA requirements met through appropriate data handling, consent tracking, and audit logging.
+10. **Security Compliance**: Security audit confirms compliance with encryption requirements, OWASP Top 10 protections, and data protection regulations.
 
 ---
 
 ## 3. Use Cases to be Supported
 
-### UC-001: User Registration with Email/Password
+### UC-001: User Login with Email and Password
 
-**Actors**: New user (educator), Authentication Module, Firebase Auth Service
+**Actors**: End User, Authentication Module
 
 **Preconditions**: 
-- User has valid email address
-- User has not previously registered
-- Firebase Authentication service is available
+- User has a registered account with verified email
+- User credentials exist in UserCredential table
+- Account is not locked or suspended
 
 **Steps**:
-1. User submits registration form with email, password, and optional referral code
-2. System validates email format and checks for existing account
-3. System validates password against strong password policy (AUTH-FR-001)
-4. If referral code provided, system validates against InviteCode entity (AUTH-FR-021)
-5. System creates Firebase Authentication user account with email/password
-6. System creates AuthUser record with user_id, email, provider_type="email", created_at timestamp
-7. If valid referral code, system assigns specified role to UserRole entity; otherwise assigns "Provisional" role (AUTH-FR-007)
-8. System marks InviteCode as used if applicable (AUTH-FR-023)
-9. System sends email verification link to user's email address (AUTH-FR-004)
-10. System returns success response with pending verification status
-11. User clicks verification link in email
-12. System verifies email ownership and activates account
-13. System issues JWT token and refresh token (AUTH-FR-011)
-14. User redirected to application with authenticated session
+1. User submits email and password to login endpoint
+2. Module retrieves UserCredential record by email
+3. Module validates password against stored password_hash using bcrypt/Argon2
+4. Module checks account status (not locked, not suspended)
+5. Module checks if MFA is enabled for user (AUTH-FR-017, AUTH-FR-020)
+6. If MFA required, module returns MFA challenge and temporary token
+7. If MFA not required or completed, module creates Session record (AUTH-FR-010)
+8. Module generates JWT access token and refresh token (AUTH-FR-011, AUTH-FR-012)
+9. Module loads user roles from UserRole table (AUTH-FR-007)
+10. Module embeds user_id, roles, and permissions in JWT claims
+11. Module logs successful login to LoginAttempt table (AUTH-FR-029)
+12. Module publishes user.logged_in event to Analytics module (AUTH-FR-030)
+13. Module returns access token, refresh token, and user profile to client
 
 **Postconditions**: 
-- AuthUser record created with verified email
-- UserRole assigned (Provisional or referral-specified role)
-- InviteCode marked as used if applicable
-- User authenticated with valid session tokens
+- Active session exists in Session table
+- User possesses valid access and refresh tokens
+- Login event recorded in audit logs
+- User can access authorized resources
 
 **Exception Flows**:
-- **E1 (Invalid Email)**: System returns validation error, registration fails
-- **E2 (Weak Password)**: System returns password policy violation error with requirements
-- **E3 (Duplicate Email)**: System returns "Email already registered" error
-- **E4 (Invalid Referral Code)**: System ignores code, assigns Provisional role, logs warning
-- **E5 (Firebase Service Error)**: System retries up to 3 times, returns "Service temporarily unavailable" if all fail
-- **E6 (Email Verification Timeout)**: Account remains unverified, user can request new verification email
+- **Invalid Email**: Return 401 Unauthorized with "Invalid credentials" message (AUTH-NFR-021)
+- **Invalid Password**: Increment LoginAttempt failure count, check rate limit (AUTH-FR-026), return 401 Unauthorized
+- **Account Locked**: Return 423 Locked with account unlock instructions (AUTH-FR-027)
+- **Rate Limit Exceeded**: Return 429 Too Many Requests with retry-after header (AUTH-FR-026)
+- **IP Blocked**: Return 403 Forbidden if IP is on deny list (AUTH-FR-028)
+- **MFA Verification Failed**: Return 401 Unauthorized, do not create session
 
-### UC-002: Social Login with Google/Microsoft
+### UC-002: OAuth Single Sign-On Authentication
 
-**Actors**: User (educator), Authentication Module, Firebase Auth Service, Social Identity Provider (Google/Microsoft)
+**Actors**: End User, Authentication Module, OAuth Provider (Google/Microsoft/GitHub)
 
 **Preconditions**:
-- User has Google or Microsoft account
-- Firebase Authentication configured with OAuth2 credentials for provider
-- User's browser/app can access social provider login page
+- OAuth provider is configured in OAuthProvider table with valid credentials
+- OAuth provider is enabled and accessible
+- User has account with OAuth provider
 
 **Steps**:
-1. User clicks "Sign in with Google" or "Sign in with Microsoft" button
-2. System initiates OAuth2 flow, redirecting to provider authorization page
-3. User authenticates with social provider and grants permission
-4. Social provider redirects back with authorization code
-5. System exchanges authorization code for provider access token
-6. System retrieves user profile (email, name, provider_user_id) from provider
-7. System checks if AuthUser exists with matching email
-8. If new user:
-   - System creates Firebase Authentication user with provider linkage
-   - System creates AuthUser record with provider_type="google" or "microsoft", provider_user_id
-   - System assigns "Provisional" role to UserRole entity (AUTH-FR-007)
-9. If existing user with different provider:
-   - System links additional provider to existing AuthUser (AUTH-FR-027)
-10. System issues JWT token and refresh token (AUTH-FR-011)
-11. System updates last_login timestamp in AuthUser
-12. User redirected to application with authenticated session
+1. User initiates OAuth login by selecting provider
+2. Module retrieves OAuthProvider configuration (client_id, authorization_endpoint, scope)
+3. Module generates state parameter for CSRF protection
+4. Module redirects user to OAuth provider authorization_endpoint with client_id, redirect_uri, scope, and state
+5. User authenticates with OAuth provider and grants permissions
+6. OAuth provider redirects back to module callback URL with authorization code and state
+7. Module validates state parameter matches original request (AUTH-NFR-014)
+8. Module exchanges authorization code for access token at provider's token_endpoint
+9. Module retrieves user profile from OAuth provider using access token
+10. Module searches for existing UserCredential by OAuth provider user ID
+11. If user exists, module proceeds to step 13; if new user, module creates UserCredential record
+12. Module links OAuth provider identity to user account
+13. Module creates Session record and generates JWT tokens (AUTH-FR-010, AUTH-FR-011)
+14. Module loads user roles and embeds in JWT claims
+15. Module logs successful OAuth login (AUTH-FR-029)
+16. Module returns access token and refresh token to client
 
 **Postconditions**:
-- AuthUser record created or updated with social provider mapping
-- User authenticated with valid session tokens
-- Provider linkage stored for future logins
+- User authenticated via OAuth provider
+- Active session created
+- OAuth provider identity linked to user account
+- User can access authorized resources
 
 **Exception Flows**:
-- **E1 (User Denies Permission)**: OAuth flow cancelled, user returned to login page
-- **E2 (Provider Service Error)**: System displays "Unable to authenticate with [Provider]" error
-- **E3 (Email Conflict)**: If email matches existing email/password account, system prompts user to link accounts
-- **E4 (Institutional Email Required)**: For Microsoft Edu, system validates email domain against whitelist, rejects non-institutional emails
-- **E5 (Token Exchange Failure)**: System retries token exchange, falls back to error page if persistent
+- **Invalid State Parameter**: Return 403 Forbidden, possible CSRF attack
+- **OAuth Provider Error**: Return 502 Bad Gateway with provider error details
+- **Token Exchange Failure**: Return 502 Bad Gateway, log provider communication failure
+- **Provider Unavailable**: Implement circuit breaker (AUTH-NFR-010), return 503 Service Unavailable
+- **User Profile Retrieval Failure**: Return 502 Bad Gateway
+- **Account Creation Failure**: Return 500 Internal Server Error, rollback OAuth linking
 
-### UC-003: Admin MFA Enrollment and Login
+### UC-003: Token Refresh and Session Extension
 
-**Actors**: Admin user, Authentication Module, Firebase Auth Service, MFA Provider (TOTP app)
+**Actors**: Client Application, Authentication Module
 
 **Preconditions**:
-- User has Admin role assigned
-- User has completed initial authentication
-- MFA not yet enrolled (within 7-day grace period)
+- User has active session with valid refresh token
+- Session has not expired beyond refresh token lifetime
+- Session has not been revoked
 
 **Steps**:
-1. Admin user logs in with email/password or social provider
-2. System checks UserRole, identifies Admin role
-3. System checks MFA enrollment status
-4. If MFA not enrolled and grace period active:
-   - System displays MFA enrollment required notification
-   - User clicks "Set up MFA"
-5. System generates TOTP secret and QR code
-6. System displays QR code and manual entry key to user
-7. User scans QR code with authenticator app (Google Authenticator, Authy, etc.)
-8. System prompts user to enter verification code from app
-9. User submits 6-digit TOTP code
-10. System validates TOTP code against secret
-11. If valid, system enables MFA for user account
-12. System generates 10 backup codes and displays to user (AUTH-FR-020)
-13. User confirms backup codes saved securely
-14. System completes MFA enrollment, updates user record
-15. For subsequent logins:
-    - User enters email/password or completes social login
-    - System prompts for MFA code
-    - User enters TOTP code from authenticator app
-    - System validates code and issues JWT tokens (AUTH-FR-011)
+1. Client detects access token expiration (JWT exp claim)
+2. Client submits refresh token to token refresh endpoint
+3. Module validates refresh token signature and format (AUTH-FR-013)
+4. Module retrieves Session record by refresh token
+5. Module checks session is not revoked (revoked_at is null)
+6. Module checks refresh token has not expired (current_time < expires_at)
+7. Module updates Session.last_activity_at timestamp
+8. Module checks idle timeout has not been exceeded (AUTH-FR-010)
+9. Module generates new JWT access token with updated expiration
+10. Module optionally rotates refresh token based on configuration
+11. Module updates Session record with new refresh token if rotated
+12. Module returns new access token (and new refresh token if rotated)
 
 **Postconditions**:
-- MFA enabled for Admin account
-- Backup codes generated and stored
-- Future logins require MFA verification
+- User has new valid access token
+- Session lifetime extended
+- Session last_activity_at updated
+- User can continue accessing resources without re-authentication
 
 **Exception Flows**:
-- **E1 (Invalid TOTP Code)**: System rejects code, allows retry (max 5 attempts)
-- **E2 (Grace Period Expired)**: System blocks admin functions until MFA enrolled (AUTH-FR-019)
-- **E3 (Lost MFA Device)**: User enters backup code instead of TOTP, backup code consumed and marked as used
-- **E4 (All Backup Codes Used)**: User must contact super-admin for MFA reset
-- **E5 (TOTP Time Drift)**: System accepts codes within 30-second window (±1 time step) to account for clock differences
+- **Invalid Refresh Token**: Return 401 Unauthorized, require re-authentication
+- **Expired Refresh Token**: Return 401 Unauthorized with "Session expired" message
+- **Revoked Session**: Return 401 Unauthorized with "Session revoked" message
+- **Idle Timeout Exceeded**: Return 401 Unauthorized, delete session, require re-authentication
+- **Absolute Timeout Exceeded**: Return 401 Unauthorized, delete session, require re-authentication
+- **Token Rotation Failure**: Log error, return current tokens, schedule retry
 
-### UC-004: Password Reset and Account Recovery
+### UC-004: Multi-Factor Authentication Enrollment and Verification
 
-**Actors**: User (forgot password), Authentication Module, Firebase Auth Service, Email Service
+**Actors**: End User, Authentication Module, MFA Service (TOTP/SMS)
 
 **Preconditions**:
-- User has registered account with verified email
-- User has access to registered email inbox
-- Email service operational
+- User is authenticated with primary credentials
+- MFA is not yet enabled for user account
 
 **Steps**:
-1. User clicks "Forgot Password" link on login page
-2. System displays password reset form requesting email address
-3. User enters registered email address
-4. System validates email format
-5. System checks if email exists in AuthUser records
-6. System generates time-limited password reset token (1-hour expiration) (AUTH-FR-016)
-7. System sends password reset email with reset link containing token
-8. System returns success message (generic "If email exists, reset link sent" to prevent email enumeration)
-9. User receives email and clicks reset link
-10. System validates reset token (not expired, not previously used)
-11. System displays password reset form
-12. User enters new password (twice for confirmation)
-13. System validates new password against password policy (AUTH-FR-001)
-14. System updates user password in Firebase Authentication
-15. System invalidates reset token (AUTH-FR-017)
-16. System invalidates all existing refresh tokens for security
-17. System sends confirmation email "Password successfully changed"
-18. User redirected to login page with success message
-19. User logs in with new password
+1. User initiates MFA enrollment from account settings
+2. Module generates cryptographically secure secret key for TOTP (AUTH-FR-017)
+3. Module creates MFAConfiguration record with mfa_type='TOTP', secret_key, enabled=false
+4. Module generates QR code containing TOTP URI (otpauth://totp/...)
+5. Module generates backup recovery codes (10 codes) and stores hashed versions
+6. Module returns QR code and backup codes to user
+7. User scans QR code with authenticator app
+8. User submits verification code from authenticator app
+9. Module validates TOTP code against secret_key using time window (±30 seconds)
+10. If valid, module updates MFAConfiguration.enabled=true, MFAConfiguration.verified_at=current_time
+11. Module logs MFA enrollment event (AUTH-FR-029)
+12. Module publishes user.mfa_enabled event (AUTH-FR-033)
+13. Module returns success confirmation
+
+**MFA Login Verification Steps** (following UC-001 step 6):
+1. User submits TOTP code or SMS code
+2. Module retrieves MFAConfiguration for user
+3. Module validates submitted code against expected value
+4. If valid, module proceeds with session creation (UC-001 step 7)
+5. Module optionally marks device as trusted if user requests (AUTH-FR-021)
 
 **Postconditions**:
-- User password updated
-- Reset token invalidated
-- All previous sessions terminated
-- User can authenticate with new password
+- MFA enabled and verified for user account
+- User possesses backup recovery codes
+- Subsequent logins require MFA verification
+- MFA enrollment logged in audit trail
 
 **Exception Flows**:
-- **E1 (Email Not Found)**: System returns generic success message (security best practice to prevent email enumeration)
-- **E2 (Token Expired)**: System displays "Reset link expired, request new link" message
-- **E3 (Token Already Used)**: System displays "Reset link already used" message
-- **E4 (Weak New Password)**: System returns password policy violation error
-- **E5 (Email Delivery Failure)**: System logs error, user can retry reset request after 5 minutes
-- **E6 (Password Same as Current)**: System allows but logs warning for security monitoring
+- **Invalid Verification Code**: Return 401 Unauthorized with "Invalid code" message, allow retry
+- **Expired TOTP Window**: Return 401 Unauthorized with "Code expired" message
+- **SMS Delivery Failure**: Return 502 Bad Gateway, offer alternative MFA method
+- **Backup Code Used**: Mark code as consumed, warn user of remaining codes
+- **All Backup Codes Exhausted**: Require MFA re-enrollment or account recovery
+- **Trusted Device Cookie Invalid**: Require MFA verification, clear trusted device status
 
-### UC-005: Profile Claiming by Invited Teacher
+### UC-005: Role-Based Authorization Check
 
-**Actors**: Invited teacher, Authentication Module, Firebase Auth Service, Email Service
+**Actors**: Product/Core Module, Authentication Module
 
 **Preconditions**:
-- Administrator has created InviteCode record with teacher's email and specified role
-- Teacher has received invitation email with claim link
-- InviteCode not expired and not yet used
+- User is authenticated with valid access token
+- Resource and action require authorization check
+- Roles and permissions are configured in database
 
 **Steps**:
-1. Teacher clicks claim link in invitation email containing invite code
-2. System extracts invite code from URL parameter
-3. System validates InviteCode record (AUTH-FR-022):
-   - Code exists in database
-   - Expiration date not passed
-   - used_flag = false
-4. System retrieves email and role from InviteCode record
-5. System displays profile claim form pre-populated with email (read-only)
-6. Teacher enters desired password (twice for confirmation)
-7. Teacher optionally enters full name and profile information
-8. System validates password against password policy (AUTH-FR-001)
-9. System creates Firebase Authentication user account with email/password
-10. System creates AuthUser record with user_id, email, provider_type="email"
-11. System assigns role from InviteCode to UserRole entity
-12. System marks InviteCode as used (used_flag=true, used_at=current_timestamp) (AUTH-FR-023)
-13. System sends email verification link to confirm email ownership
-14. System issues JWT token and refresh token (AUTH-FR-011)
-15. Teacher redirected to onboarding flow with authenticated session
+1. Consuming module extracts JWT access token from request header
+2. Consuming module sends authorization request to module with user_id, resource, and action
+3. Module validates JWT token signature and expiration (AUTH-FR-013)
+4. Module extracts user_id from JWT claims
+5. Module retrieves all UserRole records for user_id (AUTH-FR-007)
+6. Module loads Role records including parent roles for permission inheritance (AUTH-FR-006)
+7. Module aggregates all permissions from assigned roles
+8. Module checks if aggregated permissions include requested resource:action combination
+9. Module returns boolean authorization decision (granted/denied)
+10. Module logs authorization check for audit (AUTH-FR-029)
+11. Consuming module grants or denies access based on decision
 
 **Postconditions**:
-- AuthUser record created for invited teacher
-- UserRole assigned per invitation (likely "Subscriber" for institutional invites)
-- InviteCode marked as used
-- Teacher authenticated and ready to access platform
+- Authorization decision returned to consuming module
+- Access granted or denied based on user roles
+- Authorization check logged for audit
+- User can or cannot access requested resource
 
 **Exception Flows**:
-- **E1 (Invalid Code)**: System displays "Invalid or expired invitation code" error
-- **E2 (Code Already Used)**: System displays "Invitation already claimed" error
-- **E3 (Code Expired)**: System displays "Invitation expired, contact administrator" error
-- **E4 (Email Mismatch)**: If teacher tries to claim with different email, system rejects (code tied to specific email)
-- **E5 (Weak Password)**: System returns password policy violation error
-- **E6 (Account Already Exists)**: If email already registered, system displays "Account already exists, please login"
+- **Invalid Token**: Return 401 Unauthorized, consuming module redirects to login
+- **Expired Token**: Return 401 Unauthorized with "Token expired", client attempts refresh
+- **User Not Found**: Return 403 Forbidden, possible deleted account
+- **No Roles Assigned**: Return 403 Forbidden, deny access by default
+- **Role Not Found**: Log warning, exclude from permission aggregation, continue check
+- **Permission Check Timeout**: Return 500 Internal Server Error, fail-safe deny access (AUTH-NFR-009)
 
 ---
 
@@ -428,329 +445,198 @@ The module acts as the foundational security layer that gates access to all prod
 
 ### 4.1 Component Diagram
 
-The Authentication Module follows a layered architecture pattern integrating with Firebase Authentication as the core identity provider:
+The Authentication Module follows a layered architecture with clear separation of concerns:
 
-**Presentation Layer (Client-Side)**
-- **Web Authentication UI Components**: Login/registration forms, password reset flows, MFA enrollment interface, social login buttons
-- **Mobile Authentication SDK Wrapper**: Native iOS/Android authentication screens, biometric integration, secure token storage
-- **Session State Manager**: Client-side session persistence, token refresh orchestration, logout handling
+**API Layer**
+- **REST API Gateway**: Exposes authentication endpoints (login, logout, token refresh, password reset, MFA) as RESTful APIs
+- **Authorization Middleware**: Intercepts requests to validate tokens and enforce authorization
+- **Rate Limiting Filter**: Implements configurable rate limiting per IP and per email
+- **Request Validators**: Validates input data, sanitizes inputs to prevent injection attacks
 
-**Application Layer (Backend Services)**
-- **Authentication API Gateway**: RESTful API endpoints for authentication operations, request validation, rate limiting enforcement
-- **Authorization Service**: Role-based access control enforcement, permission checking, token validation
-- **Session Management Service**: Token issuance, refresh token handling, session lifecycle management
-- **Account Management Service**: Password reset workflows, email verification, account recovery
-- **Invite Code Service**: Referral code validation, invite code generation, profile claiming logic
-- **MFA Service**: TOTP enrollment, MFA verification, backup code management
+**Service Layer**
+- **Authentication Service**: Core authentication logic (credential validation, OAuth flow orchestration, SSO integration)
+- **Authorization Service**: Role and permission management, authorization decision engine
+- **Session Service**: Session lifecycle management (create, validate, refresh, revoke)
+- **Token Service**: JWT generation, validation, signing, and refresh token management
+- **MFA Service**: Multi-factor authentication enrollment, verification, backup code management
+- **Account Recovery Service**: Password reset, email verification, account unlock workflows
+- **OAuth Integration Service**: OAuth 2.0 provider communication, token exchange, profile retrieval
+- **Audit Service**: Security event logging, login attempt tracking, analytics integration
+
+**Data Access Layer**
+- **User Credential Repository**: CRUD operations for UserCredential entities
+- **Session Repository**: Session storage and retrieval with TTL support
+- **Role Repository**: Role and permission data access
+- **MFA Repository**: MFA configuration management
+- **Token Repository**: Password reset and email verification token management
+- **Audit Repository**: Authentication event persistence
+
+**Data Storage Layer**
+- **Primary Database**: Relational database for persistent storage (UserCredential, Role, UserRole, MFAConfiguration, LoginAttempt, PasswordResetToken, EmailVerificationToken, IPAccessControl)
+- **Session Store**: Distributed cache (Redis) for session and token storage with TTL
+- **Configuration Store**: Externalized configuration for OAuth providers, timeouts, policies
 
 **Integration Layer**
-- **Firebase Auth SDK Integration**: Wrapper for Firebase Authentication SDK, standardized error handling, retry logic
-- **Social Provider OAuth Handlers**: Google OAuth2 client, Microsoft OAuth2 client, token exchange logic
-- **SSO Integration Adapter**: SAML 2.0 handler, OIDC handler, institutional identity mapping
-
-**Data Layer**
-- **Authentication Database**: AuthUser entities, UserRole entities, InviteCode entities, MFA configuration
-- **Session Cache**: Redis/Firebase cache for active sessions, role permissions cache (5-min TTL)
-- **Audit Log Store**: Authentication event logging, security audit trail
-
-**External Dependencies**
-- **Firebase Authentication Service**: Primary identity provider, user credential storage, token generation
-- **Email Service**: Verification emails, password reset emails, MFA notifications
-- **Subscription Module**: Subscription status queries for role elevation, user-subscription linkage
-
-**Component Relationships**:
-- Authentication API Gateway routes requests to appropriate services (Account Management, Session Management, Invite Code)
-- All authentication services communicate with Firebase Auth SDK Integration for identity operations
-- Authorization Service queries Session Cache for role/permission data, falling back to Authentication Database
-- Invite Code Service writes to Authentication Database and triggers Account Management Service for profile creation
-- All services publish authentication events to Audit Log Store
-- Session Management Service maintains Session Cache with automatic expiration aligned to token TTL
+- **Event Publisher**: Publishes authentication events to message bus for Analytics and other modules
+- **Email Service Client**: Sends password reset and verification emails
+- **SMS Gateway Client**: Sends MFA codes via SMS
+- **OAuth Provider Clients**: HTTP clients for Google, Microsoft, GitHub OAuth APIs
+- **Admin Module Integration**: Exposes role management APIs for admin consumption
 
 ### 4.2 Dependencies
 
-**Internal Module Dependencies**:
-- **Subscription Module**: Required for linking AuthUser identities to subscription records (AUTH-FR-026), querying subscription status for role elevation (AUTH-FR-009)
-- **Product Modules (Gated Access)**: Authentication Module acts as gatekeeper for all product modules, providing authentication/authorization checks before granting access
+**Internal Module Dependencies**
+- **Admin Module**: Consumes authentication APIs for admin user authentication; provides role management UI that calls authentication module's role APIs
+- **Analytics Module**: Consumes authentication events (user.logged_in, user.logged_out, user.mfa_enabled, session.expired) for login tracking and user activity analysis
+- **All Product and Core Modules**: Consume authentication and authorization APIs for securing endpoints
 
-**External Service Dependencies**:
-- **Firebase Authentication Service** (Critical): Core identity provider for user credential management, token generation, password hashing, social provider integration
-  - Version: Firebase Auth SDK v10+ (web), v8+ (mobile)
-  - SLA: 99.95% uptime per Firebase SLA
-  - Rate Limits: 100 requests/second per project (configurable)
+**External Service Dependencies**
+- **Email Delivery Service**: Required for password reset and email verification workflows (SendGrid, AWS SES, or similar)
+- **SMS Gateway**: Required for SMS-based MFA (Twilio, AWS SNS, or similar)
+- **OAuth Providers**: Google OAuth 2.0, Microsoft Azure AD, GitHub OAuth (optional, configurable)
+- **Time Synchronization Service**: NTP or cloud-provided time sync for accurate token expiration
 
-- **Google OAuth2 Provider** (High): Social login for Google accounts
-  - OAuth2 endpoints: accounts.google.com
-  - Required scopes: email, profile, openid
+**Infrastructure Dependencies**
+- **Relational Database**: PostgreSQL, MySQL, or similar for persistent data storage
+- **Distributed Cache**: Redis or Memcached for session storage and rate limiting
+- **Message Bus**: RabbitMQ, Kafka, or AWS SNS/SQS for event publishing
+- **Secret Management**: HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault for OAuth credentials and encryption keys
+- **TLS/SSL Certificates**: Valid certificates for HTTPS communication
 
-- **Microsoft OAuth2 Provider** (High): Social login for Microsoft Education accounts
-  - OAuth2 endpoints: login.microsoftonline.com
-  - Required scopes: email, profile, openid
-
-- **Email Service** (High): Transactional email delivery for verification, password reset, MFA notifications
-  - Provider: SendGrid, AWS SES, or similar SMTP service
-  - Required capabilities: Template support, delivery tracking, bounce handling
-
-**Third-Party Libraries**:
-- **Firebase Admin SDK**: Server-side Firebase operations, token verification
-- **jsonwebtoken**: JWT parsing and validation (if custom token validation needed)
-- **bcrypt**: Password hashing (if supplementing Firebase's built-in hashing)
-- **speakeasy**: TOTP generation and validation for MFA
-- **qrcode**: QR code generation for MFA enrollment
-- **validator**: Email and input validation
-- **rate-limiter-flexible**: Rate limiting implementation for brute force protection
-
-**Infrastructure Dependencies**:
-- **Redis or Firebase Cache**: Session caching, rate limiting counters
-- **PostgreSQL or Firestore**: AuthUser, UserRole, InviteCode persistence
-- **Load Balancer**: Distributes authentication requests across service instances
-- **TLS Certificate Authority**: SSL/TLS certificates for HTTPS encryption
+**Third-Party Libraries** (Technology-agnostic, examples provided)
+- **JWT Library**: For token generation and validation (jsonwebtoken, jose, or language-specific library)
+- **Password Hashing**: bcrypt or Argon2 implementation
+- **TOTP Library**: For multi-factor authentication (speakeasy, otplib, or similar)
+- **OAuth Client Library**: OAuth 2.0 client implementation
+- **HTTP Client**: For external API communication
+- **Logging Framework**: Structured logging library
+- **Validation Library**: Input validation and sanitization
 
 ### 4.3 Data Flow
 
-**User Registration Flow (Email/Password)**:
-1. Client submits registration request (email, password, optional referral code) → Authentication API Gateway
-2. API Gateway validates input format → returns 400 if invalid
-3. API Gateway checks rate limits → returns 429 if exceeded
-4. Request forwarded to Account Management Service
-5. Account Management Service validates password policy → returns 400 if weak
-6. If referral code provided, Invite Code Service validates against InviteCode table → returns code metadata
-7. Account Management Service calls Firebase Auth SDK Integration → creates Firebase user
-8. Firebase Auth SDK Integration returns Firebase user_id
-9. Account Management Service writes AuthUser record to Authentication Database (user_id, email, provider_type="email", created_at)
-10. Account Management Service writes UserRole record (user_id, role from referral code or "Provisional")
-11. If referral code valid, Invite Code Service updates InviteCode.used_flag=true
-12. Account Management Service triggers email verification via Email Service
-13. Session Management Service generates JWT token (user_id, role, exp) and refresh token
-14. Tokens returned to client, stored in secure storage
-15. Authentication event logged to Audit Log Store
+**Authentication Flow (Email/Password)**
+1. User submits email and password to API Gateway
+2. Rate Limiting Filter checks login attempt limits for IP and email
+3. Request Validator sanitizes inputs
+4. Authentication Service receives validated credentials
+5. User Credential Repository retrieves UserCredential by email from Primary Database
+6. Authentication Service validates password hash using bcrypt/Argon2
+7. If MFA enabled, MFA Service generates challenge and returns to user
+8. If MFA verified or not required, Session Service creates session
+9. Token Service generates JWT access token and refresh token
+10. Session Repository stores session in Session Store (Redis) with TTL
+11. Authorization Service loads user roles from Role Repository
+12. Token Service embeds roles in JWT claims and signs token
+13. Audit Service logs successful login to Audit Repository
+14. Event Publisher publishes user.logged_in event to Message Bus
+15. API Gateway returns tokens to user
 
-**Social Login Flow (Google/Microsoft)**:
-1. Client initiates OAuth2 flow → Authentication API Gateway
-2. API Gateway redirects to Social Provider OAuth Handler
-3. OAuth Handler redirects client to provider authorization page (Google/Microsoft)
-4. User authenticates with provider, grants permissions
-5. Provider redirects to callback URL with authorization code
-6. OAuth Handler exchanges code for access token via provider API
-7. OAuth Handler retrieves user profile (email, provider_user_id) from provider
-8. OAuth Handler checks Authentication Database for existing AuthUser with email
-9. If new user: Creates Firebase user via Firebase Auth SDK Integration, writes AuthUser (provider_type="google"/"microsoft"), assigns Provisional role
-10. If existing user: Links provider to AuthUser via Firebase Auth SDK Integration (AUTH-FR-027)
-11. Session Management Service generates JWT and refresh tokens
-12. Tokens returned to client
-13. Authentication event logged to Audit Log Store
+**Authorization Flow**
+1. Consuming module receives request with JWT access token in Authorization header
+2. Authorization Middleware extracts and validates token
+3. Token Service verifies JWT signature and expiration
+4. Authorization Service extracts user_id and roles from JWT claims
+5. For fine-grained checks, Authorization Service queries Role Repository for permissions
+6. Authorization Service evaluates resource:action against user permissions
+7. Authorization decision (grant/deny) returned to consuming module
+8. Audit Service logs authorization check
+9. Consuming module proceeds or rejects request based on decision
 
-**Authorization Check Flow**:
-1. Client makes API request to protected resource with JWT token in Authorization header
-2. API Gateway extracts token, validates signature and expiration
-3. API Gateway extracts user_id and role from token claims
-4. Authorization Service checks Session Cache for user permissions (5-min TTL)
-5. If cache miss, Authorization Service queries Authentication Database for UserRole
-6. Authorization Service compares required permission with user role permissions
-7. If authorized: Request forwarded to target service
-8. If unauthorized: Returns 403 Forbidden
-9. Authorization decision logged to Audit Log Store
+**Token Refresh Flow**
+1. Client detects access token expiration
+2. Client submits refresh token to API Gateway
+3. Token Service validates refresh token signature
+4. Session Repository retrieves session from Session Store
+5. Session Service validates session not revoked or expired
+6. Token Service generates new access token
+7. Optionally, Token Service rotates refresh token
+8. Session Repository updates session last_activity_at and new refresh token
+9. API Gateway returns new tokens to client
 
-**Password Reset Flow**:
-1. Client submits password reset request (email) → Account Management Service
-2. Account Management Service queries Authentication Database for email
-3. If found, generates time-limited reset token (UUID, 1-hour expiration)
-4. Reset token stored in Authentication Database (user_id, token, expires_at)
-5. Email Service sends reset link with token to user email
-6. Generic success message returned to client (regardless of email existence)
-7. User clicks reset link → Client extracts token from URL
-8. Client submits new password with token → Account Management Service
-9. Account Management Service validates token (exists, not expired, not used)
-10. Account Management Service updates password via Firebase Auth SDK Integration
-11. Account Management Service marks token as used in Authentication Database
-12. Session Management Service invalidates all refresh tokens for user
-13. Success response returned, user redirected to login
+**OAuth Flow**
+1. User initiates OAuth login via API Gateway
+2. OAuth Integration Service retrieves provider configuration from Configuration Store
+3. API Gateway redirects user to OAuth provider authorization endpoint
+4. User authenticates with OAuth provider
+5. OAuth provider redirects to callback URL with authorization code
+6. OAuth Integration Service exchanges code for access token at provider's token endpoint
+7. OAuth Integration Service retrieves user profile from provider
+8. User Credential Repository searches for or creates UserCredential
+9. Session Service creates session and Token Service generates tokens
+10. Event Publisher publishes user.logged_in event
+11. API Gateway returns tokens to user
 
-**Token Refresh Flow**:
-1. Client detects access token near expiration (< 5 minutes remaining)
-2. Client submits refresh token to Session Management Service
-3. Session Management Service validates refresh token via Firebase Auth SDK Integration
-4. Firebase validates refresh token, returns new access token and refresh token
-5. Session Management Service updates Session Cache with new token data
-6. New tokens returned to client, stored in secure storage
-7. Token refresh event logged to Audit Log Store
+**Account Recovery Flow**
+1. User requests password reset via API Gateway
+2. Account Recovery Service generates secure reset token
+3. Token Repository stores PasswordResetToken in Primary Database with expiration
+4. Email Service Client sends reset link to user's email
+5. User clicks link and submits new password
+6. Account Recovery Service validates token from Token Repository
+7. User Credential Repository updates password_hash
+8. Token Repository marks token as used
+9. Audit Service logs password change event
+10. API Gateway returns success confirmation
 
 ### 4.4 Integration Points
 
-**APIs Consumed**:
+**APIs Exposed**
 
-1. **Firebase Authentication REST API**
-   - Endpoint: `https://identitytoolkit.googleapis.com/v1/accounts`
-   - Operations: signUp, signInWithPassword, signInWithIdp, resetPassword, verifyEmail
-   - Authentication: Firebase API key
-   - Data exchanged: User credentials, identity tokens, provider OAuth tokens
+| API Endpoint | Method | Purpose | Consumers |
+|--------------|--------|---------|-----------|
+| `/auth/login` | POST | Email/password authentication | All client applications |
+| `/auth/oauth/{provider}` | GET | Initiate OAuth flow | All client applications |
+| `/auth/oauth/callback` | GET | OAuth callback handler | OAuth providers |
+| `/auth/logout` | POST | Session termination | All client applications |
+| `/auth/token/refresh` | POST | Token refresh | All client applications |
+| `/auth/mfa/enroll` | POST | MFA enrollment | All client applications |
+| `/auth/mfa/verify` | POST | MFA verification | All client applications |
+| `/auth/password/reset` | POST | Request password reset | All client applications |
+| `/auth/password/reset/confirm` | POST | Confirm password reset | All client applications |
+| `/auth/email/verify` | POST | Email verification | All client applications |
+| `/auth/authorize` | POST | Authorization check | All product/core modules |
+| `/auth/session/revoke` | POST | Administrative session revocation | Admin Module |
+| `/admin/roles` | GET, POST, PUT, DELETE | Role management | Admin Module |
+| `/admin/permissions` | GET | Permission listing | Admin Module |
+| `/admin/users/{id}/roles` | GET, POST, DELETE | User role assignment | Admin Module |
 
-2. **Firebase Admin SDK**
-   - Operations: verifyIdToken, createUser, updateUser, deleteUser, setCustomUserClaims
-   - Authentication: Service account credentials
-   - Data exchanged: JWT tokens, user metadata, custom claims for roles
+**APIs Consumed**
 
-3. **Google OAuth2 API**
-   - Authorization endpoint: `https://accounts.google.com/o/oauth2/v2/auth`
-   - Token endpoint: `https://oauth2.googleapis.com/token`
-   - UserInfo endpoint: `https://www.googleapis.com/oauth2/v2/userinfo`
-   - Data exchanged: Authorization codes, access tokens, user profile (email, name)
+| External Service | API | Purpose |
+|------------------|-----|---------|
+| Email Service | Send Email API | Password reset, email verification |
+| SMS Gateway | Send SMS API | MFA code delivery |
+| Google OAuth | Authorization, Token, UserInfo | OAuth authentication |
+| Microsoft OAuth | Authorization, Token, UserInfo | OAuth authentication |
+| GitHub OAuth | Authorization, Token, User | OAuth authentication |
 
-4. **Microsoft OAuth2 API**
-   - Authorization endpoint: `https://login.microsoftonline.com/common/oauth2/v2.0/authorize`
-   - Token endpoint: `https://login.microsoftonline.com/common/oauth2/v2.0/token`
-   - UserInfo endpoint: `https://graph.microsoft.com/v1.0/me`
-   - Data exchanged: Authorization codes, access tokens, user profile (email, name, tenant)
+**Events Published**
 
-5. **Subscription Module API**
-   - Endpoint: `/api/subscriptions/user/{user_id}`
-   - Method: GET
-   - Purpose: Query subscription status for role elevation
-   - Authentication: Internal service-to-service JWT
-   - Data exchanged: Subscription status, plan type, expiration date
+| Event Name | Payload | Consumers |
+|------------|---------|-----------|
+| `user.logged_in` | { user_id, email, timestamp, ip_address, login_method } | Analytics Module |
+| `user.logged_out` | { user_id, session_id, timestamp } | Analytics Module |
+| `user.mfa_enabled` | { user_id, mfa_type, timestamp } | Analytics Module, Admin Module |
+| `user.mfa_disabled` | { user_id, timestamp } | Analytics Module, Admin Module |
+| `session.expired` | { user_id, session_id, expiration_reason, timestamp } | Analytics Module |
+| `user.password_changed` | { user_id, timestamp } | Analytics Module, Admin Module |
+| `user.account_locked` | { user_id, reason, timestamp } | Analytics Module, Admin Module |
+| `authorization.denied` | { user_id, resource, action, timestamp } | Analytics Module, Security Module |
 
-**APIs Exposed**:
+**Events Subscribed**
 
-1. **POST /api/auth/register**
-   - Purpose: Email/password user registration
-   - Request: `{ email, password, referralCode? }`
-   - Response: `{ user_id, email, role, tokens: { access_token, refresh_token } }`
-   - Authentication: None (public endpoint)
-   - Rate limit: 10 requests/hour per IP
+| Event Name | Source | Purpose |
+|------------|--------|---------|
+| `user.created` | User Management Module | Initialize authentication credentials |
+| `user.deleted` | User Management Module | Revoke sessions and delete credentials |
+| `admin.role_updated` | Admin Module | Invalidate cached permissions |
 
-2. **POST /api/auth/login**
-   - Purpose: Email/password authentication
-   - Request: `{ email, password }`
-   - Response: `{ user_id, email, role, tokens: { access_token, refresh_token } }`
-   - Authentication: None (public endpoint)
-   - Rate limit: 5 failed attempts per email per 15 minutes
+**Webhooks**
 
-3. **POST /api/auth/social/google**
-   - Purpose: Initiate Google OAuth2 flow
-   - Request: `{ redirect_uri }`
-   - Response: `{ authorization_url }`
-   - Authentication: None (public endpoint)
-
-4. **GET /api/auth/social/google/callback**
-   - Purpose: Handle Google OAuth2 callback
-   - Query params: `code, state`
-   - Response: Redirect to app with tokens in URL fragment
-   - Authentication: None (OAuth2 state validation)
-
-5. **POST /api/auth/social/microsoft**
-   - Purpose: Initiate Microsoft OAuth2 flow
-   - Request: `{ redirect_uri }`
-   - Response: `{ authorization_url }`
-   - Authentication: None (public endpoint)
-
-6. **GET /api/auth/social/microsoft/callback**
-   - Purpose: Handle Microsoft OAuth2 callback
-   - Query params: `code, state`
-   - Response: Redirect to app with tokens in URL fragment
-   - Authentication: None (OAuth2 state validation)
-
-7. **POST /api/auth/refresh**
-   - Purpose: Refresh access token
-   - Request: `{ refresh_token }`
-   - Response: `{ access_token, refresh_token }`
-   - Authentication: Valid refresh token
-
-8. **POST /api/auth/logout**
-   - Purpose: Invalidate session
-   - Request: `{ refresh_token }`
-   - Response: `{ success: true }`
-   - Authentication: Valid access token
-
-9. **POST /api/auth/password-reset/request**
-   - Purpose: Request password reset email
-   - Request: `{ email }`
-   - Response: `{ message: "If email exists, reset link sent" }`
-   - Authentication: None (public endpoint)
-   - Rate limit: 3 requests/hour per email
-
-10. **POST /api/auth/password-reset/confirm**
-    - Purpose: Complete password reset
-    - Request: `{ token, new_password }`
-    - Response: `{ success: true }`
-    - Authentication: Valid reset token
-
-11. **POST /api/auth/mfa/enroll**
-    - Purpose: Enroll in MFA (Admin only)
-    - Request: `{ }`
-    - Response: `{ secret, qr_code_url, backup_codes }`
-    - Authentication: Valid Admin access token
-
-12. **POST /api/auth/mfa/verify**
-    - Purpose: Verify MFA code during login
-    - Request: `{ user_id, code }`
-    - Response: `{ tokens: { access_token, refresh_token } }`
-    - Authentication: Pending MFA verification session
-
-13. **POST /api/auth/invite/claim**
-    - Purpose: Claim invited profile
-    - Request: `{ invite_code, password, name? }`
-    - Response: `{ user_id, email, role, tokens: { access_token, refresh_token } }`
-    - Authentication: Valid invite code
-
-14. **GET /api/auth/verify-token**
-    - Purpose: Validate access token and return user info
-    - Request: None (token in Authorization header)
-    - Response: `{ user_id, email, role, permissions }`
-    - Authentication: Valid access token
-    - Used by: All product modules for authorization checks
-
-**Events Published**:
-
-1. **user.registered**
-   - Payload: `{ user_id, email, provider_type, role, referral_code?, timestamp }`
-   - Subscribers: Analytics service, email service (welcome email), subscription module
-
-2. **user.logged_in**
-   - Payload: `{ user_id, email, provider_type, ip_address, timestamp }`
-   - Subscribers: Analytics service, security monitoring
-
-3. **user.logged_out**
-   - Payload: `{ user_id, timestamp }`
-   - Subscribers: Analytics service, session cleanup service
-
-4. **user.password_reset**
-   - Payload: `{ user_id, email, timestamp }`
-   - Subscribers: Security monitoring, email service (confirmation email)
-
-5. **user.mfa_enrolled**
-   - Payload: `{ user_id, email, timestamp }`
-   - Subscribers: Security monitoring, email service (confirmation email)
-
-6. **user.role_changed**
-   - Payload: `{ user_id, old_role, new_role, reason, timestamp }`
-   - Subscribers: Subscription module, analytics service, product modules (permission update)
-
-7. **auth.failed_login**
-   - Payload: `{ email, ip_address, reason, attempt_count, timestamp }`
-   - Subscribers: Security monitoring, rate limiter
-
-**Events Subscribed**:
-
-1. **subscription.created**
-   - Source: Subscription module
-   - Payload: `{ user_id, subscription_id, plan_type, timestamp }`
-   - Action: Elevate user role from Provisional to Subscriber (AUTH-FR-009)
-
-2. **subscription.cancelled**
-   - Source: Subscription module
-   - Payload: `{ user_id, subscription_id, timestamp }`
-   - Action: Downgrade user role from Subscriber to Provisional
-
-3. **subscription.expired**
-   - Source: Subscription module
-   - Payload: `{ user_id, subscription_id, timestamp }`
-   - Action: Downgrade user role from Subscriber to Provisional
-
-**Webhooks**:
-
-1. **Firebase Authentication Webhooks** (if available via Firebase Extensions)
-   - Event: User created, deleted, disabled
-   - Endpoint: `/api/webhooks/firebase/auth`
-   - Action: Sync AuthUser records, trigger cleanup workflows
+| Webhook | Direction | Purpose |
+|---------|-----------|---------|
+| OAuth Provider Webhooks | Inbound | Token revocation notifications (if supported by provider) |
+| Session Expiration Webhook | Outbound | Notify client applications of session expiration |
 
 ---
 
@@ -758,1064 +644,657 @@ The Authentication Module follows a layered architecture pattern integrating wit
 
 ### 5.1 Input/Output Interfaces
 
-**API Endpoint Specifications**
+**Authentication Endpoints**
 
-**1. User Registration (Email/Password)**
-
-```
-POST /api/auth/register
-Content-Type: application/json
-```
-
-**Request Schema:**
+**POST /auth/login**
+- **Purpose**: Authenticate user with email and password
+- **Authentication**: None (public endpoint)
+- **Request Schema**:
 ```json
 {
-  "email": "string (required, valid email format, max 255 chars)",
-  "password": "string (required, min 8 chars, must meet password policy)",
-  "referralCode": "string (optional, 8-16 alphanumeric chars)",
-  "name": "string (optional, max 100 chars)"
+  "email": "string (email format, required)",
+  "password": "string (required, 8-128 characters)",
+  "remember_me": "boolean (optional, default false)"
 }
 ```
-
-**Response Schema (Success - 201 Created):**
+- **Response Schema** (200 OK):
 ```json
 {
-  "user_id": "string (Firebase UID)",
-  "email": "string",
-  "role": "string (Subscriber|Provisional|Admin)",
-  "email_verified": "boolean",
-  "tokens": {
-    "access_token": "string (JWT)",
-    "refresh_token": "string",
-    "expires_in": "number (seconds, typically 3600)"
+  "access_token": "string (JWT)",
+  "refresh_token": "string",
+  "token_type": "Bearer",
+  "expires_in": "number (seconds)",
+  "mfa_required": "boolean",
+  "mfa_token": "string (if mfa_required=true)",
+  "user": {
+    "user_id": "string",
+    "email": "string",
+    "roles": ["string"]
   }
 }
 ```
+- **Error Responses**:
+  - 401 Unauthorized: Invalid credentials
+  - 423 Locked: Account locked
+  - 429 Too Many Requests: Rate limit exceeded
 
-**Response Schema (Error - 400 Bad Request):**
+**GET /auth/oauth/{provider}**
+- **Purpose**: Initiate OAuth authentication flow
+- **Authentication**: None (public endpoint)
+- **Path Parameters**:
+  - `provider`: string (google, microsoft, github)
+- **Query Parameters**:
+  - `redirect_uri`: string (optional, callback URL)
+- **Response**: 302 Redirect to OAuth provider authorization URL
+
+**GET /auth/oauth/callback**
+- **Purpose**: Handle OAuth provider callback
+- **Authentication**: None (validates state parameter)
+- **Query Parameters**:
+  - `code`: string (authorization code)
+  - `state`: string (CSRF token)
+- **Response**: 302 Redirect to client application with tokens in URL fragment or query
+
+**POST /auth/logout**
+- **Purpose**: Terminate user session
+- **Authentication**: Required (Bearer token)
+- **Request Schema**:
 ```json
 {
-  "error": {
-    "code": "string (INVALID_EMAIL|WEAK_PASSWORD|DUPLICATE_EMAIL|INVALID_REFERRAL)",
-    "message": "string (human-readable error)",
-    "details": {
-      "field": "string (email|password|referralCode)",
-      "reason": "string"
-    }
-  }
+  "refresh_token": "string (optional, revokes specific session)"
+}
+```
+- **Response Schema** (200 OK):
+```json
+{
+  "message": "Logged out successfully"
 }
 ```
 
-**Authentication Required:** None (public endpoint)
-
-**Rate Limiting:** 10 requests/hour per IP address
-
----
-
-**2. User Login (Email/Password)**
-
-```
-POST /api/auth/login
-Content-Type: application/json
-```
-
-**Request Schema:**
-```json
-{
-  "email": "string (required, valid email format)",
-  "password": "string (required)"
-}
-```
-
-**Response Schema (Success - 200 OK):**
-```json
-{
-  "user_id": "string",
-  "email": "string",
-  "role": "string",
-  "requires_mfa": "boolean",
-  "session_id": "string (if MFA required, temporary session ID)",
-  "tokens": {
-    "access_token": "string (JWT, omitted if requires_mfa=true)",
-    "refresh_token": "string (omitted if requires_mfa=true)",
-    "expires_in": "number"
-  }
-}
-```
-
-**Response Schema (Error - 401 Unauthorized):**
-```json
-{
-  "error": {
-    "code": "INVALID_CREDENTIALS",
-    "message": "Invalid email or password",
-    "attempts_remaining": "number (before account lock)"
-  }
-}
-```
-
-**Response Schema (Error - 429 Too Many Requests):**
-```json
-{
-  "error": {
-    "code": "RATE_LIMIT_EXCEEDED",
-    "message": "Too many failed login attempts. Try again in 15 minutes.",
-    "retry_after": "number (seconds until retry allowed)"
-  }
-}
-```
-
-**Authentication Required:** None (public endpoint)
-
-**Rate Limiting:** 5 failed attempts per email per 15 minutes
-
----
-
-**3. Social Login Initiation (Google)**
-
-```
-POST /api/auth/social/google
-Content-Type: application/json
-```
-
-**Request Schema:**
-```json
-{
-  "redirect_uri": "string (required, must be whitelisted)",
-  "state": "string (optional, CSRF token)"
-}
-```
-
-**Response Schema (Success - 200 OK):**
-```json
-{
-  "authorization_url": "string (Google OAuth2 URL with encoded params)",
-  "state": "string (CSRF token for validation)"
-}
-```
-
-**Authentication Required:** None (public endpoint)
-
----
-
-**4. Social Login Callback (Google)**
-
-```
-GET /api/auth/social/google/callback?code={auth_code}&state={state}
-```
-
-**Query Parameters:**
-- `code`: Authorization code from Google (required)
-- `state`: CSRF token for validation (required)
-
-**Response:** HTTP 302 Redirect to application with tokens in URL fragment
-
-```
-Location: https://app.example.com/auth/callback#access_token={jwt}&refresh_token={token}&expires_in=3600
-```
-
-**Error Response (400 Bad Request):**
-```json
-{
-  "error": {
-    "code": "OAUTH_ERROR",
-    "message": "Failed to authenticate with Google",
-    "provider_error": "string (error from Google)"
-  }
-}
-```
-
-**Authentication Required:** None (OAuth2 state validation)
-
----
-
-**5. Token Refresh**
-
-```
-POST /api/auth/refresh
-Content-Type: application/json
-```
-
-**Request Schema:**
+**POST /auth/token/refresh**
+- **Purpose**: Refresh access token using refresh token
+- **Authentication**: None (requires refresh token)
+- **Request Schema**:
 ```json
 {
   "refresh_token": "string (required)"
 }
 ```
-
-**Response Schema (Success - 200 OK):**
+- **Response Schema** (200 OK):
 ```json
 {
-  "access_token": "string (new JWT)",
-  "refresh_token": "string (new refresh token)",
+  "access_token": "string (JWT)",
+  "refresh_token": "string (new token if rotated)",
+  "token_type": "Bearer",
+  "expires_in": "number (seconds)"
+}
+```
+- **Error Responses**:
+  - 401 Unauthorized: Invalid or expired refresh token
+
+**Multi-Factor Authentication Endpoints**
+
+**POST /auth/mfa/enroll**
+- **Purpose**: Enroll user in MFA
+- **Authentication**: Required (Bearer token)
+- **Request Schema**:
+```json
+{
+  "mfa_type": "string (totp, sms)",
+  "phone_number": "string (required if mfa_type=sms)"
+}
+```
+- **Response Schema** (200 OK for TOTP):
+```json
+{
+  "secret_key": "string",
+  "qr_code": "string (data URL)",
+  "backup_codes": ["string"],
+  "mfa_config_id": "string"
+}
+```
+
+**POST /auth/mfa/verify**
+- **Purpose**: Verify MFA code during login or enrollment
+- **Authentication**: Requires MFA token from login response
+- **Request Schema**:
+```json
+{
+  "mfa_token": "string (temporary token from login)",
+  "code": "string (6-digit code)",
+  "trust_device": "boolean (optional, default false)"
+}
+```
+- **Response Schema** (200 OK):
+```json
+{
+  "access_token": "string (JWT)",
+  "refresh_token": "string",
+  "token_type": "Bearer",
   "expires_in": "number (seconds)"
 }
 ```
 
-**Response Schema (Error - 401 Unauthorized):**
+**Account Recovery Endpoints**
+
+**POST /auth/password/reset**
+- **Purpose**: Request password reset email
+- **Authentication**: None (public endpoint)
+- **Request Schema**:
 ```json
 {
-  "error": {
-    "code": "INVALID_REFRESH_TOKEN",
-    "message": "Refresh token expired or invalid. Please login again."
-  }
+  "email": "string (email format, required)"
+}
+```
+- **Response Schema** (200 OK):
+```json
+{
+  "message": "Password reset email sent if account exists"
 }
 ```
 
-**Authentication Required:** Valid refresh token
-
-**Rate Limiting:** 100 requests/hour per user
-
----
-
-**6. Logout**
-
-```
-POST /api/auth/logout
-Content-Type: application/json
-Authorization: Bearer {access_token}
-```
-
-**Request Schema:**
+**POST /auth/password/reset/confirm**
+- **Purpose**: Complete password reset with token
+- **Authentication**: None (requires reset token)
+- **Request Schema**:
 ```json
 {
-  "refresh_token": "string (required, token to invalidate)"
+  "token": "string (reset token from email)",
+  "new_password": "string (required, meets complexity rules)"
+}
+```
+- **Response Schema** (200 OK):
+```json
+{
+  "message": "Password reset successfully"
 }
 ```
 
-**Response Schema (Success - 200 OK):**
+**Authorization Endpoints**
+
+**POST /auth/authorize**
+- **Purpose**: Check user authorization for resource and action
+- **Authentication**: Required (Bearer token or API key for service-to-service)
+- **Request Schema**:
 ```json
 {
-  "success": true,
-  "message": "Successfully logged out"
+  "user_id": "string (optional, extracted from token if not provided)",
+  "resource": "string (required, e.g., 'documents')",
+  "action": "string (required, e.g., 'read', 'write', 'delete')"
+}
+```
+- **Response Schema** (200 OK):
+```json
+{
+  "authorized": "boolean",
+  "user_id": "string",
+  "roles": ["string"],
+  "reason": "string (if authorized=false)"
 }
 ```
 
-**Authentication Required:** Valid access token in Authorization header
+**Admin Role Management Endpoints**
 
----
-
-**7. Password Reset Request**
-
-```
-POST /api/auth/password-reset/request
-Content-Type: application/json
-```
-
-**Request Schema:**
+**GET /admin/roles**
+- **Purpose**: List all roles
+- **Authentication**: Required (admin role)
+- **Query Parameters**:
+  - `page`: number (optional, default 1)
+  - `limit`: number (optional, default 50)
+- **Response Schema** (200 OK):
 ```json
 {
-  "email": "string (required, valid email format)"
-}
-```
-
-**Response Schema (Success - 200 OK):**
-```json
-{
-  "message": "If an account exists with this email, a password reset link has been sent."
-}
-```
-
-**Note:** Response is intentionally generic to prevent email enumeration attacks.
-
-**Authentication Required:** None (public endpoint)
-
-**Rate Limiting:** 3 requests/hour per email address
-
----
-
-**8. Password Reset Confirmation**
-
-```
-POST /api/auth/password-reset/confirm
-Content-Type: application/json
-```
-
-**Request Schema:**
-```json
-{
-  "token": "string (required, reset token from email)",
-  "new_password": "string (required, must meet password policy)"
-}
-```
-
-**Response Schema (Success - 200 OK):**
-```json
-{
-  "success": true,
-  "message": "Password successfully reset. Please login with your new password."
-}
-```
-
-**Response Schema (Error - 400 Bad Request):**
-```json
-{
-  "error": {
-    "code": "INVALID_TOKEN|EXPIRED_TOKEN|WEAK_PASSWORD",
-    "message": "string (error description)",
-    "details": {
-      "reason": "string"
+  "roles": [
+    {
+      "role_id": "string",
+      "role_name": "string",
+      "description": "string",
+      "permissions": ["string"],
+      "parent_role_id": "string (nullable)"
     }
-  }
-}
-```
-
-**Authentication Required:** Valid reset token
-
----
-
-**9. MFA Enrollment**
-
-```
-POST /api/auth/mfa/enroll
-Content-Type: application/json
-Authorization: Bearer {access_token}
-```
-
-**Request Schema:**
-```json
-{}
-```
-
-**Response Schema (Success - 200 OK):**
-```json
-{
-  "secret": "string (base32 encoded TOTP secret)",
-  "qr_code_url": "string (data URI for QR code image)",
-  "backup_codes": [
-    "string (10 single-use backup codes)"
   ],
-  "issuer": "string (app name for authenticator app)"
+  "total": "number",
+  "page": "number",
+  "limit": "number"
 }
 ```
 
-**Authentication Required:** Valid Admin access token
-
-**Authorization:** Admin role only (returns 403 for non-admin)
-
----
-
-**10. MFA Verification**
-
-```
-POST /api/auth/mfa/verify
-Content-Type: application/json
-```
-
-**Request Schema:**
+**POST /admin/roles**
+- **Purpose**: Create new role
+- **Authentication**: Required (admin role)
+- **Request Schema**:
 ```json
 {
-  "session_id": "string (required, from login response with requires_mfa=true)",
-  "code": "string (required, 6-digit TOTP code or backup code)"
+  "role_name": "string (required, unique)",
+  "description": "string (optional)",
+  "permissions": ["string"],
+  "parent_role_id": "string (optional)"
+}
+```
+- **Response Schema** (201 Created):
+```json
+{
+  "role_id": "string",
+  "role_name": "string",
+  "description": "string",
+  "permissions": ["string"],
+  "parent_role_id": "string (nullable)",
+  "created_at": "timestamp"
 }
 ```
 
-**Response Schema (Success - 200 OK):**
+**POST /admin/users/{user_id}/roles**
+- **Purpose**: Assign role to user
+- **Authentication**: Required (admin role)
+- **Path Parameters**:
+  - `user_id`: string
+- **Request Schema**:
 ```json
 {
+  "role_id": "string (required)",
+  "expires_at": "timestamp (optional)"
+}
+```
+- **Response Schema** (201 Created):
+```json
+{
+  "user_role_id": "string",
   "user_id": "string",
-  "email": "string",
-  "role": "string",
-  "tokens": {
-    "access_token": "string (JWT)",
-    "refresh_token": "string",
-    "expires_in": "number"
-  }
+  "role_id": "string",
+  "assigned_at": "timestamp",
+  "assigned_by": "string (admin user_id)",
+  "expires_at": "timestamp (nullable)"
 }
 ```
-
-**Response Schema (Error - 401 Unauthorized):**
-```json
-{
-  "error": {
-    "code": "INVALID_MFA_CODE",
-    "message": "Invalid verification code",
-    "attempts_remaining": "number"
-  }
-}
-```
-
-**Authentication Required:** Valid MFA session ID
-
----
-
-**11. Invite Code Profile Claim**
-
-```
-POST /api/auth/invite/claim
-Content-Type: application/json
-```
-
-**Request Schema:**
-```json
-{
-  "invite_code": "string (required, 8-16 chars)",
-  "password": "string (required, must meet password policy)",
-  "name": "string (optional, max 100 chars)"
-}
-```
-
-**Response Schema (Success - 201 Created):**
-```json
-{
-  "user_id": "string",
-  "email": "string (from invite code)",
-  "role": "string (from invite code)",
-  "tokens": {
-    "access_token": "string (JWT)",
-    "refresh_token": "string",
-    "expires_in": "number"
-  }
-}
-```
-
-**Response Schema (Error - 400 Bad Request):**
-```json
-{
-  "error": {
-    "code": "INVALID_INVITE_CODE|EXPIRED_INVITE_CODE|INVITE_ALREADY_USED",
-    "message": "string (error description)"
-  }
-}
-```
-
-**Authentication Required:** None (public endpoint with valid invite code)
-
----
-
-**12. Token Verification**
-
-```
-GET /api/auth/verify-token
-Authorization: Bearer {access_token}
-```
-
-**Request Schema:** None (token in header)
-
-**Response Schema (Success - 200 OK):**
-```json
-{
-  "user_id": "string",
-  "email": "string",
-  "role": "string",
-  "permissions": [
-    "string (array of permission identifiers)"
-  ],
-  "email_verified": "boolean",
-  "mfa_enabled": "boolean"
-}
-```
-
-**Response Schema (Error - 401 Unauthorized):**
-```json
-{
-  "error": {
-    "code": "INVALID_TOKEN|EXPIRED_TOKEN",
-    "message": "string"
-  }
-}
-```
-
-**Authentication Required:** Valid access token
-
-**Usage:** Called by all product modules to validate user authentication and authorization
-
----
 
 ### 5.2 Events and Callbacks
 
-**Event Publishing Mechanism:** Event-driven architecture using message queue (e.g., Cloud Pub/Sub, RabbitMQ, AWS SNS/SQS)
+**Published Events**
 
-**Event Schema Standard:**
+All events published to message bus in JSON format with standard envelope:
+
 ```json
 {
   "event_id": "string (UUID)",
   "event_type": "string (event name)",
-  "timestamp": "string (ISO 8601 datetime)",
-  "source": "string (authentication-module)",
-  "version": "string (event schema version, e.g., 1.0)",
-  "data": {
-    // Event-specific payload
-  }
+  "timestamp": "ISO 8601 timestamp",
+  "source": "authentication_module",
+  "version": "1.0",
+  "payload": { /* event-specific data */ }
 }
 ```
 
-**Published Events:**
-
-**1. user.registered**
+**Event: user.logged_in**
 ```json
 {
-  "event_type": "user.registered",
-  "data": {
+  "payload": {
     "user_id": "string",
     "email": "string",
-    "provider_type": "string (email|google|microsoft)",
-    "role": "string (Subscriber|Provisional|Admin)",
-    "referral_code": "string|null",
-    "email_verified": "boolean",
-    "registration_ip": "string (IP address)",
-    "user_agent": "string"
-  }
-}
-```
-
-**2. user.logged_in**
-```json
-{
-  "event_type": "user.logged_in",
-  "data": {
-    "user_id": "string",
-    "email": "string",
-    "provider_type": "string",
+    "login_method": "string (email, oauth_google, oauth_microsoft, oauth_github)",
     "ip_address": "string",
     "user_agent": "string",
+    "session_id": "string",
     "mfa_used": "boolean"
   }
 }
 ```
 
-**3. user.logged_out**
+**Event: user.logged_out**
 ```json
 {
-  "event_type": "user.logged_out",
-  "data": {
+  "payload": {
     "user_id": "string",
-    "session_duration": "number (seconds)"
+    "session_id": "string",
+    "logout_reason": "string (user_initiated, admin_revoked, expired)"
   }
 }
 ```
 
-**4. user.password_reset**
+**Event: user.mfa_enabled**
 ```json
 {
-  "event_type": "user.password_reset",
-  "data": {
+  "payload": {
     "user_id": "string",
-    "email": "string",
-    "ip_address": "string"
+    "mfa_type": "string (totp, sms)",
+    "mfa_config_id": "string"
   }
 }
 ```
 
-**5. user.mfa_enrolled**
+**Event: session.expired**
 ```json
 {
-  "event_type": "user.mfa_enrolled",
-  "data": {
+  "payload": {
     "user_id": "string",
-    "email": "string",
-    "mfa_method": "string (totp)"
+    "session_id": "string",
+    "expiration_reason": "string (idle_timeout, absolute_timeout, token_expired)"
   }
 }
 ```
 
-**6. user.role_changed**
+**Subscribed Events**
+
+**Event: user.created** (from User Management Module)
+- **Purpose**: Initialize authentication credentials for new user
+- **Expected Payload**:
 ```json
 {
-  "event_type": "user.role_changed",
-  "data": {
-    "user_id": "string",
-    "old_role": "string",
-    "new_role": "string",
-    "reason": "string (subscription_created|subscription_cancelled|admin_action)",
-    "changed_by": "string (user_id of admin if manual change)"
-  }
+  "user_id": "string",
+  "email": "string",
+  "initial_password": "string (optional, hashed if provided)",
+  "require_email_verification": "boolean"
 }
 ```
+- **Callback Action**: Create UserCredential record, send email verification if required
 
-**7. auth.failed_login**
+**Event: user.deleted** (from User Management Module)
+- **Purpose**: Clean up authentication data for deleted user
+- **Expected Payload**:
 ```json
 {
-  "event_type": "auth.failed_login",
-  "data": {
-    "email": "string",
-    "ip_address": "string",
-    "reason": "string (invalid_password|account_locked|mfa_failed)",
-    "attempt_count": "number (consecutive failures)",
-    "user_agent": "string"
-  }
+  "user_id": "string"
 }
 ```
+- **Callback Action**: Revoke all sessions, delete UserCredential, MFAConfiguration, and related records
 
-**Subscribed Events:**
+**Webhooks**
 
-**1. subscription.created**
-- **Source:** Subscription Module
-- **Handler:** Role Elevation Service
-- **Action:** Update UserRole from Provisional to Subscriber (AUTH-FR-009)
-
-**2. subscription.cancelled**
-- **Source:** Subscription Module
-- **Handler:** Role Downgrade Service
-- **Action:** Update UserRole from Subscriber to Provisional, maintain grace period if configured
-
-**3. subscription.expired**
-- **Source:** Subscription Module
-- **Handler:** Role Downgrade Service
-- **Action:** Update UserRole from Subscriber to Provisional
-
-**Callback Mechanisms:**
-
-**OAuth2 Callbacks:**
-- Google OAuth2: `GET /api/auth/social/google/callback`
-- Microsoft OAuth2: `GET /api/auth/social/microsoft/callback`
-- Handles authorization code exchange, user profile retrieval, account creation/linking
-
-**Email Verification Callback:**
-- Endpoint: `GET /api/auth/verify-email?token={verification_token}`
-- Validates token, marks email as verified in Firebase Auth and AuthUser record
-- Redirects to application with verification status
-
-**Password Reset Callback:**
-- Endpoint: `GET /api/auth/password-reset?token={reset_token}`
-- Validates reset token, redirects to password reset form
-- Token submitted via POST to `/api/auth/password-reset/confirm`
+**Outbound Webhook: Session Expiration Notification**
+- **Trigger**: Session expires or is revoked
+- **Endpoint**: Configured per client application
+- **Payload**:
+```json
+{
+  "webhook_type": "session.expired",
+  "session_id": "string",
+  "user_id": "string",
+  "expiration_reason": "string"
+}
+```
 
 ### 5.3 Pseudo-Code Examples
 
-**User Registration with Referral Code Validation**
+**Password Authentication**
 
-```pseudo
-function registerUser(email, password, referralCode, name):
-  // Input validation
+```
+function authenticateWithPassword(email, password):
+  // Validate input
   if not isValidEmail(email):
-    return error("INVALID_EMAIL", "Email format is invalid")
+    return error("Invalid email format")
   
-  if not meetsPasswordPolicy(password):
-    return error("WEAK_PASSWORD", "Password must be at least 8 characters with mixed case, numbers, and special characters")
+  if password.length < 8 or password.length > 128:
+    return error("Invalid password length")
   
-  // Check for duplicate email
-  existingUser = database.query("SELECT user_id FROM AuthUser WHERE email = ?", [email])
-  if existingUser:
-    return error("DUPLICATE_EMAIL", "Email already registered")
+  // Check rate limiting
+  loginAttempts = getRecentLoginAttempts(email, ipAddress)
+  if loginAttempts.count >= config.maxLoginAttempts:
+    return error("Rate limit exceeded", 429)
   
-  // Validate referral code if provided
-  assignedRole = "Provisional"
-  inviteCodeRecord = null
+  // Check IP access control
+  if isIPBlocked(ipAddress):
+    return error("Access denied", 403)
   
-  if referralCode:
-    inviteCodeRecord = database.query(
-      "SELECT code, email, role, expiration_date, used_flag FROM InviteCode WHERE code = ?",
-      [referralCode]
-    )
+  // Retrieve user credential
+  userCredential = database.findUserCredentialByEmail(email)
+  if not userCredential:
+    logLoginAttempt(email, ipAddress, success=false, reason="user_not_found")
+    return error("Invalid credentials", 401)
+  
+  // Validate password
+  isPasswordValid = bcrypt.compare(password, userCredential.password_hash)
+  if not isPasswordValid:
+    logLoginAttempt(email, ipAddress, success=false, reason="invalid_password")
+    incrementFailedLoginCount(userCredential.user_id)
     
-    if not inviteCodeRecord:
-      log.warning("Invalid referral code attempted", {code: referralCode, email: email})
-      // Continue with Provisional role, don't fail registration
-    else if inviteCodeRecord.used_flag == true:
-      log.warning("Already used referral code attempted", {code: referralCode})
-      // Continue with Provisional role
-    else if inviteCodeRecord.expiration_date < currentTimestamp():
-      log.warning("Expired referral code attempted", {code: referralCode})
-      // Continue with Provisional role
-    else if inviteCodeRecord.email != null and inviteCodeRecord.email != email:
-      log.warning("Referral code email mismatch", {code: referralCode, expected: inviteCodeRecord.email, provided: email})
-      // Continue with Provisional role
-    else:
-      // Valid referral code
-      assignedRole = inviteCodeRecord.role
+    if getFailedLoginCount(userCredential.user_id) >= config.accountLockThreshold:
+      lockAccount(userCredential.user_id)
+      return error("Account locked due to excessive failed attempts", 423)
+    
+    return error("Invalid credentials", 401)
   
-  // Create Firebase user
-  try:
-    firebaseUser = firebaseAuth.createUser({
+  // Check account status
+  if userCredential.account_locked:
+    return error("Account locked", 423)
+  
+  // Check MFA requirement
+  mfaConfig = database.findMFAConfigByUserId(userCredential.user_id)
+  if mfaConfig and mfaConfig.enabled:
+    mfaToken = generateTemporaryMFAToken(userCredential.user_id)
+    return response(mfa_required=true, mfa_token=mfaToken)
+  
+  // Create session and generate tokens
+  session = createSession(userCredential.user_id, ipAddress, userAgent)
+  accessToken = generateAccessToken(userCredential.user_id, session.session_id)
+  refreshToken = generateRefreshToken(session.session_id)
+  
+  // Load user roles
+  userRoles = database.findUserRolesByUserId(userCredential.user_id)
+  roles = userRoles.map(ur => ur.role_name)
+  
+  // Log successful login
+  logLoginAttempt(email, ipAddress, success=true)
+  publishEvent("user.logged_in", {
+    user_id: userCredential.user_id,
+    email: email,
+    login_method: "email",
+    ip_address: ipAddress,
+    session_id: session.session_id,
+    mfa_used: false
+  })
+  
+  return response(
+    access_token: accessToken,
+    refresh_token: refreshToken,
+    token_type: "Bearer",
+    expires_in: config.accessTokenExpiration,
+    user: {
+      user_id: userCredential.user_id,
       email: email,
-      password: password,
-      emailVerified: false
-    })
-  catch FirebaseError as e:
-    if e.code == "EMAIL_EXISTS":
-      return error("DUPLICATE_EMAIL", "Email already registered")
-    else:
-      log.error("Firebase user creation failed", {error: e})
-      return error("SERVICE_ERROR", "Unable to create account. Please try again.")
-  
-  // Create AuthUser record
-  authUser = database.insert("AuthUser", {
-    user_id: firebaseUser.uid,
-    email: email,
-    provider_type: "email",
-    provider_user_id: null,
-    created_at: currentTimestamp(),
-    last_login: null
-  })
-  
-  // Create UserRole record
-  userRole = database.insert("UserRole", {
-    user_id: firebaseUser.uid,
-    role: assignedRole,
-    assigned_at: currentTimestamp()
-  })
-  
-  // Mark invite code as used if valid
-  if inviteCodeRecord and assignedRole != "Provisional":
-    database.update("InviteCode", 
-      {used_flag: true, used_at: currentTimestamp(), used_by: firebaseUser.uid},
-      {code: referralCode}
-    )
-  
-  // Send verification email
-  verificationToken = generateSecureToken()
-  database.insert("EmailVerificationToken", {
-    user_id: firebaseUser.uid,
-    token: verificationToken,
-    expires_at: currentTimestamp() + 24 * 3600  // 24 hours
-  })
-  
-  emailService.send({
-    to: email,
-    template: "email_verification",
-    data: {
-      verification_url: "https://app.example.com/verify-email?token=" + verificationToken,
-      name: name
+      roles: roles
     }
-  })
-  
-  // Generate session tokens
-  accessToken = firebaseAuth.createCustomToken(firebaseUser.uid, {
-    role: assignedRole,
-    email_verified: false
-  })
-  refreshToken = firebaseAuth.createRefreshToken(firebaseUser.uid)
-  
-  // Publish registration event
-  eventBus.publish("user.registered", {
-    user_id: firebaseUser.uid,
-    email: email,
-    provider_type: "email",
-    role: assignedRole,
-    referral_code: referralCode,
-    email_verified: false
-  })
-  
-  // Log successful registration
-  auditLog.info("User registered", {
-    user_id: firebaseUser.uid,
-    email: email,
-    role: assignedRole,
-    referral_used: (assignedRole != "Provisional")
-  })
-  
-  return success({
-    user_id: firebaseUser.uid,
-    email: email,
-    role: assignedRole,
-    email_verified: false,
-    tokens: {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      expires_in: 3600
-    }
-  })
+  )
 ```
 
-**Token Verification and Authorization Check**
+**Token Validation and Authorization**
 
-```pseudo
-function verifyTokenAndAuthorize(accessToken, requiredPermission):
+```
+function authorizeRequest(accessToken, resource, action):
   // Validate token format
-  if not accessToken or not accessToken.startsWith("Bearer "):
-    return error("INVALID_TOKEN", "Missing or malformed authorization token")
-  
-  token = accessToken.substring(7)  // Remove "Bearer " prefix
+  if not accessToken:
+    return error("Missing access token", 401)
   
   // Verify JWT signature and expiration
   try:
-    decodedToken = firebaseAuth.verifyIdToken(token)
-  catch TokenExpiredError:
-    return error("EXPIRED_TOKEN", "Access token has expired. Please refresh.")
-  catch InvalidTokenError as e:
-    log.warning("Invalid token verification attempt", {error: e})
-    return error("INVALID_TOKEN", "Invalid access token")
+    tokenPayload = jwt.verify(accessToken, publicKey)
+  catch SignatureError:
+    return error("Invalid token signature", 401)
+  catch ExpiredError:
+    return error("Token expired", 401)
   
-  userId = decodedToken.uid
+  // Extract user information from token
+  userId = tokenPayload.user_id
+  sessionId = tokenPayload.session_id
   
-  // Check session cache for user role and permissions
-  cacheKey = "user_permissions:" + userId
-  cachedPermissions = cache.get(cacheKey)
+  // Check session is still active
+  session = cache.getSession(sessionId)
+  if not session:
+    session = database.findSessionById(sessionId)
+    if not session:
+      return error("Session not found", 401)
+    cache.setSession(sessionId, session, ttl=config.sessionCacheTTL)
   
-  if cachedPermissions:
-    userRole = cachedPermissions.role
-    permissions = cachedPermissions.permissions
-  else:
-    // Cache miss - query database
-    userRoleRecord = database.query(
-      "SELECT role FROM UserRole WHERE user_id = ?",
-      [userId]
-    )
-    
-    if not userRoleRecord:
-      log.error("User role not found for authenticated user", {user_id: userId})
-      return error("AUTHORIZATION_ERROR", "User role not configured")
-    
-    userRole = userRoleRecord.role
-    permissions = getPermissionsForRole(userRole)
-    
-    // Cache for 5 minutes
-    cache.set(cacheKey, {role: userRole, permissions: permissions}, ttl: 300)
+  // Check session not revoked
+  if session.revoked_at:
+    return error("Session revoked", 401)
+  
+  // Check idle timeout
+  if (currentTime - session.last_activity_at) > config.idleTimeout:
+    revokeSession(sessionId)
+    return error("Session expired due to inactivity", 401)
+  
+  // Update last activity
+  updateSessionActivity(sessionId)
+  
+  // Get user roles and permissions
+  userRoles = cache.getUserRoles(userId)
+  if not userRoles:
+    userRoles = database.findUserRolesByUserId(userId)
+    cache.setUserRoles(userId, userRoles, ttl=config.roleCacheTTL)
+  
+  // Aggregate permissions from all roles
+  permissions = []
+  for role in userRoles:
+    rolePermissions = cache.getRolePermissions(role.role_id)
+    if not rolePermissions:
+      rolePermissions = database.findPermissionsByRoleId(role.role_id)
+      cache.setRolePermissions(role.role_id, rolePermissions, ttl=config.permissionCacheTTL)
+    permissions.extend(rolePermissions)
   
   // Check if user has required permission
-  if requiredPermission not in permissions:
-    auditLog.warning("Unauthorized access attempt", {
+  requiredPermission = resource + ":" + action
+  isAuthorized = requiredPermission in permissions
+  
+  // Log authorization check
+  logAuthorizationCheck(userId, resource, action, isAuthorized)
+  
+  if not isAuthorized:
+    publishEvent("authorization.denied", {
       user_id: userId,
-      role: userRole,
-      required_permission: requiredPermission
+      resource: resource,
+      action: action
     })
-    return error("FORBIDDEN", "Insufficient permissions to access this resource")
+    return error("Insufficient permissions", 403)
   
-  // Authorization successful
-  return success({
+  return response(
+    authorized: true,
     user_id: userId,
-    email: decodedToken.email,
-    role: userRole,
-    permissions: permissions,
-    email_verified: decodedToken.email_verified
-  })
-
-function getPermissionsForRole(role):
-  rolePermissions = {
-    "Admin": ["read", "write", "delete", "admin", "manage_users", "view_analytics"],
-    "Subscriber": ["read", "write", "access_premium_content", "download_resources"],
-    "Provisional": ["read", "access_trial_content"]
-  }
-  
-  return rolePermissions[role] or []
+    roles: userRoles.map(r => r.role_name)
+  )
 ```
 
 **MFA Enrollment and Verification**
 
-```pseudo
-function enrollMFA(userId):
-  // Verify user is Admin
-  userRole = database.query("SELECT role FROM UserRole WHERE user_id = ?", [userId])
-  if userRole.role != "Admin":
-    return error("FORBIDDEN", "MFA enrollment is only available for Admin accounts")
+```
+function enrollMFA(userId, mfaType):
+  // Validate MFA type
+  if mfaType not in ["totp", "sms"]:
+    return error("Invalid MFA type")
   
-  // Check if MFA already enrolled
-  existingMFA = database.query("SELECT mfa_enabled FROM AuthUser WHERE user_id = ?", [userId])
-  if existingMFA.mfa_enabled:
-    return error("MFA_ALREADY_ENROLLED", "MFA is already configured for this account")
+  // Check if MFA already enabled
+  existingMFA = database.findMFAConfigByUserId(userId)
+  if existingMFA and existingMFA.enabled:
+    return error("MFA already enabled")
   
-  // Generate TOTP secret
-  totpSecret = generateBase32Secret(32)  // 32-byte secret
-  
-  // Generate QR code
-  issuer = "EducatorPlatform"
-  userEmail = database.query("SELECT email FROM AuthUser WHERE user_id = ?", [userId]).email
-  otpauthUrl = "otpauth://totp/" + issuer + ":" + userEmail + "?secret=" + totpSecret + "&issuer=" + issuer
-  qrCodeDataUri = generateQRCode(otpauthUrl)
-  
-  // Generate backup codes
-  backupCodes = []
-  for i in range(10):
-    backupCode = generateSecureToken(8)  // 8-character alphanumeric
-    backupCodes.append(backupCode)
+  if mfaType == "totp":
+    // Generate TOTP secret
+    secretKey = generateSecureRandom(32)
     
-    // Store hashed backup code
-    database.insert("MFABackupCode", {
+    // Create MFA configuration
+    mfaConfig = database.createMFAConfiguration({
       user_id: userId,
-      code_hash: hashSHA256(backupCode),
-      used: false,
-      created_at: currentTimestamp()
+      mfa_type: "totp",
+      secret_key: secretKey,
+      enabled: false,
+      verified_at: null
     })
-  
-  // Store MFA secret (encrypted)
-  database.update("AuthUser", 
-    {
-      mfa_secret: encrypt(totpSecret),
-      mfa_enabled: false,  // Not enabled until first successful verification
-      mfa_enrolled_at: currentTimestamp()
-    },
-    {user_id: userId}
-  )
-  
-  return success({
-    secret: totpSecret,
-    qr_code_url: qrCodeDataUri,
-    backup_codes: backupCodes,
-    issuer: issuer
-  })
-
-function verifyMFACode(sessionId, code):
-  // Retrieve pending MFA session
-  mfaSession = cache.get("mfa_session:" + sessionId)
-  if not mfaSession:
-    return error("INVALID_SESSION", "MFA session expired or invalid")
-  
-  userId = mfaSession.user_id
-  
-  // Retrieve MFA secret
-  authUser = database.query(
-    "SELECT mfa_secret, mfa_enabled FROM AuthUser WHERE user_id = ?",
-    [userId]
-  )
-  
-  if not authUser.mfa_secret:
-    return error("MFA_NOT_CONFIGURED", "MFA is not configured for this account")
-  
-  totpSecret = decrypt(authUser.mfa_secret)
-  
-  // Check if code is TOTP or backup code
-  if code.length == 6 and code.isNumeric():
-    // TOTP verification
-    isValid = verifyTOTP(totpSecret, code, timeWindow: 1)  // Allow ±30 seconds
     
-    if isValid:
-      // Enable MFA if first successful verification
-      if not authUser.mfa_enabled:
-        database.update("AuthUser", {mfa_enabled: true}, {user_id: userId})
-        eventBus.publish("user.mfa_enrolled", {user_id: userId})
-      
-      // Generate session tokens
-      tokens = generateSessionTokens(userId)
-      cache.delete("mfa_session:" + sessionId)
-      
-      auditLog.info("MFA verification successful", {user_id: userId, method: "totp"})
-      return success({tokens: tokens})
-    else:
-      // Track failed attempts
-      attempts = cache.increment("mfa_failed_attempts:" + userId)
-      if attempts >= 5:
-        auditLog.warning("Multiple MFA failures", {user_id: userId, attempts: attempts})
-        return error("MFA_LOCKED", "Too many failed MFA attempts. Please use backup code.")
-      
-      return error("INVALID_MFA_CODE", "Invalid verification code", {attempts_remaining: 5 - attempts})
-  
-  else if code.length == 8:
-    // Backup code verification
-    codeHash = hashSHA256(code)
-    backupCode = database.query(
-      "SELECT code_hash, used FROM MFABackupCode WHERE user_id = ? AND code_hash = ?",
-      [userId, codeHash]
+    // Generate backup codes
+    backupCodes = []
+    for i in range(10):
+      code = generateSecureRandom(8)
+      backupCodes.append(code)
+      database.createBackupCode({
+        mfa_config_id: mfaConfig.mfa_config_id,
+        code_hash: hash(code),
+        used: false
+      })
+    
+    // Generate QR code
+    totpURI = "otpauth://totp/AppName:" + userEmail + "?secret=" + secretKey + "&issuer=AppName"
+    qrCode = generateQRCode(totpURI)
+    
+    return response(
+      secret_key: secretKey,
+      qr_code: qrCode,
+      backup_codes: backupCodes,
+      mfa_config_id: mfaConfig.mfa_config_id
     )
-    
-    if not backupCode:
-      return error("INVALID_BACKUP_CODE", "Invalid backup code")
-    
-    if backupCode.used:
-      return error("BACKUP_CODE_USED", "This backup code has already been used")
-    
-    // Mark backup code as used
-    database.update("MFABackupCode", {used: true, used_at: currentTimestamp()}, {code_hash: codeHash})
-    
-    // Generate session tokens
-    tokens = generateSessionTokens(userId)
-    cache.delete("mfa_session:" + sessionId)
-    
-    auditLog.info("MFA verification successful", {user_id: userId, method: "backup_code"})
-    return success({tokens: tokens})
   
-  else:
-    return error("INVALID_CODE_FORMAT", "Code must be 6-digit TOTP or 8-character backup code")
+  else if mfaType == "sms":
+    // Implementation for SMS MFA
+    // Generate and send SMS code
+    // Return mfa_config_id for verification
 ```
 
-**Password Reset Flow**
-
-```pseudo
-function requestPasswordReset(email):
-  // Rate limiting check
-  rateLimitKey = "password_reset_requests:" + email
-  requestCount = cache.increment(rateLimitKey, ttl: 3600)  // 1 hour window
-  
-  if requestCount > 3:
-    auditLog.warning("Password reset rate limit exceeded", {email: email})
-    return success({message: "If an account exists with this email, a password reset link has been sent."})
-    // Return generic success to prevent enumeration
-  
-  // Check if email exists (but don't reveal in response)
-  authUser = database.query("SELECT user_id, email FROM AuthUser WHERE email = ?", [email])
-  
-  if authUser:
-    // Generate reset token
-    resetToken = generateSecureToken(32)
-    tokenHash = hashSHA256(resetToken)
-    
-    // Store reset token
-    database.insert("PasswordResetToken", {
-      user_id: authUser.user_id,
-      token_hash: tokenHash,
-      expires_at: currentTimestamp() + 3600,  // 1 hour expiration
-      used: false,
-      created_at: currentTimestamp()
-    })
-    
-    // Send reset email
-    resetUrl = "https://app.example.com/password-reset?token=" + resetToken
-    emailService.send({
-      to: email,
-      template: "password_reset",
-      data: {
-        reset_url: resetUrl,
-        expires_in: "1 hour"
-      }
-    })
-    
-    auditLog.info("Password reset requested", {user_id: authUser.user_id, email: email})
-  else:
-    auditLog.info("Password reset requested for non-existent email", {email: email})
-  
-  // Always return generic success message
-  return success({message: "If an account exists with this email, a password reset link has been sent."})
-
-function confirmPasswordReset(resetToken, newPassword):
-  // Validate password policy
-  if not meetsPasswordPolicy(newPassword):
-    return error("WEAK_PASSWORD", "Password must be at least 8 characters with mixed case, numbers, and special characters")
-  
-  // Hash token and look up
-  tokenHash = hashSHA256(resetToken)
-  resetRecord = database.query(
-    "SELECT user_id, expires_at, used FROM PasswordResetToken WHERE token_hash = ?",
-    [tokenHash]
-  )
-  
-  if not resetRecord:
-    auditLog.warning("Invalid password reset token attempted", {token: resetToken})
-    return error("INVALID_TOKEN", "Invalid or expired reset token")
-  
-  if resetRecord.used:
-    return error("TOKEN_USED", "This reset link has already been used")
-  
-  if resetRecord.expires_at < currentTimestamp():
-    return error("EXPIRED_TOKEN", "Reset link has expired. Please request a new one.")
-  
-  userId = resetRecord.user_id
-  
-  // Update password in Firebase
+```
+function verifyMFA(mfaToken, code, trustDevice):
+  // Decode MFA token to get user_id and challenge
   try:
-    firebaseAuth.updateUser(userId, {password: newPassword})
-  catch FirebaseError as e:
-    log.error("Firebase password update failed", {user_id: userId, error: e})
-    return error("SERVICE_ERROR", "Unable to reset password. Please try again.")
+    mfaPayload = jwt.verify(mfaToken, mfaTokenSecret)
+  catch:
+    return error("Invalid MFA token", 401)
   
-  // Mark reset token as used
-  database.update("PasswordResetToken", 
-    {used: true, used_at: currentTimestamp()},
-    {token_hash: tokenHash}
+  userId = mfaPayload.user_id
+  
+  // Retrieve MFA configuration
+  mfaConfig = database.findMFAConfigByUserId(userId)
+  if not mfaConfig:
+    return error("MFA not configured", 400)
+  
+  // Verify code based on MFA type
+  isCodeValid = false
+  
+  if mfaConfig.mfa_type == "totp":
+    // Verify TOTP code with time window
+    isCodeValid = totp.verify(code, mfaConfig.secret_key, window=1)
+    
+    // If TOTP fails, check backup codes
+    if not isCodeValid:
+      backupCode = database.findBackupCodeByHash(hash(code), mfaConfig.mfa_config_id)
+      if backupCode and not backupCode.used:
+        database.markBackupCodeAsUsed(backupCode.backup_code_id)
+        isCodeValid = true
+  
+  else if mfaConfig.mfa_type == "sms":
+    // Verify SMS code from cache/database
+    storedCode = cache.getSMSCode(userId)
+    isCodeValid = (code == storedCode)
+    cache.deleteSMSCode(userId)
+  
+  if not isCodeValid:
+    return error("Invalid MFA code", 401)
+  
+  // Mark MFA as verified if this is enrollment verification
+  if not mfaConfig.enabled:
+    database.updateMFAConfiguration(mfaConfig.mfa_config_id, {
+      enabled: true,
+      verified_at: currentTime
+    })
+    publishEvent("user.mfa_enabled", {
+      user_id: userId,
+      mfa_type: mfaConfig.mfa_type,
+      mfa_config_id: mfaConfig.mfa_config_id
+    })
+  
+  // Create session and tokens
+  session = createSession(userId, ipAddress, userAgent)
+  accessToken = generateAccessToken(userId, session.session_id)
+  refreshToken = generateRefreshToken(session.session_id)
+  
+  // Handle trusted device
+  if trustDevice:
+    trustedDeviceToken = generateTrustedDeviceToken(userId, deviceFingerprint)
+    cache.setTrustedDevice(userId, deviceFingerprint, trustedDeviceToken, ttl=config.trustedDeviceTTL)
+  
+  // Log successful MFA verification
+  logLoginAttempt(userEmail, ipAddress, success=true, mfa_used=true)
+  
+  return response(
+    access_token: accessToken,
+    refresh_token: refreshToken,
+    token_type: "Bearer",
+    expires_in: config.accessTokenExpiration
   )
-  
-  // Invalidate all refresh tokens for security
-  firebaseAuth.revokeRefreshTokens(userId)
-  cache.deletePattern("user_session:" + userId + ":*")
-  
-  // Send confirmation email
-  userEmail = database.query("SELECT email FROM AuthUser WHERE user_id = ?", [userId]).email
-  emailService.send({
-    to: userEmail,
-    template: "password_changed_confirmation",
-    data: {
-      timestamp: currentTimestamp()
-    }
-  })
-  
-  // Publish password reset event
-  eventBus.publish("user.password_reset", {
-    user_id: userId,
-    email: userEmail
-  })
-  
-  auditLog.info("Password reset completed", {user_id: userId})
-  
-  return success({message: "Password successfully reset. Please login with your new password."})
 ```
 
 ---
@@ -1824,155 +1303,509 @@ function confirmPasswordReset(resetToken, newPassword):
 
 ### 6.1 Core Entities
 
-**AuthUser**
-- **user_id**: string (primary key, Firebase UID, max 128 chars)
-- **email**: string (unique, indexed, max 255 chars, validated email format)
-- **provider_type**: enum (email | google | microsoft | saml, indicates primary authentication method)
-- **provider_user_id**: string (nullable, external provider's user identifier, max 255 chars)
-- **email_verified**: boolean (default false, indicates email ownership confirmed)
-- **mfa_enabled**: boolean (default false, indicates MFA enrollment status)
-- **mfa_secret**: string (nullable, encrypted TOTP secret, max 255 chars)
-- **mfa_enrolled_at**: timestamp (nullable, when MFA was first configured)
-- **created_at**: timestamp (account creation date, indexed for analytics)
-- **last_login**: timestamp (nullable, most recent successful authentication)
-- **account_locked**: boolean (default false, set true after excessive failed attempts)
-- **locked_until**: timestamp (nullable, when account lock expires)
-- **deleted_at**: timestamp (nullable, soft delete timestamp for GDPR compliance)
+**UserCredential**
+- `user_credential_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity (in User Management Module), unique, not null
+- `email`: string(255), unique, not null, indexed
+- `password_hash`: string(255), not null (bcrypt or Argon2 hash)
+- `salt`: string(64), not null (used with password hashing)
+- `hash_algorithm`: enum('bcrypt', 'argon2id'), not null
+- `account_locked`: boolean, default false
+- `locked_at`: timestamp, nullable
+- `lock_reason`: string(500), nullable
+- `failed_login_count`: integer, default 0
+- `last_failed_login_at`: timestamp, nullable
+- `password_changed_at`: timestamp, nullable
+- `created_at`: timestamp, not null, default current_timestamp
+- `updated_at`: timestamp, not null, default current_timestamp on update
+
+**OAuthProvider**
+- `provider_id`: UUID, primary key
+- `provider_name`: string(50), unique, not null (e.g., 'google', 'microsoft', 'github')
+- `client_id`: string(255), not null
+- `client_secret`: string(500), not null, encrypted
+- `authorization_endpoint`: string(500), not null
+- `token_endpoint`: string(500), not null
+- `user_info_endpoint`: string(500), not null
+- `scope`: string(500), not null (space-separated scopes)
+- `enabled`: boolean, default true
+- `created_at`: timestamp, not null
+- `updated_at`: timestamp, not null
+
+**OAuthIdentity**
+- `oauth_identity_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, not null, indexed
+- `provider_id`: UUID, foreign key to OAuthProvider, not null
+- `provider_user_id`: string(255), not null (user ID from OAuth provider)
+- `provider_email`: string(255), nullable
+- `access_token`: string(1000), nullable, encrypted
+- `refresh_token`: string(1000), nullable, encrypted
+- `token_expires_at`: timestamp, nullable
+- `profile_data`: JSON, nullable (additional profile information)
+- `created_at`: timestamp, not null
+- `updated_at`: timestamp, not null
+- Unique constraint: (provider_id, provider_user_id)
+
+**Role**
+- `role_id`: UUID, primary key
+- `role_name`: string(100), unique, not null, indexed
+- `description`: string(500), nullable
+- `parent_role_id`: UUID, foreign key to Role (self-referencing), nullable (for role hierarchy)
+- `permissions`: JSON array, not null (list of permission strings: "resource:action")
+- `is_system_role`: boolean, default false (system roles cannot be deleted)
+- `created_at`: timestamp, not null
+- `updated_at`: timestamp, not null
+- `created_by`: UUID, foreign key to User entity, nullable
 
 **UserRole**
-- **id**: integer (primary key, auto-increment)
-- **user_id**: string (foreign key to AuthUser.user_id, indexed)
-- **role**: enum (Subscriber | Provisional | Admin, current role assignment)
-- **assigned_at**: timestamp (when role was assigned)
-- **assigned_by**: string (nullable, user_id of admin who assigned role, null for system assignments)
-- **previous_role**: enum (nullable, role before this assignment for audit trail)
-- **expires_at**: timestamp (nullable, for time-limited role assignments)
-- **notes**: text (nullable, reason for role assignment or other context)
+- `user_role_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, not null, indexed
+- `role_id`: UUID, foreign key to Role, not null, indexed
+- `assigned_at`: timestamp, not null, default current_timestamp
+- `assigned_by`: UUID, foreign key to User entity (admin who assigned), not null
+- `expires_at`: timestamp, nullable (for temporary role assignments)
+- Unique constraint: (user_id, role_id)
 
-**InviteCode**
-- **id**: integer (primary key, auto-increment)
-- **code**: string (unique, indexed, 8-16 alphanumeric chars, case-insensitive)
-- **email**: string (nullable, if code is tied to specific email, max 255 chars)
-- **role**: enum (Subscriber | Provisional | Admin, role to assign upon code use)
-- **expiration_date**: timestamp (when code becomes invalid)
-- **used_flag**: boolean (default false, set true when code is redeemed)
-- **used_at**: timestamp (nullable, when code was used)
-- **used_by**: string (nullable, user_id who used the code)
-- **created_by**: string (user_id of admin who generated code)
-- **created_at**: timestamp (code generation date)
-- **max_uses**: integer (default 1, how many times code can be used, typically 1)
-- **current_uses**: integer (default 0, how many times code has been used)
-- **batch_id**: string (nullable, identifier for bulk-generated code batches)
-- **notes**: text (nullable, purpose or context for code generation)
+**Session**
+- `session_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, not null, indexed
+- `token`: string(500), unique, not null, indexed (session token or JWT ID)
+- `refresh_token`: string(500), unique, not null, indexed
+- `ip_address`: string(45), not null (supports IPv6)
+- `user_agent`: string(500), not null
+- `device_fingerprint`: string(255), nullable
+- `created_at`: timestamp, not null
+- `last_activity_at`: timestamp, not null, indexed
+- `expires_at`: timestamp, not null, indexed
+- `revoked_at`: timestamp, nullable
+- `revoked_by`: UUID, foreign key to User entity (admin), nullable
+- `revoke_reason`: string(500), nullable
+
+**MFAConfiguration**
+- `mfa_config_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, unique, not null
+- `mfa_type`: enum('totp', 'sms'), not null
+- `secret_key`: string(255), nullable, encrypted (for TOTP)
+- `phone_number`: string(20), nullable, encrypted (for SMS)
+- `backup_codes`: JSON array, nullable (hashed backup codes)
+- `enabled`: boolean, default false
+- `verified_at`: timestamp, nullable
+- `created_at`: timestamp, not null
+- `updated_at`: timestamp, not null
+
+**BackupCode**
+- `backup_code_id`: UUID, primary key
+- `mfa_config_id`: UUID, foreign key to MFAConfiguration, not null, indexed
+- `code_hash`: string(255), not null
+- `used`: boolean, default false
+- `used_at`: timestamp, nullable
+- `created_at`: timestamp, not null
+
+**TrustedDevice**
+- `trusted_device_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, not null, indexed
+- `device_fingerprint`: string(255), not null
+- `device_name`: string(255), nullable
+- `trust_token`: string(500), unique, not null
+- `ip_address`: string(45), not null
+- `user_agent`: string(500), not null
+- `trusted_at`: timestamp, not null
+- `expires_at`: timestamp, not null
+- `last_used_at`: timestamp, not null
+- Unique constraint: (user_id, device_fingerprint)
 
 **PasswordResetToken**
-- **id**: integer (primary key, auto-increment)
-- **user_id**: string (foreign key to AuthUser.user_id, indexed)
-- **token_hash**: string (unique, SHA-256 hash of reset token, indexed)
-- **expires_at**: timestamp (token expiration, typically 1 hour from creation)
-- **used**: boolean (default false, prevents token reuse)
-- **used_at**: timestamp (nullable, when token was consumed)
-- **created_at**: timestamp (token generation time)
-- **ip_address**: string (nullable, IP from which reset was requested)
+- `token_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, not null, indexed
+- `token_hash`: string(255), unique, not null, indexed
+- `ip_address`: string(45), not null
+- `created_at`: timestamp, not null
+- `expires_at`: timestamp, not null, indexed
+- `used_at`: timestamp, nullable
+- `used_from_ip`: string(45), nullable
 
 **EmailVerificationToken**
-- **id**: integer (primary key, auto-increment)
-- **user_id**: string (foreign key to AuthUser.user_id, indexed)
-- **token_hash**: string (unique, SHA-256 hash of verification token, indexed)
-- **expires_at**: timestamp (token expiration, typically 24 hours from creation)
-- **used**: boolean (default false)
-- **used_at**: timestamp (nullable)
-- **created_at**: timestamp
+- `token_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, not null, indexed
+- `email`: string(255), not null (email being verified)
+- `token_hash`: string(255), unique, not null, indexed
+- `created_at`: timestamp, not null
+- `expires_at`: timestamp, not null, indexed
+- `verified_at`: timestamp, nullable
+- `verified_from_ip`: string(45), nullable
 
-**MFABackupCode**
-- **id**: integer (primary key, auto-increment)
-- **user_id**: string (foreign key to AuthUser.user_id, indexed)
-- **code_hash**: string (SHA-256 hash of backup code, indexed)
-- **used**: boolean (default false)
-- **used_at**: timestamp (nullable)
-- **created_at**: timestamp
+**LoginAttempt**
+- `attempt_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, nullable, indexed (null if user not found)
+- `email`: string(255), not null, indexed
+- `ip_address`: string(45), not null, indexed
+- `user_agent`: string(500), not null
+- `success`: boolean, not null, indexed
+- `failure_reason`: string(255), nullable (e.g., 'invalid_password', 'account_locked', 'mfa_failed')
+- `mfa_used`: boolean, default false
+- `attempted_at`: timestamp, not null, indexed
+- `session_id`: UUID, foreign key to Session, nullable (if login successful)
 
-**SessionToken** (if not relying solely on Firebase token management)
-- **id**: integer (primary key, auto-increment)
-- **user_id**: string (foreign key to AuthUser.user_id, indexed)
-- **refresh_token_hash**: string (SHA-256 hash of refresh token, unique, indexed)
-- **access_token_jti**: string (JWT ID claim from access token, indexed)
-- **expires_at**: timestamp (refresh token expiration, typically 30 days)
-- **revoked**: boolean (default false, for explicit logout)
-- **revoked_at**: timestamp (nullable)
-- **created_at**: timestamp
-- **last_used_at**: timestamp (updated on token refresh)
-- **ip_address**: string (IP from which session was created)
-- **user_agent**: string (browser/app identifier)
+**IPAccessControl**
+- `rule_id`: UUID, primary key
+- `ip_address`: string(45), nullable (single IP)
+- `ip_range`: string(100), nullable (CIDR notation, e.g., '192.168.1.0/24')
+- `rule_type`: enum('allow', 'deny'), not null
+- `reason`: string(500), nullable
+- `created_at`: timestamp, not null
+- `created_by`: UUID, foreign key to User entity, not null
+- `enabled`: boolean, default true
+- Check constraint: (ip_address IS NOT NULL) OR (ip_range IS NOT NULL)
 
-**AuthAuditLog**
-- **id**: integer (primary key, auto-increment)
-- **user_id**: string (nullable, foreign key to AuthUser.user_id, indexed)
-- **event_type**: enum (login | logout | registration | password_reset | mfa_enrolled | role_changed | failed_login | account_locked)
-- **email**: string (nullable, email attempted, max 255 chars)
-- **ip_address**: string (IP from which event originated)
-- **user_agent**: string (browser/app identifier)
-- **success**: boolean (whether operation succeeded)
-- **failure_reason**: string (nullable, error code or message for failed operations)
-- **metadata**: jsonb (additional event-specific data)
-- **timestamp**: timestamp (indexed, when event occurred)
+**AuditLog**
+- `audit_id`: UUID, primary key
+- `user_id`: UUID, foreign key to User entity, nullable, indexed
+- `event_type`: string(100), not null, indexed (e.g., 'login', 'logout', 'password_changed', 'role_assigned')
+- `event_category`: enum('authentication', 'authorization', 'account_management', 'admin_action'), not null
+- `resource`: string(255), nullable (resource affected)
+- `action`: string(100), nullable (action performed)
+- `result`: enum('success', 'failure'), not null
+- `ip_address`: string(45), not null
+- `user_agent`: string(500), not null
+- `details`: JSON, nullable (additional event-specific data)
+- `created_at`: timestamp, not null, indexed
 
 ### 6.2 Database Schemas
 
-**Technology Choice:** PostgreSQL (relational database for structured authentication data with ACID guarantees) with optional Firebase Firestore integration for real-time session management.
-
-**PostgreSQL Schema:**
+**Relational Database Schema (PostgreSQL/MySQL)**
 
 ```sql
--- AuthUser table
-CREATE TABLE auth_user (
-  user_id VARCHAR(128) PRIMARY KEY,
+-- UserCredential Table
+CREATE TABLE user_credentials (
+  user_credential_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID UNIQUE NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
-  provider_type VARCHAR(20) NOT NULL CHECK (provider_type IN ('email', 'google', 'microsoft', 'saml')),
-  provider_user_id VARCHAR(255),
-  email_verified BOOLEAN DEFAULT FALSE,
-  mfa_enabled BOOLEAN DEFAULT FALSE,
-  mfa_secret VARCHAR(255),  -- Encrypted
-  mfa_enrolled_at TIMESTAMP,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  last_login TIMESTAMP,
+  password_hash VARCHAR(255) NOT NULL,
+  salt VARCHAR(64) NOT NULL,
+  hash_algorithm VARCHAR(20) NOT NULL CHECK (hash_algorithm IN ('bcrypt', 'argon2id')),
   account_locked BOOLEAN DEFAULT FALSE,
-  locked_until TIMESTAMP,
-  deleted_at TIMESTAMP
+  locked_at TIMESTAMP NULL,
+  lock_reason VARCHAR(500) NULL,
+  failed_login_count INTEGER DEFAULT 0,
+  last_failed_login_at TIMESTAMP NULL,
+  password_changed_at TIMESTAMP NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_email (email),
+  INDEX idx_user_id (user_id)
 );
 
-CREATE INDEX idx_auth_user_email ON auth_user(email);
-CREATE INDEX idx_auth_user_created_at ON auth_user(created_at);
-CREATE INDEX idx_auth_user_provider ON auth_user(provider_type, provider_user_id);
-
--- UserRole table
-CREATE TABLE user_role (
-  id SERIAL PRIMARY KEY,
-  user_id VARCHAR(128) NOT NULL REFERENCES auth_user(user_id) ON DELETE CASCADE,
-  role VARCHAR(20) NOT NULL CHECK (role IN ('Subscriber', 'Provisional', 'Admin')),
-  assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  assigned_by VARCHAR(128) REFERENCES auth_user(user_id),
-  previous_role VARCHAR(20),
-  expires_at TIMESTAMP,
-  notes TEXT
+-- OAuthProvider Table
+CREATE TABLE oauth_providers (
+  provider_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  provider_name VARCHAR(50) UNIQUE NOT NULL,
+  client_id VARCHAR(255) NOT NULL,
+  client_secret VARCHAR(500) NOT NULL,
+  authorization_endpoint VARCHAR(500) NOT NULL,
+  token_endpoint VARCHAR(500) NOT NULL,
+  user_info_endpoint VARCHAR(500) NOT NULL,
+  scope VARCHAR(500) NOT NULL,
+  enabled BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_provider_name (provider_name),
+  INDEX idx_enabled (enabled)
 );
 
-CREATE INDEX idx_user_role_user_id ON user_role(user_id);
-CREATE INDEX idx_user_role_role ON user_role(role);
+-- OAuthIdentity Table
+CREATE TABLE oauth_identities (
+  oauth_identity_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  provider_id UUID NOT NULL,
+  provider_user_id VARCHAR(255) NOT NULL,
+  provider_email VARCHAR(255) NULL,
+  access_token VARCHAR(1000) NULL,
+  refresh_token VARCHAR(1000) NULL,
+  token_expires_at TIMESTAMP NULL,
+  profile_data JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (provider_id) REFERENCES oauth_providers(provider_id) ON DELETE CASCADE,
+  UNIQUE KEY unique_provider_user (provider_id, provider_user_id),
+  INDEX idx_user_id (user_id),
+  INDEX idx_provider_id (provider_id)
+);
 
--- Ensure one active role per user (application-level enforcement or unique partial index)
-CREATE UNIQUE INDEX idx_user_role_active ON user_role(user_id) 
-  WHERE expires_at IS NULL OR expires_at > CURRENT_TIMESTAMP;
+-- Role Table
+CREATE TABLE roles (
+  role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  role_name VARCHAR(100) UNIQUE NOT NULL,
+  description VARCHAR(500) NULL,
+  parent_role_id UUID NULL,
+  permissions JSON NOT NULL,
+  is_system_role BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_by UUID NULL,
+  FOREIGN KEY (parent_role_id) REFERENCES roles(role_id) ON DELETE SET NULL,
+  INDEX idx_role_name (role_name),
+  INDEX idx_parent_role_id (parent_role_id)
+);
 
--- InviteCode table
-CREATE TABLE invite_code (
-  id SERIAL PRIMARY KEY,
-  code VARCHAR(16) UNIQUE NOT NULL,
-  email VARCHAR(255),
-  role VARCHAR(20) NOT NULL CHECK (role IN ('Subscriber', 'Provisional', 'Admin')),
-  expiration_date TIMESTAMP NOT NULL,
-  used_flag BOOLEAN DEFAULT FALSE,
-  used_at TIMESTAMP,
-  used_by VARCHAR(128) REFERENCES auth_user(user_id),
-  created_by VARCHAR(128) NOT NULL REFERENCES auth_user(user_id),
-  created_at TIMESTAMP DEFAULT
+-- UserRole Table
+CREATE TABLE user_roles (
+  user_role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  role_id UUID NOT NULL,
+  assigned_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  assigned_by UUID NOT NULL,
+  expires_at TIMESTAMP NULL,
+  FOREIGN KEY (role_id) REFERENCES roles(role_id) ON DELETE CASCADE,
+  UNIQUE KEY unique_user_role (user_id, role_id),
+  INDEX idx_user_id (user_id),
+  INDEX idx_role_id (role_id),
+  INDEX idx_expires_at (expires_at)
+);
+
+-- Session Table
+CREATE TABLE sessions (
+  session_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  token VARCHAR(500) UNIQUE NOT NULL,
+  refresh_token VARCHAR(500) UNIQUE NOT NULL,
+  ip_address VARCHAR(45) NOT NULL,
+  user_agent VARCHAR(500) NOT NULL,
+  device_fingerprint VARCHAR(255) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_activity_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  revoked_at TIMESTAMP NULL,
+  revoked_by UUID NULL,
+  revoke_reason VARCHAR(500) NULL,
+  INDEX idx_user_id (user_id),
+  INDEX idx_token (token),
+  INDEX idx_refresh_token (refresh_token),
+  INDEX idx_last_activity (last_activity_at),
+  INDEX idx_expires_at (expires_at)
+);
+
+-- MFAConfiguration Table
+CREATE TABLE mfa_configurations (
+  mfa_config_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID UNIQUE NOT NULL,
+  mfa_type VARCHAR(20) NOT NULL CHECK (mfa_type IN ('totp', 'sms')),
+  secret_key VARCHAR(255) NULL,
+  phone_number VARCHAR(20) NULL,
+  backup_codes JSON NULL,
+  enabled BOOLEAN DEFAULT FALSE,
+  verified_at TIMESTAMP NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_user_id (user_id)
+);
+
+-- BackupCode Table
+CREATE TABLE backup_codes (
+  backup_code_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  mfa_config_id UUID NOT NULL,
+  code_hash VARCHAR(255) NOT NULL,
+  used BOOLEAN DEFAULT FALSE,
+  used_at TIMESTAMP NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (mfa_config_id) REFERENCES mfa_configurations(mfa_config_id) ON DELETE CASCADE,
+  INDEX idx_mfa_config_id (mfa_config_id),
+  INDEX idx_used (used)
+);
+
+-- TrustedDevice Table
+CREATE TABLE trusted_devices (
+  trusted_device_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  device_fingerprint VARCHAR(255) NOT NULL,
+  device_name VARCHAR(255) NULL,
+  trust_token VARCHAR(500) UNIQUE NOT NULL,
+  ip_address VARCHAR(45) NOT NULL,
+  user_agent VARCHAR(500) NOT NULL,
+  trusted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  last_used_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_user_device (user_id, device_fingerprint),
+  INDEX idx_user_id (user_id),
+  INDEX idx_trust_token (trust_token),
+  INDEX idx_expires_at (expires_at)
+);
+
+-- PasswordResetToken Table
+CREATE TABLE password_reset_tokens (
+  token_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  token_hash VARCHAR(255) UNIQUE NOT NULL,
+  ip_address VARCHAR(45) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  used_at TIMESTAMP NULL,
+  used_from_ip VARCHAR(45) NULL,
+  INDEX idx_user_id (user_id),
+  INDEX idx_token_hash (token_hash),
+  INDEX idx_expires_at (expires_at)
+);
+
+-- EmailVerificationToken Table
+CREATE TABLE email_verification_tokens (
+  token_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  token_hash VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  verified_at TIMESTAMP NULL,
+  verified_from_ip VARCHAR(45) NULL,
+  INDEX idx_user_id (user_id),
+  INDEX idx_token_hash (token_hash),
+  INDEX idx_expires_at (expires_at)
+);
+
+-- LoginAttempt Table
+CREATE TABLE login_attempts (
+  attempt_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NULL,
+  email VARCHAR(255) NOT NULL,
+  ip_address VARCHAR(45) NOT NULL,
+  user_agent VARCHAR(500) NOT NULL,
+  success BOOLEAN NOT NULL,
+  failure_reason VARCHAR(255) NULL,
+  mfa_used BOOLEAN DEFAULT FALSE,
+  attempted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  session_id UUID NULL,
+  FOREIGN KEY (session_id) REFERENCES sessions(session_id) ON DELETE SET NULL,
+  INDEX idx_email (email),
+  INDEX idx_ip_address (ip_address),
+  INDEX idx_success (success),
+  INDEX idx_attempted_at (attempted_at),
+  INDEX idx_user_id (user_id)
+);
+
+-- IPAccessControl Table
+CREATE TABLE ip_access_controls (
+  rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  ip_address VARCHAR(45) NULL,
+  ip_range VARCHAR(100) NULL,
+  rule_type VARCHAR(10) NOT NULL CHECK (rule_type IN ('allow', 'deny')),
+  reason VARCHAR(500) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created_by UUID NOT NULL,
+  enabled BOOLEAN DEFAULT TRUE,
+  CHECK ((ip_address IS NOT NULL) OR (ip_range IS NOT NULL)),
+  INDEX idx_ip_address (ip_address),
+  INDEX idx_rule_type (rule_type),
+  INDEX idx_enabled (enabled)
+);
+
+-- AuditLog Table
+CREATE TABLE audit_logs (
+  audit_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NULL,
+  event_type VARCHAR(100) NOT NULL,
+  event_category VARCHAR(50) NOT NULL CHECK (event_category IN ('authentication', 'authorization', 'account_management', 'admin_action')),
+  resource VARCHAR(255) NULL,
+  action VARCHAR(100) NULL,
+  result VARCHAR(20) NOT NULL CHECK (result IN ('success', 'failure')),
+  ip_address VARCHAR(45) NOT NULL,
+  user_agent VARCHAR(500) NOT NULL,
+  details JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_user_id (user_id),
+  INDEX idx_event_type (event_type),
+  INDEX idx_event_category (event_category),
+  INDEX idx_created_at (created_at),
+  INDEX idx_result (result)
+);
+```
+
+### 6.3 Data Storage Approach
+
+**Primary Data Storage: Relational Database**
+- **Technology**: PostgreSQL (preferred) or MySQL
+- **Rationale**: Authentication and authorization data requires ACID compliance, referential integrity, and complex relational queries (role hierarchies, permission aggregation). Relational databases provide strong consistency guarantees essential for security-critical operations.
+- **Tables**: All core entities stored in relational tables with foreign key constraints and indexes
+
+**Session Storage: Distributed Cache**
+- **Technology**: Redis (preferred) or Memcached
+- **Rationale**: Sessions require fast read/write access with TTL support. Distributed cache enables horizontal scaling and reduces database load for high-frequency session validation operations.
+- **Data Stored**: Active sessions keyed by session_id and refresh_token with automatic expiration
+- **Fallback**: If cache is unavailable, fall back to database session table (AUTH-NFR-009)
+
+**Configuration Storage: Externalized Configuration**
+- **Technology**: Environment variables, configuration files, or dedicated configuration service (Consul, AWS Parameter Store, Azure App Configuration)
+- **Rationale**: Enables configuration changes without code deployment, supports environment-specific settings (dev, staging, production)
+- **Data Stored**: OAuth provider credentials, session timeout settings, password complexity rules, MFA enforcement policies, rate limits, IP access lists
+
+**Secret Storage: Secret Management Service**
+- **Technology**: HashiCorp Vault, AWS Secrets Manager, or Azure Key Vault
+- **Rationale**: Sensitive credentials (OAuth client secrets, encryption keys, database passwords) require encrypted storage with access auditing and automatic rotation
+- **Data Stored**: OAuth client_secret, JWT signing keys, database credentials, encryption keys for sensitive fields
+
+**Audit Log Storage: Append-Only Log Storage**
+- **Technology**: Primary database with partitioning, or dedicated log storage (Elasticsearch, AWS CloudWatch Logs)
+- **Rationale**: Audit logs are append-only, high-volume, and require long-term retention. Time-based partitioning improves query performance and enables archival strategies.
+- **Data Stored**: All authentication and authorization events (AuditLog table)
+
+**Cache Strategy**
+- **User Roles Cache**: Cache user role assignments (key: user_id, TTL: 15 minutes, invalidated on role change)
+- **Role Permissions Cache**: Cache role permission sets (key: role_id, TTL: 30 minutes, invalidated on role update)
+- **Rate Limiting Cache**: Track login attempts per IP and email (key: ip_address or email, TTL: configurable, default 15 minutes)
+- **Trusted Devices Cache**: Cache trusted device tokens (key: device_fingerprint, TTL: configurable, default 30 days)
+
+### 6.4 Data Transformations
+
+**Password Hashing Transformation**
+- **Input**: Plain-text password from user
+- **Process**:
+  1. Generate cryptographically secure random salt (32 bytes)
+  2. Hash password using bcrypt (cost factor 12) or Argon2id (memory: 64MB, iterations: 3, parallelism: 4)
+  3. Store hash_algorithm, password_hash, and salt in UserCredential
+- **Output**: Hashed password stored in database
+- **Validation**: Compare submitted password with stored hash using same algorithm
+
+**JWT Token Generation**
+- **Input**: User identity (user_id, email), roles, session_id
+- **Process**:
+  1. Create JWT payload with claims: { user_id, email, roles, session_id, iat, exp, jti }
+  2. Set expiration (iat + configurable TTL, default 15 minutes)
+  3. Sign JWT with RS256 (preferred) or HS256 using private key
+- **Output**: Signed JWT access token
+- **Validation**: Verify signature with public key, check expiration, validate session still active
+
+**OAuth Profile Mapping**
+- **Input**: OAuth provider user profile (JSON response from provider's user info endpoint)
+- **Process**:
+  1. Extract standard fields: provider_user_id, email, name
+  2. Map provider-specific fields to OAuthIdentity.profile_data JSON
+  3. Create or update UserCredential with email
+  4. Link OAuthIdentity to user_id
+- **Output**: UserCredential and OAuthIdentity records
+- **Example Mapping**:
+  - Google: sub → provider_user_id, email → email, name → profile_data.name
+  - Microsoft: id → provider_user_id, userPrincipalName → email
+  - GitHub: id → provider_user_id, email → email (from emails API)
+
+**Permission Aggregation**
+- **Input**: User's assigned roles (UserRole records)
+- **Process**:
+  1. Retrieve all Role records for user's assigned roles
+  2. For each role, retrieve parent roles recursively (follow parent_role_id)
+  3. Collect permissions JSON arrays from all roles
+  4. Flatten and deduplicate permissions into single set
+  5. Cache aggregated permissions with user_id key
+- **Output**: Set of permission strings (e.g., ["documents:read", "documents:write", "users:read"])
+- **Invalidation**: Clear cache when user roles change or role permissions are updated
+
+**Rate Limiting Counter Transformation**
+- **Input**: Login attempt (email, IP address, timestamp)
+- **Process**:
+  1. Increment counter for email key in cache (TTL: 15 minutes)
+  2. Increment counter for IP address key in cache (TTL: 15 minutes)
+  3. Check if either counter exceeds threshold (default: 5 attempts)
+  4. If exceeded, reject login attempt with 429 status
+- **Output**: Allow or deny login attempt
+- **Reset**: Counters automatically expire after TTL
+
+**Session Expiration Calculation**
+- **Input**: Session creation timestamp, last activity timestamp, configuration (idle timeout, absolute timeout)
+- **Process**:
+  1. Calculate idle expiration: last_activity_at +
