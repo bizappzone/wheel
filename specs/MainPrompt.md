@@ -2,395 +2,216 @@
 
 ## 1. Executive Summary
 
-**URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/product-definition/marketing/executiveSummary
+**URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/product-definition/marketing/executiveSummary
 **Contains:** High-level project overview, goals, and business context
 
-The Learning Wheel enters a $12-15 billion global educational content market growing at 8-10% annually, targeting 1.5-2 million teachers in a $900 million-1.5 billion serviceable addressable market where educators spend $500-1,000 annually out-of-pocket on resources. The platform uniquely positions itself in white space between transactional marketplaces (Teachers Pay Teachers) and fragmented free resources (OER Commons) through a contribution economy model that transforms teacher-created content into earned subscription credits and professional recognition. Brand positioning as "the contribution economy for educators" emphasizes fairness, reciprocity, and professional validation—reframing participation from passive consumption to meaningful exchange where "your teaching work has value, and here it counts." This strategy capitalizes on post-pandemic digital adoption (68% by 2024), teacher burnout driving demand for ready-made resources, and growing subscription fatigue with extractive marketplace models.
+Capitalizing on the double-digit growth of the $50 billion controlled-environment agriculture market, this strategy targets the underserved $3-5 billion mid-market of urban prosumers who demand reliability over novelty. We differentiate by pivoting from the 'gamified gardening' of closed-ecosystem competitors to a professional-grade platform defined by 'Outcome Certainty' and predictive agronomy. By positioning the brand as 'Intelligent Home Agronomy'—combining open, modular hardware with enterprise-grade harvest prediction—we address the critical consumer demand for food sovereignty and supply chain independence. This approach secures high-lifetime-value subscribers by selling not just the capacity to grow, but the guarantee of the harvest.
 
-The market opportunity is substantial and accelerating: 6+ million K-12 teachers globally represent a $4.5-6 billion TAM, with digital resources growing at 10-12% CAGR as hybrid learning becomes permanent (73% of schools maintaining digital infrastructure post-pandemic) and teacher time scarcity intensifies (12+ hours weekly on lesson preparation). The primary target—budget-conscious elementary teachers spending $400-800 annually while earning $45,000-65,000—exhibits strong "contribution economy" fit, willing to trade content creation effort for subscription savings. Current competitive dynamics reveal a fragmented landscape where incumbents cluster around either transactional income models (TpT's marketplace dominance) or institutional bundling (Twinkl's school licensing), leaving unoccupied strategic territory in the center: structured, metered value exchange where contribution directly offsets cost and confers professional status. No major player owns the narrative of ongoing reciprocal participation as professional stewardship rather than selling or altruistic sharing.
+The smart agriculture market is rapidly transitioning from hobbyist experimentation to outcome-driven utility, with the mid-market segment projected to grow at 15%+ CAGR. While incumbents like Gardyn and Rise Gardens have normalized indoor growing, they face a 'Novelty Cliff' due to their focus on aesthetics and closed ecosystems that limit yield predictability and scalability. This leaves a significant white space for a 'prosumer' solution that bridges the gap between consumer appliances and complex industrial DIY tools. We will capture this $3-5 billion serviceable market by addressing the primary unmet need for confidence, targeting educated urban professionals who view growing not as a lifestyle statement, but as a pragmatic step toward food resilience.
 
-The Learning Wheel's brand strategy exploits this white space through differentiated positioning that combines economic relief with professional recognition. The core message—"Your teaching work has value, and here it counts"—resonates with teachers' dual motivations: pragmatic budget constraints and intrinsic desire for peer validation. Unlike competitors emphasizing volume or unlimited access, the brand emphasizes scarcity, intentionality, and reciprocity through messaging pillars of contribution with purpose, fair exchange, and professional recognition. Visual identity and voice reinforce trust and respect (deep blue anchoring credibility, warm tones adding human energy, colleague-like tone that's professional but never condescending). The strategic imperative is clear: own the "contribution economy" language and mental models before incumbents can credibly replicate, targeting 1-3% market penetration (15,000-45,000 subscribers, $9-27 million ARR) in years 1-3 by converting Individual Budget-Conscious Teachers through content marketing, teacher influencer partnerships, and credit-funded viral referrals. Success hinges on establishing category-defining norms around valued participation rather than competing on features, making this a values-based differentiation play that's difficult for transactional marketplaces to imitate.
+Our competitive advantage lies in redefining the category through 'Intelligent Home Agronomy,' differentiating our offering via a 'Harvest Prediction Engine' that sells guaranteed results rather than just hardware. By adopting the brand persona of the 'Empirical Sage' and a 'Lab-meets-Living Room' aesthetic, we position the subscription model as essential yield insurance rather than a software tax. This strategy aligns with the target audience's desire for control and data transparency, allowing us to bypass the 'toy' perception of competitors and establish a high-retention ecosystem based on agronomic mastery and supply chain independence.
 
 ## 2. Product Definition
 
-**URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/product-definition/product/productSummary
+**URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/product-definition/product/productSummary
 **Contains:** Product Manager perspective including functional requirements, user flows, and product scope
 
-The Learning Wheel is a contribution-based educational content marketplace that transforms teaching resources into a dynamic economy where educators both contribute and consume materials through a sophisticated credit system. The platform addresses the fundamental tension between content quality, accessibility, and creator incentivization by implementing a hybrid valuation model that rewards high-demand contributions while maintaining equitable access. This system creates a self-sustaining ecosystem where content value is determined by real-world utility rather than arbitrary pricing.
+An intelligent hydroponic cultivation platform that unifies modular 3D-printable hardware with cloud-connected automation software to deliver professional-grade growing outcomes through recipe-driven lifecycle management. The system operates autonomously across a four-phase growth model, continuously optimizing environmental conditions while building community-wide intelligence through machine learning to predict harvest timing with increasing accuracy. By separating core automation from premium insights through a subscription architecture, the platform balances immediate utility with evolving agronomic intelligence.
 
 ### Product Overview
 
-The Learning Wheel establishes a new paradigm in educational resource sharing by creating a contribution economy that balances creator recognition, content quality, and equitable access. Unlike traditional marketplaces that monetize individual transactions or free repositories that lack quality incentives, this platform uses credits as both currency and quality signal.
+A unified cultivation intelligence platform that transforms hydroponic growing from experimental trial-and-error into predictable, outcome-driven agriculture through hardware-software integration, recipe-based automation, and community-powered machine learning.
 
 
 ## Vision
 
-The Learning Wheel envisions a global educational ecosystem where every teacher's expertise contributes to collective pedagogical advancement while simultaneously meeting their own classroom needs. The platform fundamentally reimagines how educational content is valued, distributed, and sustained by treating teaching resources as living assets whose worth evolves based on demonstrated classroom utility rather than marketing prowess or upfront pricing decisions.
+This platform reimagines small-scale agriculture as a **deterministic, data-driven system** rather than a craft skill requiring years of accumulated experience. The core vision is to compress the learning curve from novice to expert-level outcomes by encoding agronomic knowledge into executable recipes, automating environmental management across growth lifecycles, and continuously improving predictions through collective intelligence gathered across the entire user community.
 
-## Core Differentiators
+## Product Architecture
 
-The platform's **hybrid credit valuation system** represents a breakthrough in balancing multiple competing objectives:
+The system operates on three foundational pillars:
 
-- **Dynamic Value Recognition**: Content value adjusts in real-time based on actual usage patterns (views/downloads), ensuring that genuinely useful resources naturally accumulate higher valuations regardless of creator reputation
-- **Strategic Demand Amplification**: Administrator-set multipliers for high-demand categories (STEM, non-English languages) address systemic content gaps by incentivizing contributions in underserved areas
-- **Aggregate Recalibration**: Periodic demand-based adjustments prevent value stagnation and ensure the credit economy reflects evolving educational priorities
+**Physical Infrastructure**: Modular chamber hardware built on 3D-printable designs enables cost-effective scaling and customization. Each chamber integrates a complete sensor array (pH, CO2, humidity, light intensity) with precision actuators (irrigation systems, spectrum-tunable grow lights, active ventilation, time-lapse imaging). The modular design supports both single-chamber home deployments and multi-chamber installations managed under unified account control, creating a seamless path from hobbyist to serious cultivator.
 
-**Multi-framework curricular tagging** distinguishes The Learning Wheel from geographically-siloed platforms by enabling simultaneous alignment with Common Core, UK National Curriculum, IB, Cambridge, and other frameworks. This cross-framework capability transforms the platform into a genuinely global resource where a single worksheet can serve educators across multiple educational systems, dramatically expanding both contributor reach and consumer choice.
+**Recipe-Driven Automation**: Growth protocols are codified as parametric recipes that define phase-specific environmental targets and intervention schedules. The four-phase lifecycle model (youth, adolescent, adult, mature) provides the temporal framework for executing plant-type-specific protocols across irrigation frequency/volume, photoperiod and light spectrum, ventilation patterns, and imaging intervals. Recipes exist in two tiers: manufacturer-curated recipes bundled with hardware that ensure immediate success, and a subscription-gated library featuring community-created recipes with full parametric control for advanced optimization.
 
-## Dual-Market Architecture
+**Community Intelligence Layer**: A machine learning engine analyzes growth trajectories, environmental conditions, and harvest outcomes across the entire user base to continuously refine harvest predictions and identify optimal growing parameters. This creates a flywheel effect where each grow cycle contributes training data, improving forecast accuracy and surfacing insights that benefit all users. The ML models operate as a subscription service, ensuring users benefit from the platform's evolving intelligence rather than static algorithms frozen at purchase time.
 
-The platform simultaneously serves **individual educators (B2C)** seeking to offset subscription costs through contributions and **institutional purchasers (B2B)** whose teachers gain fully-funded access. Critically, the system maintains individual credit ownership even under institutional accounts, preserving personal incentives while enabling organizational adoption. This creates a unique viral mechanism where B2B users become B2C acquisition channels through credit-funded teacher invitations.
+## Operational Model
 
-## Metered Subscription Philosophy
+The platform achieves **supervised autonomy**—full environmental control within the constraints of manual reservoir management. When sensor readings drift from recipe-defined tolerances, the system automatically adjusts actuators to restore optimal conditions. Local execution of core automation ensures growing operations continue uninterrupted even during connectivity loss, while cloud connectivity enables remote monitoring, historical analytics, cross-chamber orchestration, and access to the continuously-improving prediction models.
 
-By implementing **monthly download limits**, the platform reframes subscription value from "unlimited access" to "curated monthly toolkit." This constraint increases the perceived value of each download decision, encourages thoughtful resource selection, and prevents low-intent hoarding behavior that degrades platform analytics and content discovery. The scarcity creates intentionality, transforming browsing into purposeful curation.
+## Key Differentiators
 
-## Content Persistence and Quality Assurance
-
-Content independence from creator account status ensures institutional memory and resource stability—materials remain accessible even if contributors leave the platform. The **lightweight peer review system** (single approval before publication) balances quality assurance with contribution velocity, while administrative moderation queues provide oversight without creating bottlenecks. This dual-layer approach maintains quality standards while respecting educator expertise and minimizing bureaucratic friction.
+- **Lifecycle-aware automation** that adapts intervention strategies as plants progress through developmental phases
+- **Dual-tier recipe architecture** balancing immediate accessibility with advanced customization
+- **Community-powered prediction engine** that improves accuracy through collective data rather than individual trial-and-error
+- **Hardware-software unity** treating cultivation as an integrated system rather than disconnected components
+- **Scalable modularity** supporting growth from single chamber to multi-chamber installations without platform migration
 
 ## 3. Technical Stack
 
-**No technical stack configured**
+- **Frontend:** React
+- **UI Library:** Tailwind CSS
+- **Mobile:** React Native
+- **Backend:** Python/FastAPI
+- **Database:** PostgreSQL
+- **Deployment:** AWS
 
 ## 4. Marketing & Branding
 
-**URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/product-definition/marketing/marketingBranding
+**URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/product-definition/marketing/marketingBranding
 **Contains:** Brand identity, voice, UX principles, messaging, and visual design guidelines
 
-The Learning Wheel brand positions education as a shared contribution economy where teachers are recognized, rewarded, and respected for the value they create. The branding emphasizes trust, professional pride, and purposeful exchange, differentiating the platform from transactional marketplaces and free but fragmented resource libraries.
+This brand strategy positions the platform as a professional-grade agronomic tool rather than a consumer novelty, leveraging a narrative of 'engineered predictability' and 'biological mastery.' The branding bridges the gap between industrial reliability and domestic accessibility, targeting the psychological need for control and self-sufficiency through a visual and verbal identity rooted in data, transparency, and precision.
 
 ### Messaging Framework
 
-The messaging framework centers on contribution, fairness, and professional pride. Messages ladder from a single core idea into distinct pillars that can flex by audience and context.
+The messaging framework prioritizes precision, foresight, and scalability, moving away from 'green thumb' mysticism toward 'data-driven abundance.' It utilizes a hierarchy that leads with the promise of certainty.
 
 
-Core Brand Message (Primary): "Your teaching work has value—and here, it counts." Supporting Pillar 1 (Secondary): Contribution with purpose – every resource shared strengthens the community. Proof point: visible usage, peer approval, and earned credits. Supporting Pillar 2: Fair exchange – access is earned, not exploited. Proof point: metered access language and credit redemption narratives. Supporting Pillar 3: Professional recognition – teaching expertise is acknowledged. Proof point: badges, certificates, and public contributor status.
+### Core Brand Message
+**"Cultivation, Quantified. Predictable harvests, powered by intelligence."**
 
-Audience variations refine emphasis without changing meaning. For individual teachers, messaging leans into savings and self-sufficiency ("pay with what you already make"). For institutional contexts, it emphasizes stewardship and leadership ("empower your teachers to support each other"). Tertiary messages support trust and quality, reinforcing moderation and review.
+### Message Pillars
+1.  **Foresight, Not Just Insight (Primary):** "Know your harvest date before you plant your seed." This pillar highlights the ML prediction engine. It appeals to the planner and the optimizer in the audience.
+    *   *Proof Point:* Harvest timelines updated in real-time based on community growth trajectories.
+2.  **Bio-Mimicry at Scale (Secondary):** "Nature's best days, replicated daily." This addresses the hardware/software integration. We don't fight nature; we optimize it using sensor data.
+    *   *Proof Point:* 4-phase lifecycle recipes that adjust environmental variables automatically.
+3.  **Grow with the Grid (Tertiary):** "Your system gets smarter with every harvest." This validates the connected/subscription aspect. You aren't growing alone; you are leveraging a global network of data.
+    *   *Proof Point:* Over-the-air recipe updates and community-refined protocols.
 
-Hierarchy matters: lead with belief (value of work), then explain exchange (how it circulates), then reassure with credibility (why it’s trusted).
+### Audience Variations
+For the **Tech-Optimizer**: Focus on the parametric controls, API access, and sensor granularity. "Full write-access to your environment."
+For the **Health-Conscious Urbanite**: Focus on purity and supply chain control. "The shortest distance from farm to fork is zero."
 
 ### Brand Voice and Tone
 
-The Learning Wheel speaks like a respected colleague: clear, supportive, and principled. The tone balances professionalism with warmth, never talking down to educators.
+The brand voice is that of a 'Modern Chief Agronomist'—authoritative, precise, and encouraging, but never patronizing. The tone balances scientific accuracy with accessible clarity, avoiding slang or excessive marketing fluff.
 
 
-Brand personality traits: respectful, purposeful, encouraging, credible, and calm. Voice attributes are professional but human—plain language, no hype, no jargon for its own sake. Example marketing line: "Share what works. Earn what matters." Example support tone: "Thanks for contributing—here’s how to make your resource even stronger."
+### Brand Personality: The Empirical Sage
+The brand character is **Precise, Transparent, and Empowering**. We speak the language of science but translate it for the home user. We are not 'magical' or 'whimsical'; we are engineered. When things go wrong (e.g., a pump failure or nutrient imbalance), the voice is calm and diagnostic, offering solutions rather than apologies.
 
-Tone varies by context. Marketing is aspirational and values-driven. Product education is clear and instructional. Support communication is patient and appreciative. What to say: language that reinforces agency, fairness, and professionalism. What to avoid: gimmicks, aggressive sales language, or implying teachers are motivated primarily by money.
-
-Creative direction favors clarity over cleverness. Metaphors should be grounded (wheels, cycles, classrooms) rather than abstract tech imagery. Every message should reinforce that this is a serious platform built for educators’ real work.
+### Voice Attributes & Guidelines
+*   **Do:** Use precise terminology (e.g., "Photosynthetic active radiation" or "Vapor pressure deficit") but immediately explain it in context. Use data visualization metaphors. Focus on the *process* and the *outcome*.
+*   **Don't:** Use "Greenwashing" terms like "magic," "miracle," or "green thumb." Avoid overly casual slang like "let's get growing fam." Avoid guaranteeing results without explaining the science behind them.
+*   **Tone Variation:**
+    *   *Marketing:* Inspiring, forward-looking, focused on potential. "Unlock the potential of your space."
+    *   *In-App/Support:* Clinical, concise, directive. "pH levels drifted. Dispense 5ml buffer solution."
 
 ### Visual Brand Identity
 
-The visual identity expresses trust, movement, and professional warmth. It should feel modern but grounded, avoiding both corporate coldness and classroom clutter.
+The visual identity combines the organic warmth of botany with the clean, stark lines of a laboratory interface. It utilizes a deep, biological color palette accented by data-visualization brights, ensuring the hardware looks premium in a living space and the software looks capable on a screen.
 
 
-The color system balances stability with optimism. A deep blue anchors trust and credibility, while warm secondary tones introduce human energy. Typography prioritizes readability and neutrality, signaling respect for educators’ time. Visuals should feel composed and intentional, not busy.
+### Visual Design System
+The aesthetic is "Lab-meets-Living Room." We avoid the generic "leaf green" used by every garden brand. Instead, we anchor the brand in deep, structural greens and technical slate greys that suggest durability and hardware quality. The typography pairs a geometric sans-serif for headings (conveying engineering precision) with a highly legible humanist sans for body copy (ensuring readability of complex data).
 
-Photography features real educators in authentic classroom or planning moments—natural light, candid expressions, minimal staging. Illustration, where used, should be simple and functional, supporting explanation rather than decoration. Layouts rely on consistent grids, generous spacing, and clear hierarchy to reduce cognitive load.
-
-Across applications—from web to social—the identity must remain consistent. Logos should always appear with clear space and never be overlaid on busy imagery. Social visuals should lead with message clarity, using color blocks and short statements rather than dense text.
+### Photography & Imagery
+Imagery focuses on **Macro-Precision**. Photography should highlight the textures of healthy plants (trichomes, leaf veins) contrasted against the smooth, matte finish of the 3D-printed hardware. We frequently use "UI Overlays" in marketing visuals—superimposing data points (growth curves, harvest countdowns) over plant photography to visually reinforce the marriage of biology and software. Lighting in photography should be dramatic and moody (grow light spectrums) rather than flat daylight.
 
 
 #### Color Palette
 
 
-**Primary Color**: Learning Blue
+**Primary Color**: Deep Canopy
 
-- Hex: #1F4ED8
+- Hex: #0F3D3E
 
-- RGB: rgb(31, 78, 216)
+- RGB: rgb(15, 61, 62)
 
-- Usage: Primary brand color for headers, logo, and key navigation elements
+- Usage: Primary brand assets, hardware housing renders, heavy headers.
 
-- Psychology: Trust, intelligence, stability, and confidence
+- Psychology: Communicates depth, seriousness, and biological density. Distinguishes from 'toy' gardening brands.
 
 
 **Secondary Colors**:
 
-1. Warm Amber: #F59E0B - Supporting highlights and emphasis in illustrations or section headers
+1. Slate Interface: #34495E - Secondary text, UI panels, hardware accents.
 
-2. Growth Green: #16A34A - Positive states, success indicators, and community cues
+2. Vapor Grey: #F0F4F8 - Backgrounds, app canvas, packaging base.
 
 
 **Accent Colors**:
 
-1. Action Coral: #EF4444 - CTAs, alerts, and key interactive moments
+1. Data Amber: #F59E0B - Alerts, harvest notifications, 'Action Required' UI elements.
+
+2. Growth Teal: #2A9D8F - Success states, primary CTAs, data visualization lines.
 
 
 **Neutral Colors**:
 
-1. Slate Dark: #1F2937 - Primary text color
-
-2. Slate Light: #F3F4F6 - Backgrounds and content containers
-
-3. Border Gray: #D1D5DB - Dividers and borders
+1. Carbon: #121212 - Main body text, high contrast borders.
 
 
 
 #### Typography
 
 
-**Heading Font**: Inter
+**Heading Font**: Space Grotesk
 
-- Weights: 600, 700
+- Weights: 500, 700
 
-- Usage: Headings, section titles, emphasis text
+- Usage: Headlines, data readouts, hardware labeling.
 
-- Fallback: Arial, sans-serif
+- Fallback: Helvetica Neue, Arial, sans-serif
 
 
 **Body Font**: Inter
 
-- Weights: 400, 500
+- Weights: 400, 600
 
 - Line Height: 1.6
 
-- Usage: Body copy, descriptions, instructional text
+- Usage: Long-form content, app UI, instructions.
 
-- Fallback: Arial, sans-serif
+- Fallback: Segoe UI, Roboto, sans-serif
 
 
-**Accent Font**: Source Serif 4
+**Accent Font**: JetBrains Mono
 
-- Usage: Occasional quotes or editorial highlights
+- Usage: Code snippets, sensor raw data values, recipe parameters.
 
 
 
 #### Visual Design System
 
 
-**Photography**: Natural, candid classroom and planning environments with real educators
+**Photography**: High-contrast macro photography of botany mixed with clean product shots. Mood is 'scientific observation'—sharp focus, deep shadows, grow-light purples and whites.
 
 
-**Illustration**: Minimal, flat illustrations used for explanation
+**Illustration**: Technical wireframes and exploded views of the hardware. 3D-rendered schematics to explain the modularity.
 
 
-**Iconography**: Line icons with rounded corners
+**Iconography**: Thin-line, geometric icons inspired by dashboard instrument clusters. No organic/hand-drawn icons.
 
 
-**Graphic Elements**: Circular and radial motifs suggesting cycles and movement
+**Graphic Elements**: Data visualization motifs: grid lines, crosshairs, and dot-matrix patterns used as subtle background textures.
 
 
-**Layout Principles**: 12-column grid, generous spacing, consistent vertical rhythm
+**Layout Principles**: Modular grid systems mimicking the physical modularity of the chambers. Generous whitespace to prevent data density from feeling overwhelming.
 
 
 ## 5. Module Specifications
 
-### 1. Systems Configuration Module
-**Purpose:** Technical specification for the Systems Configuration Module
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/lu838IJjrlpId6IO2Si5
-**Local Documentation:** /specs/Systems-Configuration-Module.md
-
----
-
-### 2. Business Analytics Module
-**Purpose:** Technical specification for the Business Analytics Module
-
-**Key Features:**
-1. Real-time dashboards
-2. Cohort and retention analysis
-3. Funnel tracking
-4. Automated alerts
-5. Custom report exports
-
-**Key Performance Indicators (KPIs):**
-[object Object]
-[object Object]
-[object Object]
-[object Object]
-[object Object]
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/XSLmm34fQ5XzF9uj0iYg
-**Local Documentation:** /specs/Business-Analytics-Module.md
-
----
-
-### 3. Subscription Experience Module
-**Purpose:** Technical specification for the Subscription Experience Module
-
-**Key Features:**
-1. Subscription status and renewal visibility
-2. Credit-based renewal flows
-3. Invitation acceptance and access activation
-4. Usage meter visibility
-5. Institution-funded access indicators
-6. Subscription history
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/d1gmb5udodt7UM3v8EkK
-**Local Documentation:** /specs/Subscription-Experience-Module.md
-
----
-
-### 4. File Storage & CDN Module
-**Purpose:** Technical specification for the File Storage & CDN Module
-
-**Key Features:**
-1. Secure file uploads
-2. Versioned storage
-3. CDN-backed delivery
-4. Access-controlled URLs
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/084CRsbePVxLVYdIsvbX
-**Local Documentation:** /specs/File-Storage---CDN-Module.md
-
----
-
-### 5. Notification Module
+### 1. Notification Module
 **Purpose:** Technical specification for the Notification Module
 
 **Key Features:**
-1. Email notifications
-2. In-app notifications
-3. Event-based triggers
-4. Template management
-5. Delivery tracking
+1. Multi-channel notification delivery (email, push, in-app)
+2. Template-based notification generation with dynamic content
+3. User notification preference management per channel and event type
+4. Delivery tracking and read receipts
+5. Notification scheduling and batching to prevent spam
+6. Priority-based notification routing (critical, important, informational)
+7. Notification history and audit trail
+8. Unsubscribe management and compliance
+9. A/B testing for notification content and timing
+10. Delivery failure handling and retry logic
 
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/h5pTnof3uGmDQi9naIsC
+**Documentation URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/specifications/UgU0eqfclzJMQIoo4Z2H
 **Local Documentation:** /specs/Notification-Module.md
-
----
-
-### 6. Monetization/Payment Module
-**Purpose:** Technical specification for the Monetization/Payment Module
-
-**Key Features:**
-1. Recurring subscription billing
-2. Institutional invoicing support
-3. Payment method storage
-4. Renewal and cancellation handling
-5. Refund and adjustment workflows
-6. Financial reporting
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/5JHxUtbc2Wysvebmc4TX
-**Local Documentation:** /specs/Monetization-Payment-Module.md
-
----
-
-### 7. Search & Discovery Module
-**Purpose:** Technical specification for the Search & Discovery Module
-
-**Key Features:**
-1. Full-text search
-2. Facet filtering
-3. Relevance scoring
-4. Autocomplete suggestions
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/E8WNEdvsCzFgN9CCp71g
-**Local Documentation:** /specs/Search---Discovery-Module.md
-
----
-
-### 8. Content Moderation Module
-**Purpose:** Technical specification for the Content Moderation Module
-
-**Key Features:**
-1. Moderation queues
-2. Review assignments
-3. Flagging and takedowns
-4. Decision audit trails
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/U7YIV7UJJ0QkuRSpL1Jo
-**Local Documentation:** /specs/Content-Moderation-Module.md
-
----
-
-### 9. Content Marketplace Module
-**Purpose:** Technical specification for the Content Marketplace Module
-
-**Key Features:**
-1. Search and browse by grade level and subject
-2. Multi-framework curriculum tagging and filtering
-3. Preview of content prior to download
-4. Metered monthly download enforcement
-5. Popularity and demand-based ranking
-6. Saved collections and favorites
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/3r6KgecMdn8JIIXujpD3
-**Local Documentation:** /specs/Content-Marketplace-Module.md
-
----
-
-### 10. Admin Module
-**Purpose:** Technical specification for the Admin Module
-
-**Key Features:**
-1. User and account management
-2. Feature flag control
-3. System configuration
-4. Impersonation tools
-5. Audit logs
-6. Support ticket handling
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/nX0Ml6NGGAYHz8AAgNqH
-**Local Documentation:** /specs/Admin-Module.md
-
----
-
-### 11. Content Creation & Submission Module
-**Purpose:** Technical specification for the Content Creation & Submission Module
-
-**Key Features:**
-1. Content upload with metadata and curriculum tagging
-2. Versioning and update history
-3. Single-peer approval workflow
-4. Administrative moderation queue
-5. Content persistence after account changes
-6. Contributor attribution and history
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/5saeyMvTiCI9opYcQUV9
-**Local Documentation:** /specs/Content-Creation---Submission-Module.md
-
----
-
-### 12. User Account & Profile Module
-**Purpose:** Technical specification for the User Account & Profile Module
-
-**Key Features:**
-1. Individual teacher account creation and profile management
-2. Institutional account linkage and role assignment
-3. Account status tracking independent of content ownership
-4. Professional credentials and badge display
-5. Institution switching for multi-school educators
-6. Account activity and contribution summaries
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/1ILGWItZHLKvQvlHv0oK
-**Local Documentation:** /specs/User-Account---Profile-Module.md
-
----
-
-### 13. Authentication Module
-**Purpose:** Technical specification for the Authentication Module
-
-**Key Features:**
-1. Email/password authentication
-2. OAuth and SSO support
-3. Role-based access control
-4. Session and token management
-5. Multi-factor authentication
-6. Account recovery flows
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/EwUmBdDbjQrvmLZlIyxA
-**Local Documentation:** /specs/Authentication-Module.md
-
----
-
-### 14. Credit & Incentives Module
-**Purpose:** Technical specification for the Credit & Incentives Module
-
-**Key Features:**
-1. Credit accrual based on views and downloads
-2. Dynamic and fixed credit multipliers
-3. Aggregate demand recalibration
-4. Credit balance tracking
-5. Redemption for subscriptions, invitations, and rewards
-6. Credit expiration and anti-hoarding mechanisms
-
-**Documentation URL:** https://bigbrainplan.com/projects/bfXOCJde6gzkvzA6AJRD/specifications/WRYeMAc50v6wyld00Sxl
-**Local Documentation:** /specs/Credit---Incentives-Module.md
 
 ---
 
