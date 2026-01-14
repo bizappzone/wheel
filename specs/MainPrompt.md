@@ -2,56 +2,51 @@
 
 ## 1. Executive Summary
 
-**URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/product-definition/marketing/executiveSummary
+**URL:** https://bigbrainplan.com/projects/HgeSVN7eXmNC0E9Ex9NW/product-definition/marketing/executiveSummary
 **Contains:** High-level project overview, goals, and business context
 
-Capitalizing on the double-digit growth of the $50 billion controlled-environment agriculture market, this strategy targets the underserved $3-5 billion mid-market of urban prosumers who demand reliability over novelty. We differentiate by pivoting from the 'gamified gardening' of closed-ecosystem competitors to a professional-grade platform defined by 'Outcome Certainty' and predictive agronomy. By positioning the brand as 'Intelligent Home Agronomy'—combining open, modular hardware with enterprise-grade harvest prediction—we address the critical consumer demand for food sovereignty and supply chain independence. This approach secures high-lifetime-value subscribers by selling not just the capacity to grow, but the guarantee of the harvest.
+The Learning Wheel enters a multi-billion dollar K–12 supplemental materials market at a strategic inflection point: teachers are fatigued with transactional marketplaces and ready for subscription models that offer predictable value and professional reciprocity. By targeting the underserved 'long tail' of multilingual and STEM educators—a massive global TAM ignored by US-centric incumbents—the platform positions itself not as another content store, but as an exclusive professional guild where contribution builds ongoing currency through a validated credit economy. This membership-as-professional-leverage model directly counters the commoditization of teaching expertise found in dominant players like Teachers Pay Teachers, while the brand positioning as a 'gated professional sanctuary' transforms the value proposition from buying content to earning access within a globally-connected educator collective.
 
-The smart agriculture market is rapidly transitioning from hobbyist experimentation to outcome-driven utility, with the mid-market segment projected to grow at 15%+ CAGR. While incumbents like Gardyn and Rise Gardens have normalized indoor growing, they face a 'Novelty Cliff' due to their focus on aesthetics and closed ecosystems that limit yield predictability and scalability. This leaves a significant white space for a 'prosumer' solution that bridges the gap between consumer appliances and complex industrial DIY tools. We will capture this $3-5 billion serviceable market by addressing the primary unmet need for confidence, targeting educated urban professionals who view growing not as a lifestyle statement, but as a pragmatic step toward food resilience.
+The global K–12 supplemental education market presents a compelling opportunity driven by normalized teacher out-of-pocket spending, widespread digital payment adoption, and critical gaps in non-English and specialized STEM resources. Current market leaders—Teachers Pay Teachers (transactional marketplace) and Twinkl (generic subscription library)—dominate through SEO moats and content volume, but suffer from quality inconsistency, transactional fatigue, and inability to serve multilingual classrooms effectively. The Learning Wheel exploits this whitespace by rejecting rigid curriculum alignment in favor of flexible, tag-based discovery that enables cross-border knowledge transfer, while the Hybrid Valuation Engine and Credit Escrow system create community-validated quality signals that transcend easily-gamed star ratings. This positions the platform uniquely between the chaos of free social platforms and the nickel-and-diming friction of pay-per-item models.
 
-Our competitive advantage lies in redefining the category through 'Intelligent Home Agronomy,' differentiating our offering via a 'Harvest Prediction Engine' that sells guaranteed results rather than just hardware. By adopting the brand persona of the 'Empirical Sage' and a 'Lab-meets-Living Room' aesthetic, we position the subscription model as essential yield insurance rather than a software tax. This strategy aligns with the target audience's desire for control and data transparency, allowing us to bypass the 'toy' perception of competitors and establish a high-retention ecosystem based on agronomic mastery and supply chain independence.
+The brand strategy amplifies this competitive differentiation by framing membership as professional investment rather than content transaction. Positioning as "the professional membership community where K–8 educators worldwide turn teaching expertise into professional currency," The Learning Wheel targets the 'Resourceful Innovator' persona—digitally native K–8 educators motivated by reciprocal altruism and professional dignity over side-hustle income. The visual identity (Deep Teal anchoring trust and global reach, Amber Gold highlighting recognition) and messaging framework ("Your expertise deserves more than a marketplace") reinforce the guild metaphor, while the invite-token viral loop and strict lockout protocol engineer retention through loss aversion and FOMO. Strategic timing is optimal: post-pandemic acceleration of digital adoption, rising teacher dissatisfaction with gig-economy platforms, and the AI threat (which validates human-created, battle-tested resources over generated content) create urgency for a platform that restores professional reciprocity while delivering measurable ROI—unlimited access to validated global resources for the cost of 2-3 purchased lesson sets annually, plus ongoing credit accumulation that sustains membership and builds professional portfolio.
 
 ## 2. Product Definition
 
-**URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/product-definition/product/productSummary
+**URL:** https://bigbrainplan.com/projects/HgeSVN7eXmNC0E9Ex9NW/product-definition/product/productSummary
 **Contains:** Product Manager perspective including functional requirements, user flows, and product scope
 
-An intelligent hydroponic cultivation platform that unifies modular 3D-printable hardware with cloud-connected automation software to deliver professional-grade growing outcomes through recipe-driven lifecycle management. The system operates autonomously across a four-phase growth model, continuously optimizing environmental conditions while building community-wide intelligence through machine learning to predict harvest timing with increasing accuracy. By separating core automation from premium insights through a subscription architecture, the platform balances immediate utility with evolving agronomic intelligence.
+The Learning Wheel is a closed, global learning resource ecosystem that enables educators to discover, validate, and exchange high‑value instructional materials across borders without curriculum lock‑in. It is designed to convert professional contribution into durable utility through a credit‑based participation system, while maintaining quality, fairness, and continuity through strict access and validation rules.
 
 ### Product Overview
 
-A unified cultivation intelligence platform that transforms hydroponic growing from experimental trial-and-error into predictable, outcome-driven agriculture through hardware-software integration, recipe-based automation, and community-powered machine learning.
+A subscription‑gated, multilingual knowledge exchange platform that prioritizes validated contribution, cross‑border reuse, and professional continuity over transactional content sales.
 
 
-## Vision
+### Product Vision
+The Learning Wheel is envisioned as a **global professional infrastructure** for educators rather than a marketplace or social feed. Its core purpose is to enable teachers to reliably access, contribute, and refine high‑quality instructional resources—especially in STEM and non‑dominant languages—without being constrained by national standards, platform noise, or extractive monetization models. The product treats educational materials as shared professional capital, not disposable downloads.
 
-This platform reimagines small-scale agriculture as a **deterministic, data-driven system** rather than a craft skill requiring years of accumulated experience. The core vision is to compress the learning curve from novice to expert-level outcomes by encoding agronomic knowledge into executable recipes, automating environmental management across growth lifecycles, and continuously improving predictions through collective intelligence gathered across the entire user community.
+### What Makes the Product Distinct
+Unlike platforms that optimize for visibility or one‑off transactions, The Learning Wheel is built as a **closed ecosystem with enforced participation rules**. Access is intentionally gated to ensure that every participant is a committed member of the system, and contribution is rewarded only after peer validation. Key differentiators include:
+- **Flexible, user‑defined tagging** that supports global reuse without curriculum alignment overhead
+- **Hybrid Valuation Engine** that reflects both structural priorities (e.g., language scarcity) and real‑time demand
+- **Credit Escrow and Strict Lockout mechanisms** that tie long‑term value to ongoing participation and quality
 
-## Product Architecture
+### Value Delivered by the System
+The platform's value is not simply in hosting content, but in **reducing the cognitive and operational cost of finding trustworthy materials**. By embedding validation, delayed rewards, and demand signals directly into the system, The Learning Wheel ensures that high‑effort, high‑impact resources rise in visibility and utility. Educators are incentivized to improve shared assets over time, creating compounding value rather than content churn.
 
-The system operates on three foundational pillars:
+### Strategic Product Goals
+At a strategic level, the product aims to:
+- Establish a **self‑regulating content economy** where quality is structurally favored
+- Enable **cross‑language and cross‑context knowledge flow** without standardization bottlenecks
+- Preserve professional dignity by framing participation as collective infrastructure building, not side work
 
-**Physical Infrastructure**: Modular chamber hardware built on 3D-printable designs enables cost-effective scaling and customization. Each chamber integrates a complete sensor array (pH, CO2, humidity, light intensity) with precision actuators (irrigation systems, spectrum-tunable grow lights, active ventilation, time-lapse imaging). The modular design supports both single-chamber home deployments and multi-chamber installations managed under unified account control, creating a seamless path from hobbyist to serious cultivator.
-
-**Recipe-Driven Automation**: Growth protocols are codified as parametric recipes that define phase-specific environmental targets and intervention schedules. The four-phase lifecycle model (youth, adolescent, adult, mature) provides the temporal framework for executing plant-type-specific protocols across irrigation frequency/volume, photoperiod and light spectrum, ventilation patterns, and imaging intervals. Recipes exist in two tiers: manufacturer-curated recipes bundled with hardware that ensure immediate success, and a subscription-gated library featuring community-created recipes with full parametric control for advanced optimization.
-
-**Community Intelligence Layer**: A machine learning engine analyzes growth trajectories, environmental conditions, and harvest outcomes across the entire user base to continuously refine harvest predictions and identify optimal growing parameters. This creates a flywheel effect where each grow cycle contributes training data, improving forecast accuracy and surfacing insights that benefit all users. The ML models operate as a subscription service, ensuring users benefit from the platform's evolving intelligence rather than static algorithms frozen at purchase time.
-
-## Operational Model
-
-The platform achieves **supervised autonomy**—full environmental control within the constraints of manual reservoir management. When sensor readings drift from recipe-defined tolerances, the system automatically adjusts actuators to restore optimal conditions. Local execution of core automation ensures growing operations continue uninterrupted even during connectivity loss, while cloud connectivity enables remote monitoring, historical analytics, cross-chamber orchestration, and access to the continuously-improving prediction models.
-
-## Key Differentiators
-
-- **Lifecycle-aware automation** that adapts intervention strategies as plants progress through developmental phases
-- **Dual-tier recipe architecture** balancing immediate accessibility with advanced customization
-- **Community-powered prediction engine** that improves accuracy through collective data rather than individual trial-and-error
-- **Hardware-software unity** treating cultivation as an integrated system rather than disconnected components
-- **Scalable modularity** supporting growth from single chamber to multi-chamber installations without platform migration
+### Long‑Term Product Direction
+Over time, The Learning Wheel is designed to become an **authoritative layer of educational practice knowledge**—a system where instructional artifacts, adaptations, and refinements accumulate institutional memory. The platform's structure supports evolution without fragmentation, allowing it to scale globally while maintaining coherence and trust.
 
 ## 3. Technical Stack
 
-- **Frontend:** React
+- **Frontend:** Next.js
 - **UI Library:** Tailwind CSS
 - **Mobile:** React Native
 - **Backend:** Python/FastAPI
@@ -60,158 +55,180 @@ The platform achieves **supervised autonomy**—full environmental control withi
 
 ## 4. Marketing & Branding
 
-**URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/product-definition/marketing/marketingBranding
+**URL:** https://bigbrainplan.com/projects/HgeSVN7eXmNC0E9Ex9NW/product-definition/marketing/marketingBranding
 **Contains:** Brand identity, voice, UX principles, messaging, and visual design guidelines
 
-This brand strategy positions the platform as a professional-grade agronomic tool rather than a consumer novelty, leveraging a narrative of 'engineered predictability' and 'biological mastery.' The branding bridges the gap between industrial reliability and domestic accessibility, targeting the psychological need for control and self-sufficiency through a visual and verbal identity rooted in data, transparency, and precision.
+The Learning Wheel brand positions itself as the professional membership community that elevates educator contribution beyond transactional content sharing. The brand voice balances professional respect with collaborative warmth, emphasizing collective impact, reciprocity, and the dignified recognition of teaching expertise. Visual identity draws from global education iconography—circular motion, growth cycles, and interconnection—rendered in a modern, accessible design system that feels both trustworthy and forward-thinking.
 
 ### Messaging Framework
 
-The messaging framework prioritizes precision, foresight, and scalability, moving away from 'green thumb' mysticism toward 'data-driven abundance.' It utilizes a hierarchy that leads with the promise of certainty.
+The core brand message—"Your expertise deserves more than a marketplace"—anchors all communication, supported by four pillars: Professional Currency (contribution builds ongoing value), Global Collective (worldwide community solving shared challenges), Quality & Trust (peer-validated, closed ecosystem), and Strategic Recognition (high-need subjects rewarded). Messaging adapts by audience maturity: acquisition emphasizes time savings and fairness, retention focuses on credit growth and community impact.
 
 
-### Core Brand Message
-**"Cultivation, Quantified. Predictable harvests, powered by intelligence."**
-
-### Message Pillars
-1.  **Foresight, Not Just Insight (Primary):** "Know your harvest date before you plant your seed." This pillar highlights the ML prediction engine. It appeals to the planner and the optimizer in the audience.
-    *   *Proof Point:* Harvest timelines updated in real-time based on community growth trajectories.
-2.  **Bio-Mimicry at Scale (Secondary):** "Nature's best days, replicated daily." This addresses the hardware/software integration. We don't fight nature; we optimize it using sensor data.
-    *   *Proof Point:* 4-phase lifecycle recipes that adjust environmental variables automatically.
-3.  **Grow with the Grid (Tertiary):** "Your system gets smarter with every harvest." This validates the connected/subscription aspect. You aren't growing alone; you are leveraging a global network of data.
-    *   *Proof Point:* Over-the-air recipe updates and community-refined protocols.
-
-### Audience Variations
-For the **Tech-Optimizer**: Focus on the parametric controls, API access, and sensor granularity. "Full write-access to your environment."
-For the **Health-Conscious Urbanite**: Focus on purity and supply chain control. "The shortest distance from farm to fork is zero."
+• Messaging architecture frameworks: search "brand messaging pillars framework examples"
+• Teacher pain points and motivations (marketplace fatigue): search "teacher marketplace burnout research"
+• Professional community messaging (guilds, associations): search "professional association messaging strategy"
+• Educator voice and language preferences: https://www.ednc.org/perspective-what-teachers-really-want/
+• Multilingual educator community research: search "bilingual teacher professional development needs"
 
 ### Brand Voice and Tone
 
-The brand voice is that of a 'Modern Chief Agronomist'—authoritative, precise, and encouraging, but never patronizing. The tone balances scientific accuracy with accessible clarity, avoiding slang or excessive marketing fluff.
+The Learning Wheel brand voice is Respectful, Collaborative, Clear, Purposeful, and Globally Inclusive—balancing professional gravitas with warm collegiality. Tone shifts by context: marketing is invitational and aspirational, onboarding is supportive and orienting, community communication is peer-to-peer and appreciative, while policy/system messages are transparent and principle-driven.
 
 
-### Brand Personality: The Empirical Sage
-The brand character is **Precise, Transparent, and Empowering**. We speak the language of science but translate it for the home user. We are not 'magical' or 'whimsical'; we are engineered. When things go wrong (e.g., a pump failure or nutrient imbalance), the voice is calm and diagnostic, offering solutions rather than apologies.
+**Brand Personality Characteristics:**
 
-### Voice Attributes & Guidelines
-*   **Do:** Use precise terminology (e.g., "Photosynthetic active radiation" or "Vapor pressure deficit") but immediately explain it in context. Use data visualization metaphors. Focus on the *process* and the *outcome*.
-*   **Don't:** Use "Greenwashing" terms like "magic," "miracle," or "green thumb." Avoid overly casual slang like "let's get growing fam." Avoid guaranteeing results without explaining the science behind them.
-*   **Tone Variation:**
-    *   *Marketing:* Inspiring, forward-looking, focused on potential. "Unlock the potential of your space."
-    *   *In-App/Support:* Clinical, concise, directive. "pH levels drifted. Dispense 5ml buffer solution."
+1. **Respectful** – Acknowledges teaching as skilled profession requiring expertise, not side hustle. Language honors educator agency and avoids patronizing or overly casual tones.
+2. **Collaborative** – Emphasizes collective success over individual competition. Uses "we," "our community," and "together" language; frames platform as shared infrastructure, not vendor-customer transaction.
+3. **Clear** – Communicates complex systems (credit escrow, lockout protocol) in plain language without jargon or edtech buzzwords. Transparency about how things work builds trust.
+4. **Purposeful** – Every message ties back to professional impact and community benefit. Avoids fluff, filler, or hype; focuses on tangible outcomes (time saved, credits earned, global reach).
+5. **Globally Inclusive** – Recognizes diverse educational contexts, languages, and teaching realities. Avoids US-centric assumptions; celebrates multilingual contributions and cross-border collaboration.
+
+**Voice Attributes & Tone Variations:**
+
+- **Marketing/Acquisition Tone:** Invitational and aspirational, but grounded. Example: *"Imagine a community where your STEM lessons don't just get downloaded—they earn you ongoing professional standing. That's The Learning Wheel."* Avoid hype ("Revolutionary!"), scarcity manipulation ("Limited spots!"), or hard-sell urgency. Do emphasize fairness, collective impact, and professional dignity.
+  
+- **Onboarding/Support Tone:** Supportive, orienting, patient. Example: *"Your first credits will vest once the community validates your contribution through downloads or upvotes. Here's how it works..."* Avoid corporate stiffness or overly technical explanations. Do provide clear next steps and reinforce community norms.
+  
+- **Community/Engagement Tone:** Peer-to-peer, appreciative, celebratory. Example: *"This week, @TeacherMaria's bilingual math unit earned 47 downloads across 12 countries. Your work is traveling, Maria."* Avoid transactional language ("top seller," "bestseller"). Do highlight member contributions, cross-border impact, and credit milestones.
+  
+- **Policy/System Messaging Tone:** Transparent, principle-driven, respectful but firm. Example: *"Our lockout protocol ensures active contributors maintain their standing. When your subscription lapses, pending credits freeze—but they're waiting for you when you return."* Avoid legalistic coldness or apologetic hedging. Do explain the "why" behind policies and tie to community fairness.
+
+**What to Say / What to Avoid:**
+
+- **Say:** "Your expertise," "professional currency," "community-validated," "global collective," "strategic recognition," "peer-reviewed," "ongoing value."
+- **Avoid:** "Passive income," "side hustle," "monetize your classroom," "viral," "hack," "game-changer," "disruption," "revolutionary," marketplace/sales language ("customers," "buyers," "sellers").
+
+**Creative Direction:** Visual and verbal communication should feel like a professional journal or guild newsletter—sophisticated but accessible, global but grounded, aspirational but honest. Think *The Atlantic* or *Smithsonian* tone applied to educator community, not startup hype or corporate HR-speak.
 
 ### Visual Brand Identity
 
-The visual identity combines the organic warmth of botany with the clean, stark lines of a laboratory interface. It utilizes a deep, biological color palette accented by data-visualization brights, ensuring the hardware looks premium in a living space and the software looks capable on a screen.
+The Learning Wheel visual identity balances global professionalism with approachable warmth through a color palette anchored by Deep Teal (trust, growth, global reach) and energized by Amber Gold accents (recognition, value). Typography pairs the clean, modern Inter for UI/headings with the readable, scholarly Merriweather for body text, ensuring accessibility across languages and devices. Visual style emphasizes circular motifs, interconnected networks, and authentic educator imagery—avoiding stock classroom clichés in favor of real teaching moments and global diversity.
 
 
-### Visual Design System
-The aesthetic is "Lab-meets-Living Room." We avoid the generic "leaf green" used by every garden brand. Instead, we anchor the brand in deep, structural greens and technical slate greys that suggest durability and hardware quality. The typography pairs a geometric sans-serif for headings (conveying engineering precision) with a highly legible humanist sans for body copy (ensuring readability of complex data).
+**Color Palette System:**
 
-### Photography & Imagery
-Imagery focuses on **Macro-Precision**. Photography should highlight the textures of healthy plants (trichomes, leaf veins) contrasted against the smooth, matte finish of the 3D-printed hardware. We frequently use "UI Overlays" in marketing visuals—superimposing data points (growth curves, harvest countdowns) over plant photography to visually reinforce the marriage of biology and software. Lighting in photography should be dramatic and moody (grow light spectrums) rather than flat daylight.
+The primary brand color, **Deep Teal (#0D7C7C)**, anchors the identity with associations of trust, growth, global interconnection, and professional depth—evoking both ocean (global reach) and evergreen (sustained value). This is supported by **Sky Blue (#3B9FC6)** for secondary applications requiring lighter, more approachable energy, and **Slate Gray (#4A5B6C)** for professional gravitas in text-heavy contexts. Accent colors include **Amber Gold (#F59E0B)** for calls-to-action, credit highlights, and recognition moments (evoking value, reward, achievement), and **Coral (#FF6B6B)** for alerts, urgency, and strategic emphasis (used sparingly). The neutral palette provides **Warm White (#FAFAF9)** for backgrounds, **Charcoal (#2D3748)** for primary text, **Mid Gray (#718096)** for secondary text, and **Light Gray (#E2E8F0)** for borders and dividers. All color combinations meet WCAG AA contrast standards (4.5:1 for body text, 3:1 for UI elements).
+
+**Typography Hierarchy:**
+
+Headings use **Inter** (Google Fonts), a modern sans-serif designed for screen legibility and international character support—weights 400 (Regular), 600 (SemiBold), and 700 (Bold) for display, H1-H3, and UI elements. Body text uses **Merriweather** (Google Fonts), a serif typeface that balances readability with scholarly warmth—weights 400 (Regular) and 700 (Bold), with line-height 1.6 for comfortable reading across languages and screen sizes. This pairing creates visual hierarchy (sans-serif command attention, serif invites sustained reading) while maintaining cross-platform compatibility and multilingual glyph support. Fallbacks: Inter → system-ui → sans-serif; Merriweather → Georgia → serif. Avoid decorative or script fonts; prioritize clarity and accessibility for global educator audience.
+
+**Visual Design System:**
+
+Photography style emphasizes **authentic educator moments**—real teachers in diverse global settings (not staged stock photos), close-ups of hands-on learning, students collaborating across cultures, and classroom environments that reflect varied resource levels and geographies. Avoid overly polished, US-centric classroom imagery; prioritize diversity in age, ethnicity, setting, and subject matter. Illustration approach uses **simple line-art icons and diagrammatic graphics** to explain system concepts (credit flow, validation cycles, global network)—style is clean, geometric, and universally readable without cultural specificity. Iconography follows **rounded line style** (2px stroke weight, rounded caps) for friendliness and modern clarity; avoid filled or overly decorative icons. Graphic elements include **circular motifs** (echoing "wheel" metaphor), **interconnected node networks** (global community), and **subtle arc/curve patterns** (growth, motion, cycles). Layout principles: 8px grid system for spacing consistency, generous whitespace to avoid overwhelm, asymmetric balance for visual interest while maintaining clarity, and modular card-based layouts for resource browsing.
+
+**Design Applications:**
+
+Logo usage centers on a **circular wordmark or icon-text lockup** with ample clear space (minimum 1x logo height on all sides). Marketing collateral (landing pages, email campaigns, social graphics) uses Deep Teal backgrounds with Warm White text for hero sections, Amber Gold CTAs, and authentic educator photography overlaid with subtle circular graphic elements. Digital/web application prioritizes **clean, card-based layouts** on Warm White backgrounds with Deep Teal navigation, Sky Blue interactive elements, and Amber Gold for credit indicators and achievement highlights. Social media visuals follow **square or 4:5 ratio templates** with consistent Deep Teal branding bar, Inter headlines, and member contribution spotlights—avoiding busy, text-heavy designs in favor of bold typography and single-focus imagery. All applications maintain accessibility (contrast, font size, alt text) and cultural inclusivity (diverse representation, avoid region-specific idioms in visuals).
 
 
 #### Color Palette
 
 
-**Primary Color**: Deep Canopy
+**Primary Color**: Deep Teal
 
-- Hex: #0F3D3E
+- Hex: #0D7C7C
 
-- RGB: rgb(15, 61, 62)
+- RGB: rgb(13, 124, 124)
 
-- Usage: Primary brand assets, hardware housing renders, heavy headers.
+- Usage: Primary brand color for logos, navigation bars, primary CTAs, and major brand touchpoints. Use for headers, key UI elements, and anywhere brand presence needs strong anchor.
 
-- Psychology: Communicates depth, seriousness, and biological density. Distinguishes from 'toy' gardening brands.
+- Psychology: Evokes trust, growth, global interconnection, and professional depth. Combines the reliability of blue with the vitality of green, suggesting both stability and forward motion. Culturally neutral and globally accessible.
 
 
 **Secondary Colors**:
 
-1. Slate Interface: #34495E - Secondary text, UI panels, hardware accents.
+1. Sky Blue: #3B9FC6 - Secondary brand color for lighter, more approachable applications—subheadings, secondary buttons, hover states, and informational callouts. Provides visual variety while maintaining brand cohesion.
 
-2. Vapor Grey: #F0F4F8 - Backgrounds, app canvas, packaging base.
+2. Slate Gray: #4A5B6C - Professional secondary for text-heavy contexts, alternative navigation, and subdued UI elements requiring gravitas without primary brand color intensity.
 
 
 **Accent Colors**:
 
-1. Data Amber: #F59E0B - Alerts, harvest notifications, 'Action Required' UI elements.
+1. Amber Gold: #F59E0B - Primary accent for CTAs, credit highlights, achievement badges, and recognition moments. Use sparingly for maximum impact—buttons, notifications, reward indicators.
 
-2. Growth Teal: #2A9D8F - Success states, primary CTAs, data visualization lines.
+2. Coral: #FF6B6B - Alert and urgency accent for error states, important warnings, and strategic emphasis. Use sparingly—only for elements requiring immediate attention.
 
 
 **Neutral Colors**:
 
-1. Carbon: #121212 - Main body text, high contrast borders.
+1. Warm White: #FAFAF9 - Primary background color for pages, cards, and content areas. Slightly warmer than pure white to reduce eye strain and create approachable feel.
+
+2. Charcoal: #2D3748 - Primary text color for body copy, headings, and high-contrast UI elements. Softer than pure black for readability and reduced eye strain.
+
+3. Mid Gray: #718096 - Secondary text color for captions, metadata, placeholder text, and de-emphasized content. Maintains readability while creating visual hierarchy.
+
+4. Light Gray: #E2E8F0 - Borders, dividers, subtle backgrounds, and inactive UI states. Provides structure without visual weight.
 
 
 
 #### Typography
 
 
-**Heading Font**: Space Grotesk
+**Heading Font**: Inter
 
-- Weights: 500, 700
+- Weights: 400, 600, 700
 
-- Usage: Headlines, data readouts, hardware labeling.
+- Usage: Display text, H1-H6 headings, navigation labels, button text, and all UI elements requiring clear hierarchy and modern professionalism. Weight 700 for display/H1, 600 for H2-H3, 400 for UI labels.
 
-- Fallback: Helvetica Neue, Arial, sans-serif
+- Fallback: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
 
 
-**Body Font**: Inter
+**Body Font**: Merriweather
 
-- Weights: 400, 600
+- Weights: 400, 700
 
 - Line Height: 1.6
 
-- Usage: Long-form content, app UI, instructions.
+- Usage: Body text, article content, long-form reading, descriptions, and educational content. Weight 400 for body, 700 for emphasis within body text. Line-height 1.6 ensures comfortable reading across languages and screen sizes.
 
-- Fallback: Segoe UI, Roboto, sans-serif
+- Fallback: Georgia, Cambria, 'Times New Roman', serif
 
 
-**Accent Font**: JetBrains Mono
+**Accent Font**: Inter
 
-- Usage: Code snippets, sensor raw data values, recipe parameters.
+- Usage: Used sparingly for data callouts, credit numbers, or short emphatic statements where sans-serif clarity enhances scannability. Not a separate font—leverages heading font for consistency.
 
 
 
 #### Visual Design System
 
 
-**Photography**: High-contrast macro photography of botany mixed with clean product shots. Mood is 'scientific observation'—sharp focus, deep shadows, grow-light purples and whites.
+**Photography**: Authentic educator moments featuring real teachers in diverse global settings—close-ups of hands-on learning, collaborative student work, and varied classroom environments. Prioritize diversity in ethnicity, age, geography, and resource levels. Avoid staged stock photos, US-centric imagery, and overly polished corporate aesthetics. Lighting should be natural or softly lit; compositions favor candid, documentary-style captures over posed portraits.
 
 
-**Illustration**: Technical wireframes and exploded views of the hardware. 3D-rendered schematics to explain the modularity.
+**Illustration**: Simple line-art diagrams and geometric graphics for system explanations (credit flow, validation cycles, network effects). Style is clean, minimal, universally readable—avoiding cultural specificity or decorative complexity. Use primarily for conceptual communication, not decorative embellishment.
 
 
-**Iconography**: Thin-line, geometric icons inspired by dashboard instrument clusters. No organic/hand-drawn icons.
+**Iconography**: Rounded line icons with 2px stroke weight and rounded caps/joins. Style is friendly, modern, and clear—optimized for international recognition. Avoid filled icons (too heavy), duotone (too complex), or overly detailed illustrations. Icon set should cover core actions (upload, download, validate, share, credit, lock) and be scalable from 16px to 48px.
 
 
-**Graphic Elements**: Data visualization motifs: grid lines, crosshairs, and dot-matrix patterns used as subtle background textures.
+**Graphic Elements**: Circular motifs (echoing 'wheel' metaphor), interconnected node networks (global community), and subtle arc/curve patterns (growth, motion, cycles). Use as background textures, section dividers, or decorative accents—never overwhelming content. Patterns should be low-contrast and fade into backgrounds.
 
 
-**Layout Principles**: Modular grid systems mimicking the physical modularity of the chambers. Generous whitespace to prevent data density from feeling overwhelming.
+**Layout Principles**: 8px grid system for consistent spacing and alignment. Generous whitespace to avoid cognitive overload—especially important for multilingual content and varied screen sizes. Asymmetric balance for visual interest while maintaining clarity. Modular card-based layouts for resource browsing, with clear hierarchy (image, title, metadata, actions). Responsive breakpoints prioritize mobile-first readability.
 
 
 ## 5. Module Specifications
 
-### 1. Notification Module
-**Purpose:** Technical specification for the Notification Module
+### 1. Search Infrastructure Module
+**Purpose:** Technical specification for the Search Infrastructure Module
 
 **Key Features:**
-1. Multi-channel notification delivery (email, push, in-app)
-2. Template-based notification generation with dynamic content
-3. User notification preference management per channel and event type
-4. Delivery tracking and read receipts
-5. Notification scheduling and batching to prevent spam
-6. Priority-based notification routing (critical, important, informational)
-7. Notification history and audit trail
-8. Unsubscribe management and compliance
-9. A/B testing for notification content and timing
-10. Delivery failure handling and retry logic
+1. Elasticsearch/AWS OpenSearch cluster management with indexing and query optimization
+2. Full-text search with multi-language analyzers and stemming
+3. Faceted filtering by tags, language, content type, validation score, and recency
+4. Relevance ranking algorithm incorporating validation scores, download counts, and recency
+5. Search autocomplete and suggestion based on tags and resource titles
+6. Synonym management and query expansion for improved recall
+7. Search result highlighting and snippet generation
+8. Personalized search ranking based on user preferences and history
+9. Search analytics tracking query volume, zero-result searches, and click-through rates
+10. Index management with real-time updates, bulk reindexing, and schema migrations
 
-**Documentation URL:** https://bigbrainplan.com/projects/zociAwd3AdJxoJi8kbLI/specifications/UgU0eqfclzJMQIoo4Z2H
-**Local Documentation:** /specs/Notification-Module.md
+**Documentation URL:** https://bigbrainplan.com/projects/HgeSVN7eXmNC0E9Ex9NW/specifications/713TXK5KQJJi1wPvNyA1
+**Local Documentation:** /specs/Search-Infrastructure-Module.md
 
 ---
 
